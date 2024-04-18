@@ -6,7 +6,8 @@ templ Signup(form form.SignupUser) {
 	<div id="main" hx-ext="response-targets">
 		<div>
 			<h1>Signup Page</h1>
-			<form hx-post="/signupp" hx-swap="outerHTML" hx-target-422="#main">
+			<div id="message-box"></div>
+			<form hx-post="/signup" hx-target-201="#message-box" hx-target-422="#main">
 				<label for="username">Username:</label>
 				<input type="text" id="username" name="username" value={ form.Username }/>
 				<div>{ form.Errors["username"] }</div>
@@ -21,12 +22,13 @@ templ Signup(form form.SignupUser) {
 				//
 				<input type="submit" value="Signup"/>
 			</form>
+			<p>Already have an account? <a href="/signin">Sign in</a></p>
 		</div>
 	</div>
 }
 
 templ SignupSuccess() {
-	<div>
+	<div id="message-box">
 		account created! Sign in to continue
 	</div>
 }

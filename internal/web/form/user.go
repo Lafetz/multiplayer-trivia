@@ -36,7 +36,7 @@ func (f *SignupUser) Valid() bool {
 	}
 
 	if utf8.RuneCountInString(f.Password) < 8 {
-		f.Errors["Password"] = "Password is too short."
+		f.Errors["password"] = "password is too short."
 	}
 
 	return len(f.Errors) == 0
@@ -50,7 +50,7 @@ func (f *SigninUser) Valid() bool {
 		f.Errors["email"] = "email is required"
 	}
 	if strings.TrimSpace(f.Password) == "" {
-		f.Errors["Password"] = "Password is required"
+		f.Errors["password"] = "password is required"
 	}
 
 	return len(f.Errors) == 0

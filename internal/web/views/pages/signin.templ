@@ -1,0 +1,24 @@
+package pages
+
+import "github.com/Lafetz/showdown-trivia-game/internal/web/form"
+
+templ Signin(form form.SigninUser, message string) {
+	<div id="main" hx-ext="response-targets">
+		<div>
+			<h1>Signin Page</h1>
+			<div>{ message }</div>
+			<form hx-post="/signin" hx-swap="outerHTML" hx-target-422="#main">
+				//
+				<label for="email">Email:</label>
+				<input type="email" id="email" name="email" value={ form.Email }/>
+				<div>{ form.Errors["email"] }</div>
+				//
+				<label for="password">Password:</label>
+				<input type="password" id="password" name="password" value={ form.Password }/>
+				<div>{ form.Errors["password"] }</div>
+				//
+				<input type="submit" value="Signin"/>
+			</form>
+		</div>
+	</div>
+}
