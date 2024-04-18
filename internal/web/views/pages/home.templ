@@ -1,4 +1,38 @@
 package pages
 
-templ home() {
+templ Home() {
+	<header class="flex justify-center justify-center ">
+		<div class=" flex justify-between w-full max-w-3xl">
+			<div class="logo">
+				<div>Logo</div>
+			</div>
+			<div class="flex gap-3">
+				<div>profile pic</div>
+				<button class="logout-btn">Logout</button>
+			</div>
+		</div>
+	</header>
+	<main>
+		<section id="create-game">
+			<form hx-post="/create_game" hx-target="#game-list" hx-swap="outerHTML" hx-trigger="submit">
+				<div class="mb-4">
+					<label class="block text-gray-700 text-sm font-bold mb-2" for="game-name">Game Name</label>
+					<input type="text" id="game-name" name="game-name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+				</div>
+				<div class="mb-4">
+					<label class="block text-gray-700 text-sm font-bold mb-2" for="game-type">Game Type</label>
+					<select id="game-type" name="game-type" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+						<option value="single">Single Player</option>
+						<option value="multi">Multiplayer</option>
+					</select>
+				</div>
+				<div class="mb-4">
+					<button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create Game</button>
+				</div>
+			</form>
+		</section>
+	</main>
+	<footer>
+		<p>&copy; 2024 Trivia Game. All rights reserved.</p>
+	</footer>
 }

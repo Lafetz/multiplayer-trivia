@@ -7,7 +7,7 @@ templ Signin(form form.SigninUser, message string) {
 		<div>
 			<h1>Signin Page</h1>
 			<div>{ message }</div>
-			<form hx-post="/signin" hx-swap="outerHTML" hx-target-422="#main">
+			<form hx-post="/signin" hx-refresh="true" hx-swap="outerHTML" hx-target-422="#main">
 				//
 				<label for="email">Email:</label>
 				<input type="email" id="email" name="email" value={ form.Email }/>

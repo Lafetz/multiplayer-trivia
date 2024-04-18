@@ -9,6 +9,9 @@ import (
 )
 
 func (a *App) initAppRoutes() {
+	fileServer := http.FileServer(http.Dir("./internal/web/static"))
+
+	a.router.Handle("/static/", http.StripPrefix("/static/", fileServer))
 	a.router.HandleFunc("GET /signup", func(w http.ResponseWriter, r *http.Request) {
 		p := pages.Signup(form.SignupUser{})
 		err := layout.Base("Sign up", p).Render(r.Context(), w)
@@ -86,10 +89,19 @@ func (a *App) initAppRoutes() {
 			}
 			return
 		}
-		http.Redirect(w, r, "/home", http.StatusSeeOther)
+
+		w.Header().Set("HX-Redirect", "/home")
+		w.WriteHeader(http.StatusOK)
 
 	})
 
-	a.router.HandleFunc("GET /Home", func(w http.ResponseWriter, r *http.Request) {})
+	a.router.HandleFunc("GET /home", func(w http.ResponseWriter, r *http.Request) {
+		p := pages.Home()
+		err := layout.Base("Home", p).Render(r.Context(), w)
+		if err != nil {
+			http.Error(w, "Error rendering template", http.StatusInternalServerError)
+			return
+		}
+	})
 	a.router.HandleFunc("POST /signups", func(w http.ResponseWriter, r *http.Request) {})
 }

@@ -38,7 +38,7 @@ func Signin(form form.SigninUser, message string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><form hx-post=\"/signin\" hx-swap=\"outerHTML\" hx-target-422=\"#main\"><label for=\"email\">Email:</label> <input type=\"email\" id=\"email\" name=\"email\" value=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><form hx-post=\"/signin\" hx-refresh=\"true\" hx-swap=\"outerHTML\" hx-target-422=\"#main\"><label for=\"email\">Email:</label> <input type=\"email\" id=\"email\" name=\"email\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
