@@ -29,7 +29,7 @@ func Home() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<main><section id=\"create-game\" class=\"flex justify-center\"><a href=\"/game\">create Game</a></section></main>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<main hx-ext=\"response-targets\"><section id=\"create-game\" class=\"flex justify-center\"><button hx-post=\"/create\" type=\"button\" hx-swap=\"main\" hx-target=\"main\">Create Game</button></section><section></section></main>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

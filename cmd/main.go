@@ -7,7 +7,7 @@ import (
 	"github.com/Lafetz/showdown-trivia-game/internal/core/user"
 	"github.com/Lafetz/showdown-trivia-game/internal/repository"
 	"github.com/Lafetz/showdown-trivia-game/internal/web"
-	"github.com/Lafetz/showdown-trivia-game/internal/web/ws"
+	"github.com/Lafetz/showdown-trivia-game/internal/ws"
 )
 
 var addr = flag.String("addr", ":8080", "http service address")

@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/Lafetz/showdown-trivia-game/internal/core/user"
-	"github.com/Lafetz/showdown-trivia-game/internal/web/ws"
+	"github.com/Lafetz/showdown-trivia-game/internal/ws"
 )
 
 type App struct {

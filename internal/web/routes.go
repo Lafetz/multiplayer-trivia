@@ -103,20 +103,25 @@ func (a *App) initAppRoutes() {
 			return
 		}
 	})
-	a.router.HandleFunc("/game", func(w http.ResponseWriter, r *http.Request) {
-		p := pages.Game()
-		err := layout.Base("Game", p).Render(r.Context(), w)
-		if err != nil {
-			http.Error(w, "Error rendering template", http.StatusInternalServerError)
-			return
-		}
-
-	})
-	//ws
 	a.router.HandleFunc("/create", func(w http.ResponseWriter, r *http.Request) {
-		a.hub.CreateRoom(w, r)
+		sendGamePage(w, r, true)
 	})
 	a.router.HandleFunc("/join", func(w http.ResponseWriter, r *http.Request) {
+		sendGamePage(w, r, false)
+	})
+	//ws
+	a.router.HandleFunc("/wscreate", func(w http.ResponseWriter, r *http.Request) {
 		a.hub.CreateRoom(w, r)
 	})
+	a.router.HandleFunc("/wsjoin", func(w http.ResponseWriter, r *http.Request) {
+		a.hub.CreateRoom(w, r)
+	})
+}
+func sendGamePage(w http.ResponseWriter, r *http.Request, create bool) {
+	p := pages.Game(create)
+	err := layout.Base("Game", p).Render(r.Context(), w)
+	if err != nil {
+		http.Error(w, "Error rendering template", http.StatusInternalServerError)
+		return
+	}
 }

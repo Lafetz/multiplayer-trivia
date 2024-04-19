@@ -4,9 +4,10 @@ import "github.com/Lafetz/showdown-trivia-game/internal/web/views/components"
 
 templ Home() {
 	@components.Header()
-	<main>
+	<main hx-ext="response-targets">
 		<section id="create-game" class="flex justify-center">
-			<a href="/game">create Game</a>
+			<button hx-post="/create" type="button" hx-swap="main" hx-target="main">Create Game</button>
 		</section>
+		<section></section>
 	</main>
 }
