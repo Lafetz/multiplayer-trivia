@@ -4,20 +4,23 @@ import (
 	"net/http"
 
 	"github.com/Lafetz/showdown-trivia-game/internal/core/user"
+	"github.com/Lafetz/showdown-trivia-game/internal/web/ws"
 )
 
 type App struct {
 	port        int
 	router      *http.ServeMux
 	userService user.UserServiceApi
+	hub         *ws.Hub
 }
 
-func NewApp(userService user.UserServiceApi) *App {
+func NewApp(userService user.UserServiceApi, hub *ws.Hub) *App {
 
 	a := &App{
 		router:      http.NewServeMux(),
 		port:        8080,
 		userService: userService,
+		hub:         hub,
 	}
 
 	a.initAppRoutes()

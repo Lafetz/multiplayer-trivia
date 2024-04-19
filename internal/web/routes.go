@@ -103,5 +103,20 @@ func (a *App) initAppRoutes() {
 			return
 		}
 	})
-	a.router.HandleFunc("POST /signups", func(w http.ResponseWriter, r *http.Request) {})
+	a.router.HandleFunc("/game", func(w http.ResponseWriter, r *http.Request) {
+		p := pages.Game()
+		err := layout.Base("Game", p).Render(r.Context(), w)
+		if err != nil {
+			http.Error(w, "Error rendering template", http.StatusInternalServerError)
+			return
+		}
+
+	})
+	//ws
+	a.router.HandleFunc("/create", func(w http.ResponseWriter, r *http.Request) {
+		a.hub.CreateRoom(w, r)
+	})
+	a.router.HandleFunc("/join", func(w http.ResponseWriter, r *http.Request) {
+		a.hub.CreateRoom(w, r)
+	})
 }

@@ -1,0 +1,12 @@
+package pages
+
+templ Game() {
+	<div hx-ws="connect:ws://localhost:8080/create">
+		<div id="chat_room">
+			…
+		</div>
+		<form hx-ws="send:submit">
+			<input name="chat_message"/>
+		</form>
+	</div>
+}
