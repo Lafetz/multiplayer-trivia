@@ -29,7 +29,7 @@ func Home() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<main hx-ext=\"response-targets\"><section id=\"create-game\" class=\"flex justify-center\"><button hx-post=\"/create\" type=\"button\" hx-swap=\"main\" hx-target=\"main\">Create Game</button></section><section></section></main>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<sl-dialog label=\"New Game\" no-header class=\"dialog-create flex justify-center\"><span class=\"w-fit\">Create new Game?</span><div slot=\"footer\" class=\"flex justify-center gap-3\"><sl-button id=\"dialog-create-close\" variant=\"primary\">Close</sl-button> <sl-button hx-GET=\"/create\" hx-swap=\"main\" hx-target=\"main\" hx-on::after-request=\" document.querySelector(&#39;.dialog-create&#39;).hide()\">Create Game</sl-button></div></sl-dialog><main hx-ext=\"response-targets\"><section id=\"create-game\" class=\"flex justify-center\"><sl-button id=\"dialog-create-open\">New Game</sl-button></section><section></section></main>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

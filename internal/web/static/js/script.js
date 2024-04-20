@@ -1,10 +1,12 @@
-window.openModal = function(modalId) {
-    document.getElementById(modalId).style.display = 'block'
-    document.getElementsByTagName('body')[0].classList.add('overflow-y-hidden')
-}
+//create new game
+const dialog = document.querySelector('.dialog-create');
+const createBtn = document.querySelector('#dialog-create-open');
+const closeCreate =document.querySelector('#dialog-create-close');
 
-window.closeModal = function(modalId) {
-    document.getElementById(modalId).style.display = 'none'
-    document.getElementsByTagName('body')[0].classList.remove('overflow-y-hidden')
-}
+createBtn.addEventListener('click', () => dialog.show());
+closeCreate.addEventListener('click', () => dialog.hide());
+//join game
+document.addEventListener("htmx:wsOpen", function() {
+    dialog.hide()
 
+});

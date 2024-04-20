@@ -4,9 +4,17 @@ import "github.com/Lafetz/showdown-trivia-game/internal/web/views/components"
 
 templ Home() {
 	@components.Header()
+	<sl-dialog label="New Game" no-header class="dialog-create flex justify-center">
+		<span class="w-fit">Create new Game?</span>
+		<div slot="footer" class="flex justify-center gap-3">
+			<sl-button id="dialog-create-close" variant="primary">Close</sl-button>
+			<sl-button hx-GET="/create" hx-swap="main" hx-target="main" hx-on::after-request=" document.querySelector('.dialog-create').hide()">Create Game</sl-button>
+		</div>
+	</sl-dialog>
 	<main hx-ext="response-targets">
 		<section id="create-game" class="flex justify-center">
-			<button hx-post="/create" type="button" hx-swap="main" hx-target="main">Create Game</button>
+			<sl-button id="dialog-create-open">New Game</sl-button>
+			// <button hx-post="/create" type="button" hx-swap="main" hx-target="main">Create Game</button>
 		</section>
 		<section></section>
 	</main>

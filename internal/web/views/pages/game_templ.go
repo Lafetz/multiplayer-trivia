@@ -23,7 +23,7 @@ func Game(owner bool) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div hx-ws=\"connect:ws://localhost:8080/create\"><div id=\"chat_room\">…</div><form hx-ws=\"send:submit\"><input name=\"chat_message\"></form></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div hx-ws=\"connect:ws://localhost:8080/wscreate\"><div id=\"chat_room\">…</div><form hx-ws=\"send:submit\"><input name=\"chat_message\"></form></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

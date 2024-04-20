@@ -34,7 +34,11 @@ func (h *Hub) addRoom(room *Room) {
 	defer h.Unlock()
 	h.rooms[room.Id] = room
 }
+func (h *Hub) ListRooms() {
+	h.Lock()
+	defer h.Unlock()
 
+}
 func (h *Hub) removeRoom(room *Room) {
 	h.Lock()
 	defer h.Unlock()
@@ -56,5 +60,7 @@ func checkOrigin(r *http.Request) bool {
 	// default:
 	// 	return false
 	// }
+	//	id := uuid.New().String()[:7]
+
 	return true
 }
