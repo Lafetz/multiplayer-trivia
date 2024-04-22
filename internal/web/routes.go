@@ -8,6 +8,10 @@ import (
 	"github.com/Lafetz/showdown-trivia-game/internal/web/views/pages"
 )
 
+const (
+	wsUrl = "connect:ws://localhost:8080"
+)
+
 func (a *App) initAppRoutes() {
 	fileServer := http.FileServer(http.Dir("./internal/web/static"))
 
@@ -104,21 +108,35 @@ func (a *App) initAppRoutes() {
 		}
 	})
 	a.router.HandleFunc("/create", func(w http.ResponseWriter, r *http.Request) {
-		sendGamePage(w, r, true)
+		gameOwner := true
+		id := ""
+		sendGamePage(w, r, gameOwner, id)
 	})
-	a.router.HandleFunc("/join", func(w http.ResponseWriter, r *http.Request) {
-		sendGamePage(w, r, false)
+	a.router.HandleFunc("/join/{id}", func(w http.ResponseWriter, r *http.Request) {
+		gameOwner := false
+		id := r.PathValue("id")
+		sendGamePage(w, r, gameOwner, id)
 	})
 	//ws
 	a.router.HandleFunc("/wscreate", func(w http.ResponseWriter, r *http.Request) {
+		println("called this func")
 		a.hub.CreateRoom(w, r)
 	})
-	a.router.HandleFunc("/wsjoin", func(w http.ResponseWriter, r *http.Request) {
+	a.router.HandleFunc("/wsjoin/{id}", func(w http.ResponseWriter, r *http.Request) {
 		a.hub.CreateRoom(w, r)
+	})
+	a.router.HandleFunc("/activegames", func(w http.ResponseWriter, r *http.Request) {
+		rooms := a.hub.ListRooms()
+		p := pages.ActiveGames(rooms)
+		err := p.Render(r.Context(), w)
+		if err != nil {
+			http.Error(w, "Error rendering template", http.StatusInternalServerError)
+			return
+		}
 	})
 }
-func sendGamePage(w http.ResponseWriter, r *http.Request, create bool) {
-	p := pages.Game(create)
+func sendGamePage(w http.ResponseWriter, r *http.Request, create bool, id string) {
+	p := pages.Game(create, id)
 	err := layout.Base("Game", p).Render(r.Context(), w)
 	if err != nil {
 		http.Error(w, "Error rendering template", http.StatusInternalServerError)

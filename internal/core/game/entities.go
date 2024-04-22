@@ -11,13 +11,14 @@ func NewQuestion() {
 }
 
 type Player struct {
-	username string
+	Username string
 	Score    int
 }
 
 func NewPlayer(username string) *Player {
 	return &Player{
-		username: username,
+		Username: username,
+		Score:    0,
 	}
 }
 

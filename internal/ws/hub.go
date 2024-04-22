@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"sync"
 
+	"github.com/Lafetz/showdown-trivia-game/internal/web/entity"
 	"github.com/gorilla/websocket"
 )
 
@@ -17,8 +18,8 @@ var (
 )
 
 type Hub struct {
-	rooms    RoomList
-	handlers map[string]EventHandler
+	rooms RoomList
+	// handlers map[string]EventHandler
 	sync.RWMutex
 }
 
@@ -34,10 +35,19 @@ func (h *Hub) addRoom(room *Room) {
 	defer h.Unlock()
 	h.rooms[room.Id] = room
 }
-func (h *Hub) ListRooms() {
+func (h *Hub) ListRooms() []entity.RoomData {
 	h.Lock()
 	defer h.Unlock()
+	var rooms []entity.RoomData
+	for _, r := range h.rooms {
 
+		rooms = append(rooms, entity.RoomData{
+			Owner:   r.owner,
+			Id:      r.Id,
+			Players: r.getUsers(),
+		})
+	}
+	return rooms
 }
 func (h *Hub) removeRoom(room *Room) {
 	h.Lock()
@@ -47,8 +57,8 @@ func (h *Hub) removeRoom(room *Room) {
 
 func NewHub() *Hub {
 	h := &Hub{
-		rooms:    make(RoomList),
-		handlers: make(map[string]EventHandler),
+		rooms: make(RoomList),
+		// handlers: make(map[string]EventHandler),
 	}
 	return h
 }

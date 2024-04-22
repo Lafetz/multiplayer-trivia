@@ -14,17 +14,17 @@ func TestGame(t *testing.T) {
 		NewPlayer("panzer"),
 		NewPlayer("leopard"),
 	}
-	game := newGame(questions, players)
+	game := NewGame(questions)
 	//change default timer so that tests finishes quicker
 	span := 500 * time.Microsecond
 	game.timerSpan = span
 	go func() {
-		for msg := range game.message {
+		for msg := range game.Message {
 			println(msg)
 		}
 	}()
 	// start the game
-	go game.Start()
+	go game.Start(players)
 	// simulate players answering questions
 	go func() {
 		game.AnswerCh <- newAnswer("panzer", "B")
@@ -42,7 +42,7 @@ func TestGame(t *testing.T) {
 	expectedScores := []int{1, 2} // expected scores for each player
 	for i, player := range game.Players {
 		if player.Score != expectedScores[i] {
-			t.Errorf("Player %s: got score %d, expected %d", player.username, player.Score, expectedScores[i])
+			t.Errorf("Player %s: got score %d, expected %d", player.Username, player.Score, expectedScores[i])
 		}
 	}
 }

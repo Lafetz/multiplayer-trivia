@@ -3,6 +3,8 @@ package ws
 import (
 	"log"
 	"net/http"
+
+	"github.com/google/uuid"
 )
 
 func (h *Hub) CreateRoom(w http.ResponseWriter, r *http.Request) {
@@ -12,17 +14,14 @@ func (h *Hub) CreateRoom(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 		return
 	}
-	room := NewRoom("test")
+	id := uuid.New().String()[:7]
+	room := NewRoom(id)
 	h.addRoom(room)
 
-	if err != nil {
-		println(err)
-
-		return
-	}
-
 	client := NewClient(conn, room)
+	println("wtfc")
 	go client.readMessage()
+
 	go client.writeMessage()
 
 }

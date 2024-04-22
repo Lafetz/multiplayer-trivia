@@ -1,12 +1,83 @@
 package pages
 
-templ Game(owner bool) {
-	<div hx-ws="connect:ws://localhost:8080/wscreate">
-		<div id="chat_room">
-			…
+import "github.com/Lafetz/showdown-trivia-game/internal/web/entity"
+import "github.com/Lafetz/showdown-trivia-game/internal/core/game"
+
+templ Game(owner bool, id string) {
+	if owner {
+		<div id="hello" hx-ws="connect:ws://localhost:8080/wscreate">
+			<div class="w-screen bg-black flex flex-col justify-center items-center relative max-w-2xl gap-4" id="chat-room">plz work</div>
+			<div id="lobby">
+				<div hx-swap-oob="outerHTML:#players" id="players">Players:</div>
+				<sl-button id="startGame" ws-send hx-trigger="click">start</sl-button>
+			</div>
+			//
+			<button
+				id="keep"
+				hx-ws="send"
+				hx-vals='{
+        "type": "start_game",
+        "payload": "this will do for now"
+    }'
+			>
+				Submit
+			</button>
+			// <form hx-ws="send">
+			// 	<input type="submit" name="type" value="Start"/>
+			// </form>
+			//
 		</div>
-		<form hx-ws="send:submit">
-			<input name="chat_message"/>
-		</form>
+	} else {
+		<div hx-ws={ "connect:ws://localhost:8080/join/" + id }>
+			<div id="lobby">
+				<div hx-swap-oob="outerHTML:#players" id="players">Players:</div>
+			</div>
+		</div>
+	}
+}
+
+templ Players() {
+	//
+	<div hx-swap-oob="outerHTML:#players" id="players">Players:</div>
+}
+
+templ ActiveGames(rooms []entity.RoomData) {
+	<div class="flex-col  min-w-80">
+		<div class="flex justify-between ">
+			<div>Game Owner</div>
+			<div>Game ID</div>
+		</div>
+		for _, room := range rooms {
+			<div hx-get={ "/join/" + room.Id } hx-swap="main" hx-target="main" hx-swap="innerHTML" hx-trigger="click" class="flex justify-between hover:bg-blue-200 hover:text-black transition duration-300">
+				<div>{ room.Owner }</div>
+				<div>{ room.Id }</div>
+			</div>
+		}
 	</div>
+}
+
+templ Question(q game.Question) {
+	<div id="lobby">
+		<div class="flex-col  min-w-80" hx-swap-oob="outerHTML:#lobby">
+			<p>
+				{ q.Question }
+			</p>
+			for i,c :=range q.Options {
+				@choice(c, i)
+			}
+		</div>
+	</div>
+}
+
+templ choice(choice string, i int) {
+	<button
+		id="keep"
+		hx-ws="send"
+		hx-vals='{
+			    "type": "send_answer",
+			    "payload": {i}
+			}'
+	>
+		{ choice }
+	</button>
 }

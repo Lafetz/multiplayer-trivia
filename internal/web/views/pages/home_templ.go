@@ -29,7 +29,11 @@ func Home() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<sl-dialog label=\"New Game\" no-header class=\"dialog-create flex justify-center\"><span class=\"w-fit\">Create new Game?</span><div slot=\"footer\" class=\"flex justify-center gap-3\"><sl-button id=\"dialog-create-close\" variant=\"primary\">Close</sl-button> <sl-button hx-GET=\"/create\" hx-swap=\"main\" hx-target=\"main\" hx-on::after-request=\" document.querySelector(&#39;.dialog-create&#39;).hide()\">Create Game</sl-button></div></sl-dialog><main hx-ext=\"response-targets\"><section id=\"create-game\" class=\"flex justify-center\"><sl-button id=\"dialog-create-open\">New Game</sl-button></section><section></section></main>")
+		templ_7745c5c3_Err = Game(true, "").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<sl-dialog label=\"New Game\" no-header class=\"dialog-create flex justify-center\"><span class=\"w-fit\">Create new Game?</span><div slot=\"footer\" class=\"flex justify-center gap-3\"><sl-button id=\"dialog-create-close\" variant=\"primary\">Close</sl-button> <sl-button hx-GET=\"/create\" hx-swap=\"main\" hx-target=\"main\" hx-on::after-request=\" document.querySelector(&#39;.dialog-create&#39;).hide()\">Create Game</sl-button></div></sl-dialog><main hx-ext=\"response-targets\"><section id=\"create-game\" class=\"flex justify-center\"><sl-button id=\"dialog-create-open\">New Game</sl-button></section><div hx-get=\"/activegames\" hx-swap=\"innerHTML\" hx-trigger=\"load\" class=\"flex justify-center\"></div></main>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

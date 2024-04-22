@@ -5,6 +5,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/Lafetz/showdown-trivia-game/internal/core/game"
 	"github.com/gorilla/websocket"
 )
 
@@ -15,6 +16,7 @@ var (
 
 type ClientList map[*Client]bool
 type Client struct {
+	Username   string
 	connection *websocket.Conn
 	room       *Room
 	egress     chan []byte
@@ -22,6 +24,7 @@ type Client struct {
 
 func NewClient(conn *websocket.Conn, room *Room) *Client {
 	c := &Client{
+		Username:   "@genric",
 		connection: conn,
 		room:       room,
 		egress:     make(chan []byte),
@@ -40,7 +43,7 @@ func (c *Client) readMessage() {
 	c.connection.SetReadLimit(512)
 	c.connection.SetPongHandler(c.pongHandler)
 	for {
-		_, payload, err := c.connection.ReadMessage()
+		_, msg, err := c.connection.ReadMessage()
 		if err != nil {
 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway,
 				websocket.CloseAbnormalClosure) {
@@ -48,19 +51,27 @@ func (c *Client) readMessage() {
 			}
 			break
 		}
+
 		var req Event
-		if err := json.Unmarshal(payload, &req); err != nil {
+		if err := json.Unmarshal(msg, &req); err != nil {
 			log.Println("error reading message", err)
 			break
 		}
-		println(req.EventType, req.Payload)
-		for x := range c.room.clients {
-			x.egress <- payload
+		//check if valid
+		//
+		switch req.EventType {
+		case StartGame:
+			var players []*game.Player
+			for c := range c.room.clients {
+				players = append(players, game.NewPlayer(c.Username))
+			}
+			go c.room.Game.Start(players)
+		case SendAnswer:
+			println("answer send!!", req.Payload)
+		default:
+			log.Println("unknown event type:", req.EventType)
 		}
-		// if err := c.hub.routeMessages(req, c); err != nil {
-		// 	log.Println("error routing message", err)
-		// 	break
-		// }
+
 	}
 }
 func (c *Client) writeMessage() {
@@ -68,6 +79,14 @@ func (c *Client) writeMessage() {
 		c.room.removeClient(c)
 	}()
 	ticker := time.NewTicker(pingInterval)
+	//
+	// buf := render.RenderWS()
+	// err := c.connection.WriteMessage(websocket.TextMessage, buf.Bytes())
+	// println("ping")
+	// if err != nil {
+	// 	return
+	// }
+	//
 	for {
 		select {
 		case message, ok := <-c.egress:
@@ -79,18 +98,24 @@ func (c *Client) writeMessage() {
 				return
 			}
 
-			data, err := json.Marshal(message)
-			if err != nil {
-				log.Print(err)
-				return
-			}
+			// buf := render.RenderWS()
+			// err := c.connection.WriteMessage(websocket.TextMessage, buf.Bytes())
 
-			if err := c.connection.WriteMessage(websocket.TextMessage, data); err != nil {
+			// data, err := json.Marshal(message)
+			// if err != nil {
+			// 	log.Print(err)
+			// 	return
+			// }
+
+			if err := c.connection.WriteMessage(websocket.TextMessage, message); err != nil {
 				log.Println("failed to send msg", err)
 			}
 			log.Print("message sent")
+
 		case <-ticker.C:
 			log.Println("ping")
+			//x := pages.Players()
+
 			if err := c.connection.WriteMessage(websocket.PingMessage, []byte("")); err != nil {
 				log.Println("ping failed", err)
 				return
