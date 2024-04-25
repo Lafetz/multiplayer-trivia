@@ -27,9 +27,15 @@ type Answer struct {
 	answer   string
 }
 
-func newAnswer(username string, ans string) Answer {
+func NewAnswer(username string, ans string) Answer {
 	return Answer{
 		username: username,
 		answer:   ans,
 	}
 }
+
+type Info struct {
+	InfoType string
+	Text     string
+}
+type Winners map[string]int

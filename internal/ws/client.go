@@ -2,7 +2,9 @@ package ws
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
+	"strconv"
 	"time"
 
 	"github.com/Lafetz/showdown-trivia-game/internal/core/game"
@@ -24,12 +26,12 @@ type Client struct {
 
 func NewClient(conn *websocket.Conn, room *Room) *Client {
 	c := &Client{
-		Username:   "@genric",
+		Username:   fmt.Sprintf("user %s", strconv.Itoa(len(room.clients))),
 		connection: conn,
 		room:       room,
 		egress:     make(chan []byte),
 	}
-	room.addClient(c)
+
 	return c
 }
 func (c *Client) readMessage() {
@@ -63,10 +65,13 @@ func (c *Client) readMessage() {
 		case StartGame:
 			var players []*game.Player
 			for c := range c.room.clients {
+				println(c.Username, "hmmm")
 				players = append(players, game.NewPlayer(c.Username))
 			}
 			go c.room.Game.Start(players)
 		case SendAnswer:
+			answer := game.NewAnswer(c.Username, req.Payload)
+			c.room.Game.AnswerCh <- answer
 			println("answer send!!", req.Payload)
 		default:
 			log.Println("unknown event type:", req.EventType)
@@ -98,23 +103,12 @@ func (c *Client) writeMessage() {
 				return
 			}
 
-			// buf := render.RenderWS()
-			// err := c.connection.WriteMessage(websocket.TextMessage, buf.Bytes())
-
-			// data, err := json.Marshal(message)
-			// if err != nil {
-			// 	log.Print(err)
-			// 	return
-			// }
-
 			if err := c.connection.WriteMessage(websocket.TextMessage, message); err != nil {
 				log.Println("failed to send msg", err)
 			}
 			log.Print("message sent")
 
 		case <-ticker.C:
-			log.Println("ping")
-			//x := pages.Players()
 
 			if err := c.connection.WriteMessage(websocket.PingMessage, []byte("")); err != nil {
 				log.Println("ping failed", err)
@@ -124,6 +118,6 @@ func (c *Client) writeMessage() {
 	}
 }
 func (c *Client) pongHandler(pongMsg string) error {
-	log.Println("pong")
+
 	return c.connection.SetReadDeadline(time.Now().Add(pongWait))
 }

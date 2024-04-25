@@ -5,3 +5,5 @@ type RoomData struct {
 	Id      string
 	Players []string
 }
+type Message struct {
+}

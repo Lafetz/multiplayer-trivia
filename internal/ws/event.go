@@ -1,12 +1,8 @@
 package ws
 
-import (
-	"encoding/json"
-)
-
 type Event struct {
-	EventType string          `json:"type"`
-	Payload   json.RawMessage `json:"payload"`
+	EventType string `json:"type"`
+	Payload   string `json:"payload"`
 }
 
 func (e *Event) valid() error {

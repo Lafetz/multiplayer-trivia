@@ -18,25 +18,25 @@ func TestGame(t *testing.T) {
 	//change default timer so that tests finishes quicker
 	span := 500 * time.Microsecond
 	game.timerSpan = span
-	go func() {
-		for msg := range game.Message {
-			println(msg)
-		}
-	}()
+	// go func() {
+	// 	for msg := range game.Message {
+	// 		//println(msg)
+	// 	}
+	// }()
 	// start the game
 	go game.Start(players)
 	// simulate players answering questions
 	go func() {
-		game.AnswerCh <- newAnswer("panzer", "B")
-		game.AnswerCh <- newAnswer("leopard", "B")
+		game.AnswerCh <- NewAnswer("panzer", "1")
+		game.AnswerCh <- NewAnswer("leopard", "1")
 		time.Sleep(span)
-		game.AnswerCh <- newAnswer("panzer", "A") //playe a answers first
+		game.AnswerCh <- NewAnswer("panzer", "2") //playe a answers first
 		time.Sleep(span / 100)
-		game.AnswerCh <- newAnswer("leopard", "C")
+		game.AnswerCh <- NewAnswer("leopard", "2")
 	}()
 
 	// wait for the game to finish
-	<-time.After(span * 10)
+	<-time.After(span * 1000)
 
 	// verify player scores
 	expectedScores := []int{1, 2} // expected scores for each player

@@ -19,14 +19,14 @@ func (h *Hub) CreateRoom(w http.ResponseWriter, r *http.Request) {
 	h.addRoom(room)
 
 	client := NewClient(conn, room)
-	println("wtfc")
+	//println("wtfc")
 	go client.readMessage()
-
 	go client.writeMessage()
+	room.addClient(client)
 
 }
-func (h *Hub) JoinRoom(w http.ResponseWriter, r *http.Request) {
-	roomId := r.URL.Query().Get("id")
+func (h *Hub) JoinRoom(w http.ResponseWriter, r *http.Request, roomId string) {
+
 	if roomId == "" {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
@@ -44,4 +44,6 @@ func (h *Hub) JoinRoom(w http.ResponseWriter, r *http.Request) {
 	client := NewClient(conn, room)
 	go client.readMessage()
 	go client.writeMessage()
+	room.addClient(client)
+
 }

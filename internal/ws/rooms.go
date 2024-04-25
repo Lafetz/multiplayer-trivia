@@ -18,26 +18,18 @@ type Room struct {
 }
 
 func (r *Room) sendMsg(msg []byte) {
-	println(len(r.clients))
+
 	for c := range r.clients {
-		print(c.Username)
+
 		c.egress <- msg
 	}
-	println("done sending pe")
+
 }
 
-//	func (r *Room) sendMsg(msg string) {
-//		println(len(r.clients))
-//		for c := range r.clients {
-//			print(c.Username)
-//			c.egress <- []byte(msg)
-//		}
-//		println("done sending pe")
-//	}
 func NewRoom(id string) *Room {
 	questions := []game.Question{
-		{Question: "What is 2+2?", Options: []string{"3", "4", "5", "6"}, CorrectAnswer: "B"},
-		{Question: "What is the capital of France?", Options: []string{"A) London", "B) Berlin", "C) Paris", "D) Rome"}, CorrectAnswer: "C"},
+		{Question: "What is 2+2?", Options: []string{"3", "4", "5", "6"}, CorrectAnswer: "1"},
+		{Question: "What is the capital of France?", Options: []string{"A) London", "B) Berlin", "C) Paris", "D) Rome"}, CorrectAnswer: "2"},
 	}
 	g := *game.NewGame(questions)
 	r := &Room{
@@ -47,10 +39,31 @@ func NewRoom(id string) *Room {
 		Game:    g,
 	}
 	go func() {
-		for q := range g.Message {
-			buff := render.RenderQuestion(q)
-			println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-			r.sendMsg(buff.Bytes())
+		for m := range g.Message {
+			switch m.MsgType {
+			case "question":
+				if payload, ok := m.Payload.(game.Question); ok {
+					buff := render.RenderQuestion(payload)
+					r.sendMsg(buff.Bytes())
+				} else {
+					continue
+				}
+			case "info":
+				if payload, ok := m.Payload.(game.Info); ok {
+					buff := render.RenderGameMessage(payload)
+					r.sendMsg(buff.Bytes())
+				} else {
+					continue
+				}
+			case "game_end":
+				if payload, ok := m.Payload.(game.Winners); ok {
+					buff := render.GameEnd(payload)
+					r.sendMsg(buff.Bytes())
+				} else {
+					continue
+				}
+			}
+
 		}
 	}()
 	return r
@@ -59,6 +72,8 @@ func (r *Room) addClient(client *Client) {
 	r.Lock()
 	defer r.Unlock()
 	r.clients[client] = true
+	buff := render.RenderPlayers(r.Id, r.getUsers())
+	r.sendMsg(buff.Bytes())
 }
 func (r *Room) removeClient(client *Client) {
 	r.Lock()

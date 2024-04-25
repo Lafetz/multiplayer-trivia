@@ -1,17 +1,23 @@
 package game
 
 import (
-	"fmt"
 	"time"
 )
 
 const (
-	DefaultTimerSpan = 10 * time.Second
+	DefaultTimerSpan = 2 * time.Second
 )
 
 type Message struct {
 	MsgType string
-	payload interface{}
+	Payload interface{}
+}
+
+func NewMessage(MsgType string, payload interface{}) Message {
+	return Message{
+		MsgType: MsgType,
+		Payload: payload,
+	}
 }
 
 type Game struct {
@@ -19,7 +25,7 @@ type Game struct {
 	Players     []*Player
 	CurrentQues int
 	AnswerCh    chan Answer
-	Message     chan Question
+	Message     chan Message
 	timerSpan   time.Duration
 	gameStarted bool
 }
@@ -36,11 +42,12 @@ func (g *Game) Start(players []*Player) {
 
 func (g *Game) AskQuestion(question Question) {
 	timer := time.NewTimer(g.timerSpan)
-	g.Message <- question
+	g.Message <- NewMessage("question", question)
 	go func() {
 		for {
 			select {
 			case answer := <-g.AnswerCh:
+				println("some one sent answer whooooooooooooo")
 				if answer.answer == question.CorrectAnswer {
 					for _, player := range g.Players {
 						if player.Username == answer.username {
@@ -51,24 +58,26 @@ func (g *Game) AskQuestion(question Question) {
 				}
 			case <-timer.C:
 				g.CurrentQues++
-				fmt.Println("Time's up!")
+
 				return
 			}
 		}
 	}()
 }
 func (g *Game) DisplayWinner() {
-	fmt.Println("Game Over! Final Scores:")
+
+	winners := make(Winners)
 	for _, player := range g.Players {
-		fmt.Printf("Player %s: %d\n", player.Username, player.Score)
+		winners[player.Username] = player.Score
 	}
+	g.Message <- NewMessage("game_end", winners)
 }
 func NewGame(questions []Question) *Game {
 	return &Game{
 		Questions: questions,
 		//	Players:   players,
 		AnswerCh:    make(chan Answer),
-		Message:     make(chan Question),
+		Message:     make(chan Message),
 		timerSpan:   DefaultTimerSpan,
 		gameStarted: false,
 	}

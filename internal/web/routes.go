@@ -123,7 +123,8 @@ func (a *App) initAppRoutes() {
 		a.hub.CreateRoom(w, r)
 	})
 	a.router.HandleFunc("/wsjoin/{id}", func(w http.ResponseWriter, r *http.Request) {
-		a.hub.CreateRoom(w, r)
+		id := r.PathValue("id")
+		a.hub.JoinRoom(w, r, id)
 	})
 	a.router.HandleFunc("/activegames", func(w http.ResponseWriter, r *http.Request) {
 		rooms := a.hub.ListRooms()
@@ -136,6 +137,7 @@ func (a *App) initAppRoutes() {
 	})
 }
 func sendGamePage(w http.ResponseWriter, r *http.Request, create bool, id string) {
+	println(create, "create ")
 	p := pages.Game(create, id)
 	err := layout.Base("Game", p).Render(r.Context(), w)
 	if err != nil {
