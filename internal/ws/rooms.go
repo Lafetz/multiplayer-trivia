@@ -28,8 +28,8 @@ func (r *Room) sendMsg(msg []byte) {
 
 func NewRoom(id string) *Room {
 	questions := []game.Question{
-		{Question: "What is 2+2?", Options: []string{"3", "4", "5", "6"}, CorrectAnswer: "1"},
-		{Question: "What is the capital of France?", Options: []string{"A) London", "B) Berlin", "C) Paris", "D) Rome"}, CorrectAnswer: "2"},
+		{Question: "What is 2+2?", Options: []string{"A. 2", "B. 4", "C. 43", "D. 1"}, CorrectAnswer: "B"},
+		{Question: "What is the capital of France?", Options: []string{"A. London", "B. Berlin", "C. Paris", "D. Rome"}, CorrectAnswer: "C"},
 	}
 	g := *game.NewGame(questions)
 	r := &Room{
@@ -43,7 +43,7 @@ func NewRoom(id string) *Room {
 			switch m.MsgType {
 			case "question":
 				if payload, ok := m.Payload.(game.Question); ok {
-					buff := render.RenderQuestion(payload)
+					buff := render.RenderQuestion(payload, "")
 					r.sendMsg(buff.Bytes())
 				} else {
 					continue

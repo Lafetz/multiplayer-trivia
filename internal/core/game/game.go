@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	DefaultTimerSpan = 2 * time.Second
+	DefaultTimerSpan = 5 * time.Second
 )
 
 type Message struct {
@@ -47,7 +47,7 @@ func (g *Game) AskQuestion(question Question) {
 		for {
 			select {
 			case answer := <-g.AnswerCh:
-				println("some one sent answer whooooooooooooo")
+				// println("some one sent answer whooooooooooooo")
 				if answer.answer == question.CorrectAnswer {
 					for _, player := range g.Players {
 						if player.Username == answer.username {
@@ -79,6 +79,7 @@ func NewGame(questions []Question) *Game {
 		AnswerCh:    make(chan Answer),
 		Message:     make(chan Message),
 		timerSpan:   DefaultTimerSpan,
+		CurrentQues: 0,
 		gameStarted: false,
 	}
 }

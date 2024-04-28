@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/Lafetz/showdown-trivia-game/internal/core/game"
+	render "github.com/Lafetz/showdown-trivia-game/internal/web/Render"
 	"github.com/gorilla/websocket"
 )
 
@@ -26,7 +27,7 @@ type Client struct {
 
 func NewClient(conn *websocket.Conn, room *Room) *Client {
 	c := &Client{
-		Username:   fmt.Sprintf("user %s", strconv.Itoa(len(room.clients))),
+		Username:   fmt.Sprintf("user%s", strconv.Itoa(len(room.clients))),
 		connection: conn,
 		room:       room,
 		egress:     make(chan []byte),
@@ -72,7 +73,8 @@ func (c *Client) readMessage() {
 		case SendAnswer:
 			answer := game.NewAnswer(c.Username, req.Payload)
 			c.room.Game.AnswerCh <- answer
-			println("answer send!!", req.Payload)
+			buff := render.RenderQuestion(c.room.Game.Questions[c.room.Game.CurrentQues], req.Payload)
+			c.egress <- buff.Bytes()
 		default:
 			log.Println("unknown event type:", req.EventType)
 		}

@@ -10,24 +10,25 @@ import "github.com/Lafetz/showdown-trivia-game/internal/core/game"
 templ Game(owner bool, id string) {
 	if owner {
 		<div id="socket" hx-ws="connect:ws://localhost:8080/wscreate">
-			<div id="lobby">
-				<div id="players">Players:</div>
-				<sl-button
+			<div id="lobby" class="flex flex-col gap-3 justify-center items-center">
+				@Players("", []string{""})
+				<button
 					id="keep"
 					hx-ws="send"
 					hx-vals='{
         "type": "start_game",
         "payload": "this will do for now"
     }'
+					class="shadow-md rounded bg-sky-600 py-0.5 px-4 font-bold text-white transition-colors  duration-100 hover:bg-sky-800"
 				>
 					Start
-				</sl-button>
+				</button>
 			</div>
 		</div>
 	} else {
 		<div hx-ws={ "connect:ws://localhost:8080/wsjoin/" + id }>
-			<div id="lobby">
-				<div id="players">Players:</div>
+			<div id="lobby" class="flex flex-col gap-3 justify-center items-center">
+				@Players("", []string{""})
 			</div>
 		</div>
 	}
@@ -35,39 +36,59 @@ templ Game(owner bool, id string) {
 
 templ Players(id string, players []string) {
 	//
-	<div hx-swap-oob="outerHTML:#players" id="players">
-		<div>ID:{ id }</div>
-		<span>Players:</span>
-		for _,player := range players {
-			<span>{ player }</span>
-		}
+	<div hx-swap="outerHTML:#players" id="players" class="flex flex-col gap-1">
+		<div class="font-semibold">Game ID:  { id }</div>
+		<div class="font-semibold flex gap-1">
+			<span>Players: </span>
+			for _,player := range players {
+				<span>{ player }</span>
+			}
+		</div>
 	</div>
 }
 
 templ ActiveGames(rooms []entity.RoomData) {
-	<div class="flex-col  min-w-80">
-		<div class="flex justify-between ">
-			<div>Game Owner</div>
-			<div>Game ID</div>
-		</div>
-		for _, room := range rooms {
-			<div hx-get={ "/join/" + room.Id } hx-swap="main" hx-target="main" hx-swap="innerHTML" hx-trigger="click" class="flex justify-between hover:bg-blue-200 hover:text-black transition duration-300">
-				<div>{ room.Owner }</div>
-				<div>{ room.Id }</div>
-			</div>
-		}
-	</div>
+	<table class="table-fixed min-w-72 text-left border-separate border-spacing-y-1">
+		<thead>
+			<tr>
+				<th>Game Creator</th>
+				<th>Game Id</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			for _, room := range rooms {
+				<tr>
+					<td>{ room.Owner }</td>
+					<td>{ room.Id }</td>
+					<td>
+						<button hx-get={ "/join/" + room.Id } hx-confirm="Join Game?" hx-swap="main" hx-target="main" hx-swap="innerHTML" class="shadow-md rounded bg-green-600 px-4 py-1 font-bold  transition-colors  duration-100 hover:bg-green-800">Join</button>
+						//<button id="dialog-join-open" onclick="openJoinModal()" class="shadow-md rounded bg-green-600 px-4 font-bold  transition-colors  duration-100 hover:bg-green-800">Join</button>
+						//
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
 }
 
-templ Question(q game.Question) {
+templ Question(q game.Question, userAnswer string) {
 	<div id="lobby">
-		<div class="flex-col  min-w-80" hx-swap-oob="outerHTML:#lobby">
-			<p>
-				{ q.Question }
-			</p>
-			for i,c :=range q.Options {
-				@choice(c, i)
-			}
+		<div class="flex flex-col  min-w-80 justify-center items-center gap-5 px-2" hx-swap-oob="outerHTML:#lobby">
+			<div class="flex flex-col font-bold justify-center items-center max-w-md min-w-xs  gap-3 w-full ">
+				<div class="text-2xl text-sky-600">4</div>
+				<div class="text-xl text-yellow-500">2/5</div>
+				<div class="font-medium">{ q.Question }</div>
+				<div>
+					Your Answer:
+					<span class="text-yellow-500">{ userAnswer }</span>
+				</div>
+				<div class="flex flex-col  gap-2 w-full">
+					for i,c :=range q.Options {
+						@choice(c, i)
+					}
+				</div>
+			</div>
 		</div>
 	</div>
 }
@@ -77,13 +98,25 @@ templ choice(choice string, i int) {
 		id="keep"
 		hx-ws="send"
 		hx-vals={ jsonvalues(i) }
-	>
-		{ choice }
-	</button>
+		class="shadow-md rounded bg-sky-600 py-1.5 font-bold text-white transition-colors  duration-100 hover:bg-sky-800"
+	>{ choice }</button>
 }
 
 func jsonvalues(i int) string {
-	return fmt.Sprintf(`{"type": "send_answer", "payload": "%s"}`, strconv.Itoa(i))
+	var choice string
+	switch i {
+	case 0:
+		choice = "A"
+	case 1:
+		choice = "B"
+	case 2:
+		choice = "C"
+	case 3:
+		choice = "D"
+	default:
+		choice = "Z"
+	}
+	return fmt.Sprintf(`{"type": "send_answer", "payload": "%s"}`, choice)
 }
 
 templ GameMessage(msg string) {
@@ -98,13 +131,22 @@ templ GameMessage(msg string) {
 
 templ GameEndMessage(winners game.Winners) {
 	<div id="lobby">
-		<div class="flex-col  min-w-80" hx-swap-oob="outerHTML:#lobby">
-			<p>
-				Game Ended
-			</p>
-			for player,score :=range winners {
-				<div>{ player }:{ strconv.Itoa(score) }</div>
-			}
+		<div class="flex flex-col justify-center items-center gap-5">
+			<span class="text-4xl font-bold">Game has ended</span>
+			<span class="text-2xl font-semibold underline">Players</span>
+			<div class="flex gap-1 flex-wrap">
+				for player,score :=range winners {
+					<div class="flex flex-col shadow-md rounded bg-yellow-700 py-2 px-3 font-semibold">
+						<div>
+							<span>Username: </span>
+							<span>{ fmt.Sprintf("@") }{ player }</span>
+						</div>
+						<div><span>Score: </span><span>{ strconv.Itoa(score) }</span></div>
+					</div>
+				}
+			</div>
+			<span class="text-2xl font-semibold text-green-500">You Lost</span>
+			<button onclick="window.location.href = '/home';" class="shadow-md rounded bg-sky-600 py-1.5 px-4 font-bold text-white transition-colors  duration-100 hover:bg-sky-800">Home</button>
 		</div>
 	</div>
 }

@@ -14,8 +14,8 @@ func RenderPlayers(id string, players []string) *bytes.Buffer {
 	component.Render(context.Background(), buffer)
 	return buffer
 }
-func RenderQuestion(q game.Question) *bytes.Buffer {
-	component := pages.Question(q)
+func RenderQuestion(q game.Question, userAnswer string) *bytes.Buffer {
+	component := pages.Question(q, userAnswer)
 	buffer := &bytes.Buffer{}
 	component.Render(context.Background(), buffer)
 	return buffer
