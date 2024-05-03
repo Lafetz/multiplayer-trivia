@@ -2,7 +2,6 @@ package web
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 )
 
@@ -11,7 +10,6 @@ func (a *App) requireAuth(next http.Handler) http.HandlerFunc {
 		// Retrieve session
 		session, err := a.store.Get(r, "user-session")
 		if err != nil || session.Values["authenticated"] != true {
-			fmt.Printf("so %s", session.Values)
 			http.Redirect(w, r, "/signin", http.StatusSeeOther)
 			return
 		}

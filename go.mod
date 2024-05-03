@@ -3,8 +3,8 @@ module github.com/Lafetz/showdown-trivia-game
 go 1.22.2
 
 require (
+	github.com/PuerkitoBio/goquery v1.8.1
 	github.com/a-h/templ v0.2.663
-	github.com/alexedwards/scs/v2 v2.8.0
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/sessions v1.2.2
 	github.com/gorilla/websocket v1.5.1
@@ -13,6 +13,7 @@ require (
 )
 
 require (
+	github.com/andybalholm/cascadia v1.3.1 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/gorilla/securecookie v1.1.2 // indirect
 	github.com/klauspost/compress v1.13.6 // indirect

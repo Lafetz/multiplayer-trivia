@@ -26,7 +26,7 @@ func (a *App) initAppRoutes() {
 
 	a.router.HandleFunc("GET /home", a.requireAuth(s))
 	a.router.HandleFunc("/create", a.requireAuth(handlers.CreateGet()))
-	a.router.HandleFunc("/join/{id}", handlers.Join())
+	a.router.HandleFunc("GET /join/{id}", handlers.Join())
 	//ws
 	a.router.HandleFunc("/activegames", a.requireAuth(handlers.ActiveGames(a.hub)))
 	//
