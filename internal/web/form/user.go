@@ -52,6 +52,11 @@ func (f *SigninUser) Valid() bool {
 	if strings.TrimSpace(f.Password) == "" {
 		f.Errors["password"] = "password is required"
 	}
+	println("what", len(strings.TrimSpace(f.Password)))
+	if strings.TrimSpace(f.Password) != "" && len(strings.TrimSpace(f.Password)) < 8 {
+
+		f.Errors["password"] = "password length needs to be above 8"
+	}
 
 	return len(f.Errors) == 0
 }

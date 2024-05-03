@@ -1,4 +1,4 @@
-package pages
+package components
 
 import (
 	"strconv"
@@ -72,16 +72,16 @@ templ ActiveGames(rooms []entity.RoomData) {
 	</table>
 }
 
-templ Question(q game.Question, userAnswer string) {
+templ Question(q game.Question, current int, total int) {
 	<div id="lobby">
 		<div class="flex flex-col  min-w-80 justify-center items-center gap-5 px-2" hx-swap-oob="outerHTML:#lobby">
 			<div class="flex flex-col font-bold justify-center items-center max-w-md min-w-xs  gap-3 w-full ">
-				<div class="text-2xl text-sky-600">4</div>
-				<div class="text-xl text-yellow-500">2/5</div>
+				//<div id="countdown" class="text-2xl text-sky-600">3</div>
+				<div class="text-xl text-yellow-500">{ strconv.Itoa(current) }/{ strconv.Itoa(total) }</div>
 				<div class="font-medium">{ q.Question }</div>
 				<div>
 					Your Answer:
-					<span class="text-yellow-500">{ userAnswer }</span>
+					<span class="text-yellow-500" id="answer"></span>
 				</div>
 				<div class="flex flex-col  gap-2 w-full">
 					for i,c :=range q.Options {
@@ -93,8 +93,13 @@ templ Question(q game.Question, userAnswer string) {
 	</div>
 }
 
+templ Answer(userAnswer string) {
+	<span class="text-yellow-500" id="answer">{ userAnswer }</span>
+}
+
 templ choice(choice string, i int) {
 	<button
+		hx-swap-oob="outerHTML:#answer"
 		id="keep"
 		hx-ws="send"
 		hx-vals={ jsonvalues(i) }

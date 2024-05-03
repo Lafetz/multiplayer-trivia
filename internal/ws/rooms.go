@@ -43,7 +43,8 @@ func NewRoom(id string) *Room {
 			switch m.MsgType {
 			case "question":
 				if payload, ok := m.Payload.(game.Question); ok {
-					buff := render.RenderQuestion(payload, "")
+					println(g.CurrentQues, "from here")
+					buff := render.RenderQuestion(payload, r.Game.CurrentQues, len(g.Questions))
 					r.sendMsg(buff.Bytes())
 				} else {
 					continue

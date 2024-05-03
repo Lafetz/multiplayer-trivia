@@ -73,7 +73,7 @@ func (c *Client) readMessage() {
 		case SendAnswer:
 			answer := game.NewAnswer(c.Username, req.Payload)
 			c.room.Game.AnswerCh <- answer
-			buff := render.RenderQuestion(c.room.Game.Questions[c.room.Game.CurrentQues], req.Payload)
+			buff := render.RenderUserAnswer(req.Payload)
 			c.egress <- buff.Bytes()
 		default:
 			log.Println("unknown event type:", req.EventType)

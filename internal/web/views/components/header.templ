@@ -1,15 +1,19 @@
 package components
 
-templ Header() {
-	<header class="flex justify-center justify-center ">
-		<div class=" flex justify-between w-full max-w-3xl">
-			<div class="logo">
-				<div>Logo</div>
+import "fmt"
+
+templ Header(username string) {
+	<header>
+		<nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 bg-gray-800">
+			<div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+				<a href="/home" class="flex items-center">
+					<span class="self-center text-2xl font-semibold whitespace-nowrap  text-yellow-500">TG</span>
+				</a>
+				<div class="flex items-center lg:order-2 ">
+					<span class=" rounded-lg font-semibold text-semibold px-4 lg:px-5 py-2 lg:py-2.5 mr-2  focus:outline-none dark:focus:ring-gray-800">{ fmt.Sprintf("@%s",username) }</span>
+					<a href="/signout" class="text-white bg-red-700 hover:bg-red-900 focus:ring-4 transition-colors  duration-300 focus:ring-blue-300 font-semibold rounded-lg text-sm px-3 py-2  focus:outline-none">Sign out</a>
+				</div>
 			</div>
-			<div class="flex gap-3">
-				<div>profil pic</div>
-				<button class="logout-btn">Logout</button>
-			</div>
-		</div>
+		</nav>
 	</header>
 }

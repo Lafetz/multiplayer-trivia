@@ -16,10 +16,11 @@ type User struct {
 
 func NewUser(username string, email string, password []byte) *User {
 	user := &User{
-		Id:       uuid.New(),
-		Username: username,
-		Email:    email,
-		Password: password,
+		Id:        uuid.New(),
+		Username:  username,
+		Email:     email,
+		Password:  password,
+		CreatedAt: time.Now(),
 	}
 
 	return user

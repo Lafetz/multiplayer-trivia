@@ -2,7 +2,7 @@ package layout
 
 templ Base(title string, contents templ.Component) {
 	<!DOCTYPE html>
-	<html lang="en" data-theme="dark" class="sl-theme-dark">
+	<html lang="en">
 		<head>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -18,7 +18,7 @@ templ Base(title string, contents templ.Component) {
 			<link rel="stylesheet" href="/static/css/styles.css"/>
 			<title>{ title }</title>
 		</head>
-		<body>
+		<body class="dark:bg-gray-900 min-h-screen text-white">
 			@contents
 		</body>
 	</html>
