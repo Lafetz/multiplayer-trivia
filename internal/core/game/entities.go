@@ -1,5 +1,11 @@
 package game
 
+const (
+	MsgGameEnd  = "game_end"
+	MsgQuestion = "question"
+	MsgInfo     = "info"
+)
+
 type Question struct {
 	Question      string
 	Options       []string

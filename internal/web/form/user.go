@@ -19,7 +19,7 @@ type SigninUser struct {
 	Errors   map[string]string
 }
 
-var rxEmail = regexp.MustCompile(`^[a-zA-Z\\_\\-\\.]+@[a-zA-Z\\_\\-\\.]+$`)
+var rxEmail = regexp.MustCompile(`^[a-zA-Z-0-9\\_\\-\\.]+@[a-zA-Z\\_\\-\\.]+$`)
 
 func (f *SignupUser) Valid() bool {
 
@@ -41,7 +41,9 @@ func (f *SignupUser) Valid() bool {
 
 	return len(f.Errors) == 0
 }
-
+func (f *SignupUser) AddError(errTarget string, errMsg string) {
+	f.Errors[errTarget] = errMsg
+}
 func (f *SigninUser) Valid() bool {
 
 	f.Errors = make(map[string]string)
@@ -52,10 +54,9 @@ func (f *SigninUser) Valid() bool {
 	if strings.TrimSpace(f.Password) == "" {
 		f.Errors["password"] = "password is required"
 	}
-	println("what", len(strings.TrimSpace(f.Password)))
-	if strings.TrimSpace(f.Password) != "" && len(strings.TrimSpace(f.Password)) < 8 {
 
-		f.Errors["password"] = "password length needs to be above 8"
+	if utf8.RuneCountInString(f.Password) < 8 {
+		f.Errors["password"] = "password is too short."
 	}
 
 	return len(f.Errors) == 0

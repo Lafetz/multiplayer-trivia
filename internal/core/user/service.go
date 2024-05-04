@@ -1,6 +1,17 @@
 package user
 
-import "github.com/google/uuid"
+import (
+	"errors"
+
+	"github.com/google/uuid"
+)
+
+var (
+	ErrUserNotFound   = errors.New("user not found")
+	ErrUsernameUnique = errors.New("an account with this username exists")
+	ErrDelete         = errors.New("failed to Delete user")
+	ErrEmailUnique    = errors.New("an account with this email exists")
+)
 
 type UserService struct {
 	repo repository

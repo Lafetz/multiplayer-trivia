@@ -38,7 +38,7 @@ func (g *Game) AskQuestion(question Question, doneCh chan struct{}) {
 
 	timer := time.NewTimer(g.timerSpan)
 
-	g.Message <- NewMessage("question", question)
+	g.Message <- NewMessage(MsgQuestion, question)
 
 	answers := make(map[string]string)
 
@@ -85,8 +85,8 @@ func (g *Game) DisplayWinner() {
 	for _, player := range g.Players {
 		winners[player.Username] = player.Score
 	}
-	g.Message <- NewMessage("game_end", winners)
-	println("closed")
+	g.Message <- NewMessage(MsgGameEnd, winners)
+
 	close(g.Message)
 }
 func NewGame(questions []Question) *Game {

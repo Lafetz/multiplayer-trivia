@@ -41,22 +41,21 @@ func NewRoom(id string) *Room {
 	go func() {
 		for m := range g.Message {
 			switch m.MsgType {
-			case "question":
+			case game.MsgQuestion:
 				if payload, ok := m.Payload.(game.Question); ok {
-					println(g.CurrentQues, "from here")
 					buff := render.RenderQuestion(payload, r.Game.CurrentQues, len(g.Questions))
 					r.sendMsg(buff.Bytes())
 				} else {
 					continue
 				}
-			case "info":
+			case game.MsgInfo:
 				if payload, ok := m.Payload.(game.Info); ok {
 					buff := render.RenderGameMessage(payload)
 					r.sendMsg(buff.Bytes())
 				} else {
 					continue
 				}
-			case "game_end":
+			case game.MsgGameEnd:
 				if payload, ok := m.Payload.(game.Winners); ok {
 					buff := render.GameEnd(payload)
 					r.sendMsg(buff.Bytes())

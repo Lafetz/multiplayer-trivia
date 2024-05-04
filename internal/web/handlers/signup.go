@@ -1,10 +1,12 @@
 package handlers
 
 import (
+	"errors"
 	"log"
 	"net/http"
 
 	"github.com/Lafetz/showdown-trivia-game/internal/core/user"
+	render "github.com/Lafetz/showdown-trivia-game/internal/web/Render"
 	"github.com/Lafetz/showdown-trivia-game/internal/web/form"
 	layout "github.com/Lafetz/showdown-trivia-game/internal/web/views/layouts"
 	"github.com/Lafetz/showdown-trivia-game/internal/web/views/pages"
@@ -34,9 +36,7 @@ func SignupPost(userService user.UserServiceApi, logger *log.Logger) http.Handle
 			Password: r.PostForm.Get("password"),
 		}
 		if !form.Valid() {
-			p := pages.Signup(form)
-			w.WriteHeader(http.StatusUnprocessableEntity)
-			err = layout.Base("Sign up", p).Render(r.Context(), w)
+			err := render.InvalidFormSignup(w, r, form)
 			if err != nil {
 				ServerError(w, r, err, logger)
 				return
@@ -48,9 +48,26 @@ func SignupPost(userService user.UserServiceApi, logger *log.Logger) http.Handle
 			ServerError(w, r, err, logger)
 			return
 		}
-		user := user.NewUser(form.Username, form.Email, hashedPassword)
-		_, err = userService.AddUser(user)
+		u := user.NewUser(form.Username, form.Email, hashedPassword)
+		_, err = userService.AddUser(u)
 		if err != nil {
+			//||
+			if errors.Is(err, user.ErrEmailUnique) {
+				form.AddError("email", err.Error())
+				err := render.InvalidFormSignup(w, r, form)
+				if err != nil {
+					ServerError(w, r, err, logger)
+				}
+				return
+			}
+			if errors.Is(err, user.ErrUsernameUnique) {
+				form.AddError("username", err.Error())
+				err := render.InvalidFormSignup(w, r, form)
+				if err != nil {
+					ServerError(w, r, err, logger)
+				}
+				return
+			}
 			ServerError(w, r, err, logger)
 			return
 		}

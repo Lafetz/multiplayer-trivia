@@ -19,7 +19,7 @@ func Home(w http.ResponseWriter, r *http.Request, username string) error {
 	return nil
 
 }
-func InvalidForm(w http.ResponseWriter, r *http.Request, form form.SigninUser) error {
+func InvalidFormSignin(w http.ResponseWriter, r *http.Request, form form.SigninUser) error {
 	w.WriteHeader(http.StatusUnprocessableEntity)
 	p := pages.Signin(form, "")
 	err := p.Render(r.Context(), w)
@@ -37,7 +37,12 @@ func IncorrectPasswordEmail(w http.ResponseWriter, r *http.Request) error {
 	}
 	return nil
 }
-func InvalidForxm(w http.ResponseWriter, r *http.Request) {}
+func InvalidFormSignup(w http.ResponseWriter, r *http.Request, form form.SignupUser) error {
+	p := pages.Signup(form)
+	w.WriteHeader(http.StatusUnprocessableEntity)
+	err := layout.Base("Sign up", p).Render(r.Context(), w)
+	return err
+}
 func ActiveGames(w http.ResponseWriter, r *http.Request, rooms []entity.RoomData) error {
 	p := components.ActiveGames(rooms)
 	err := p.Render(r.Context(), w)

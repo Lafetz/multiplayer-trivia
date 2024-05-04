@@ -35,7 +35,7 @@ func SigninPost(userservice user.UserServiceApi, store *sessions.CookieStore, lo
 			Password: r.PostForm.Get("password"),
 		}
 		if !form.Valid() {
-			if err := render.InvalidForm(w, r, form); err != nil {
+			if err := render.InvalidFormSignin(w, r, form); err != nil {
 				ServerError(w, r, err, logger)
 			}
 			return
