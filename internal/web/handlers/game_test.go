@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Lafetz/showdown-trivia-game/internal/ws"
+	"github.com/Lafetz/showdown-trivia-game/internal/web/ws"
 	"github.com/PuerkitoBio/goquery"
 )
 
@@ -17,7 +17,7 @@ func TestHome(t *testing.T) {
 
 	w := httptest.NewRecorder()
 
-	handler := Home()
+	handler := Home(mockLogger)
 	handler.ServeHTTP(w, req)
 
 	// Check response status code
@@ -46,7 +46,7 @@ func TestCreateGet(t *testing.T) {
 	req := httptest.NewRequest("GET", "/create", nil)
 	w := httptest.NewRecorder()
 
-	handler := CreateGet()
+	handler := CreateGet(mockLogger)
 	handler.ServeHTTP(w, req)
 
 	// Check response status code
@@ -76,7 +76,7 @@ func TestActiveGames(t *testing.T) {
 	req := httptest.NewRequest("GET", "/active", nil)
 	w := httptest.NewRecorder()
 
-	handler := ActiveGames(hub)
+	handler := ActiveGames(hub, mockLogger)
 	handler.ServeHTTP(w, req)
 
 	// Check response status code
@@ -90,7 +90,7 @@ func TestJoin(t *testing.T) {
 	req := httptest.NewRequest("GET", "/", nil)
 	w := httptest.NewRecorder()
 
-	handler := Join()
+	handler := Join(mockLogger)
 	handler.ServeHTTP(w, req)
 
 	// Check response status code

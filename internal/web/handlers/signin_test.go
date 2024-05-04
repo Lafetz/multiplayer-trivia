@@ -36,7 +36,7 @@ func TestSigninGetHandler(t *testing.T) {
 	req := httptest.NewRequest("GET", "/signin", nil)
 	w := httptest.NewRecorder()
 
-	SigninGet().ServeHTTP(w, req)
+	SigninGet(mockLogger).ServeHTTP(w, req)
 
 	if w.Code != http.StatusOK {
 		t.Errorf("SigninGet handler returned unexpected status code: %d", w.Code)
@@ -65,7 +65,7 @@ func TestSigninPost(t *testing.T) {
 	blockKey := "your-generated-block-key"
 	store := sessions.NewCookieStore([]byte(hashKey), []byte(blockKey)) // Create a mock cookie store
 
-	handler := SigninPost(userService, store)
+	handler := SigninPost(userService, store, mockLogger)
 
 	t.Run("ValidSignin", func(t *testing.T) {
 		formData := strings.NewReader("email=test@example.com&password=pass123456")

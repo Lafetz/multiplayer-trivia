@@ -11,12 +11,13 @@ import (
 	"github.com/a-h/templ"
 )
 
-func SendGamePage(w http.ResponseWriter, r *http.Request, create bool, id string) {
+func SendGamePage(w http.ResponseWriter, r *http.Request, create bool, id string) error {
 	p := components.Game(create, id)
 	err := layout.Base("Game", p).Render(r.Context(), w)
 	if err != nil {
-		InternalServer(w, r)
+		return err
 	}
+	return nil
 }
 func RenderPlayers(id string, players []string) *bytes.Buffer {
 	component := components.Players(id, players)

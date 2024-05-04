@@ -9,18 +9,6 @@ const (
 	DefaultTimerSpan = 1 * time.Second
 )
 
-type Message struct {
-	MsgType string
-	Payload interface{}
-}
-
-func NewMessage(MsgType string, payload interface{}) Message {
-	return Message{
-		MsgType: MsgType,
-		Payload: payload,
-	}
-}
-
 type Game struct {
 	Questions   []Question
 	Players     []*Player

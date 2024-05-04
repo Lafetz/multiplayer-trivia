@@ -16,7 +16,6 @@ func (srv *UserService) GetUser(username string) (*User, error) {
 	return srv.repo.GetUser(username)
 }
 func (srv *UserService) AddUser(user *User) (*User, error) {
-	//
 	return srv.repo.AddUser(user)
 }
 

@@ -10,6 +10,18 @@ func NewQuestion() {
 
 }
 
+type Message struct {
+	MsgType string
+	Payload interface{}
+}
+
+func NewMessage(MsgType string, payload interface{}) Message {
+	return Message{
+		MsgType: MsgType,
+		Payload: payload,
+	}
+}
+
 type Player struct {
 	Username string
 	Score    int

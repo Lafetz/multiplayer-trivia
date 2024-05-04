@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"bytes"
+	"log"
 	"net/http"
 	"net/http/httptest"
 
@@ -9,6 +11,11 @@ import (
 
 	"github.com/Lafetz/showdown-trivia-game/internal/core/user"
 	"github.com/PuerkitoBio/goquery"
+)
+
+var (
+	buff       bytes.Buffer
+	mockLogger = log.New(&buff, "", log.LstdFlags)
 )
 
 type mockUserService struct{}
@@ -23,7 +30,7 @@ func TestSignupGet(t *testing.T) {
 	w := httptest.NewRecorder()
 
 	// Call the SignupGet handler function directly
-	SignupGet().ServeHTTP(w, req)
+	SignupGet(mockLogger).ServeHTTP(w, req)
 
 	// Check the response status code
 	if w.Code != http.StatusOK {
@@ -48,7 +55,7 @@ func TestSignupGet(t *testing.T) {
 }
 func TestSignupPost(t *testing.T) {
 	userService := &mockUserService{}
-	handler := SignupPost(userService)
+	handler := SignupPost(userService, mockLogger)
 
 	t.Run("ValidSignup", func(t *testing.T) {
 		formData := strings.NewReader("username=test&email=test@example.com&password=pass123456")

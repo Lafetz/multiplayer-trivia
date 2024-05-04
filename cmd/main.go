@@ -6,7 +6,7 @@ import (
 	"github.com/Lafetz/showdown-trivia-game/internal/core/user"
 	"github.com/Lafetz/showdown-trivia-game/internal/repository"
 	"github.com/Lafetz/showdown-trivia-game/internal/web"
-	"github.com/Lafetz/showdown-trivia-game/internal/ws"
+	"github.com/Lafetz/showdown-trivia-game/internal/web/ws"
 	"github.com/gorilla/sessions"
 )
 

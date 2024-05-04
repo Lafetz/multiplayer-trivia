@@ -10,39 +10,40 @@ import (
 	"github.com/Lafetz/showdown-trivia-game/internal/web/views/pages"
 )
 
-func Home(w http.ResponseWriter, r *http.Request, username string) {
+func Home(w http.ResponseWriter, r *http.Request, username string) error {
 	p := pages.Home(username)
 	err := layout.Base("Home", p).Render(r.Context(), w)
 	if err != nil {
-		InternalServer(w, r)
+		return err
 	}
+	return nil
 
 }
-func InvalidForm(w http.ResponseWriter, r *http.Request, form form.SigninUser) {
+func InvalidForm(w http.ResponseWriter, r *http.Request, form form.SigninUser) error {
 	w.WriteHeader(http.StatusUnprocessableEntity)
 	p := pages.Signin(form, "")
 	err := p.Render(r.Context(), w)
 	if err != nil {
-		http.Error(w, "Error rendering template", http.StatusInternalServerError)
-		return
+		return err
 	}
+	return nil
 }
-func IncorrectPasswordEmail(w http.ResponseWriter, r *http.Request) {
+func IncorrectPasswordEmail(w http.ResponseWriter, r *http.Request) error {
 	w.WriteHeader(http.StatusUnauthorized)
 	p := pages.InvalidAuth()
 	err := p.Render(r.Context(), w)
 	if err != nil {
-		http.Error(w, "Error rendering template", http.StatusInternalServerError)
-		return
+		return err
 	}
+	return nil
 }
 func InvalidForxm(w http.ResponseWriter, r *http.Request) {}
-func ActiveGames(w http.ResponseWriter, r *http.Request, rooms []entity.RoomData) {
+func ActiveGames(w http.ResponseWriter, r *http.Request, rooms []entity.RoomData) error {
 	p := components.ActiveGames(rooms)
 	err := p.Render(r.Context(), w)
 	if err != nil {
-		http.Error(w, "Error rendering template", http.StatusInternalServerError)
-		return
+		return err
 	}
+	return nil
 
 }

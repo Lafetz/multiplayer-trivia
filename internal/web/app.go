@@ -1,10 +1,12 @@
 package web
 
 import (
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/Lafetz/showdown-trivia-game/internal/core/user"
-	"github.com/Lafetz/showdown-trivia-game/internal/ws"
+	"github.com/Lafetz/showdown-trivia-game/internal/web/ws"
 	"github.com/gorilla/sessions"
 )
 
@@ -14,6 +16,7 @@ type App struct {
 	userService user.UserServiceApi
 	hub         *ws.Hub
 	store       *sessions.CookieStore
+	logger      *log.Logger
 }
 
 func NewApp(userService user.UserServiceApi, hub *ws.Hub, store *sessions.CookieStore) *App {
@@ -24,6 +27,7 @@ func NewApp(userService user.UserServiceApi, hub *ws.Hub, store *sessions.Cookie
 		userService: userService,
 		hub:         hub,
 		store:       store,
+		logger:      log.New(os.Stdout, "", log.LstdFlags),
 	}
 
 	a.initAppRoutes()

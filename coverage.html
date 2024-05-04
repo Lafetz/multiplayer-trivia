@@ -1,0 +1,2259 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>cmd: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">github.com/Lafetz/showdown-trivia-game/cmd/main.go (0.0%)</option>
+				
+				<option value="file1">github.com/Lafetz/showdown-trivia-game/internal/core/user/entities.go (100.0%)</option>
+				
+				<option value="file2">github.com/Lafetz/showdown-trivia-game/internal/core/user/service.go (0.0%)</option>
+				
+				<option value="file3">github.com/Lafetz/showdown-trivia-game/internal/repository/store.go (0.0%)</option>
+				
+				<option value="file4">github.com/Lafetz/showdown-trivia-game/internal/repository/user.go (0.0%)</option>
+				
+				<option value="file5">github.com/Lafetz/showdown-trivia-game/internal/web/Render/error.go (0.0%)</option>
+				
+				<option value="file6">github.com/Lafetz/showdown-trivia-game/internal/web/Render/html.go (66.7%)</option>
+				
+				<option value="file7">github.com/Lafetz/showdown-trivia-game/internal/web/Render/ws.go (17.6%)</option>
+				
+				<option value="file8">github.com/Lafetz/showdown-trivia-game/internal/web/app.go (0.0%)</option>
+				
+				<option value="file9">github.com/Lafetz/showdown-trivia-game/internal/web/form/user.go (94.7%)</option>
+				
+				<option value="file10">github.com/Lafetz/showdown-trivia-game/internal/web/handlers/game.go (69.6%)</option>
+				
+				<option value="file11">github.com/Lafetz/showdown-trivia-game/internal/web/handlers/hashpassword.go (90.0%)</option>
+				
+				<option value="file12">github.com/Lafetz/showdown-trivia-game/internal/web/handlers/signin.go (82.4%)</option>
+				
+				<option value="file13">github.com/Lafetz/showdown-trivia-game/internal/web/handlers/signup.go (64.9%)</option>
+				
+				<option value="file14">github.com/Lafetz/showdown-trivia-game/internal/web/middleware.go (0.0%)</option>
+				
+				<option value="file15">github.com/Lafetz/showdown-trivia-game/internal/web/routes.go (0.0%)</option>
+				
+				<option value="file16">github.com/Lafetz/showdown-trivia-game/internal/web/views/components/error_templ.go (0.0%)</option>
+				
+				<option value="file17">github.com/Lafetz/showdown-trivia-game/internal/web/views/components/game_templ.go (22.6%)</option>
+				
+				<option value="file18">github.com/Lafetz/showdown-trivia-game/internal/web/views/components/header_templ.go (69.2%)</option>
+				
+				<option value="file19">github.com/Lafetz/showdown-trivia-game/internal/web/views/layouts/base.component_templ.go (78.1%)</option>
+				
+				<option value="file20">github.com/Lafetz/showdown-trivia-game/internal/web/views/pages/home_templ.go (68.4%)</option>
+				
+				<option value="file21">github.com/Lafetz/showdown-trivia-game/internal/web/views/pages/internalError_templ.go (0.0%)</option>
+				
+				<option value="file22">github.com/Lafetz/showdown-trivia-game/internal/web/views/pages/notfounderror_templ.go (0.0%)</option>
+				
+				<option value="file23">github.com/Lafetz/showdown-trivia-game/internal/web/views/pages/signin_templ.go (77.8%)</option>
+				
+				<option value="file24">github.com/Lafetz/showdown-trivia-game/internal/web/views/pages/signup_templ.go (69.6%)</option>
+				
+				<option value="file25">github.com/Lafetz/showdown-trivia-game/internal/ws/client.go (0.0%)</option>
+				
+				<option value="file26">github.com/Lafetz/showdown-trivia-game/internal/ws/event.go (0.0%)</option>
+				
+				<option value="file27">github.com/Lafetz/showdown-trivia-game/internal/ws/hub.go (27.8%)</option>
+				
+				<option value="file28">github.com/Lafetz/showdown-trivia-game/internal/ws/rooms.go (0.0%)</option>
+				
+				<option value="file29">github.com/Lafetz/showdown-trivia-game/internal/ws/ws_upgrader.go (0.0%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">not covered</span>
+				<span class="cov8">covered</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package main
+
+import (
+        "log"
+
+        "github.com/Lafetz/showdown-trivia-game/internal/core/user"
+        "github.com/Lafetz/showdown-trivia-game/internal/repository"
+        "github.com/Lafetz/showdown-trivia-game/internal/web"
+        "github.com/Lafetz/showdown-trivia-game/internal/ws"
+        "github.com/gorilla/sessions"
+)
+
+func main() <span class="cov0" title="0">{
+        hashKey := "your-generated-hash-key"
+        blockKey := "your-generated-block-key"
+        store := sessions.NewCookieStore([]byte(hashKey), []byte(blockKey))
+        repo := repository.NewStore()
+        userservice := user.NewUserService(repo)
+        hub := ws.NewHub()
+        app := web.NewApp(userservice, hub, store)
+        err := app.Run()
+        if err != nil </span><span class="cov0" title="0">{
+                log.Fatal("ListenAndServe: ", err)
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package user
+
+import (
+        "time"
+
+        "github.com/google/uuid"
+)
+
+type User struct {
+        Id        uuid.UUID
+        Username  string
+        Email     string
+        Password  []byte
+        CreatedAt time.Time
+}
+
+func NewUser(username string, email string, password []byte) *User <span class="cov8" title="1">{
+        user := &amp;User{
+                Id:        uuid.New(),
+                Username:  username,
+                Email:     email,
+                Password:  password,
+                CreatedAt: time.Now(),
+        }
+
+        return user
+}</span>
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">package user
+
+import "github.com/google/uuid"
+
+type UserService struct {
+        repo repository
+}
+
+func NewUserService(repo repository) *UserService <span class="cov0" title="0">{
+        return &amp;UserService{
+                repo: repo,
+        }
+}</span>
+
+func (srv *UserService) GetUser(username string) (*User, error) <span class="cov0" title="0">{
+        return srv.repo.GetUser(username)
+}</span>
+func (srv *UserService) AddUser(user *User) (*User, error) <span class="cov0" title="0">{
+        //
+        return srv.repo.AddUser(user)
+}</span>
+
+func (srv *UserService) DeleteUser(id uuid.UUID) error <span class="cov0" title="0">{
+        return srv.repo.DeleteUser(id)
+}</span>
+</pre>
+		
+		<pre class="file" id="file3" style="display: none">package repository
+
+import (
+        "context"
+        "log"
+        "time"
+
+        "go.mongodb.org/mongo-driver/mongo"
+        "go.mongodb.org/mongo-driver/mongo/options"
+)
+
+type Store struct {
+        users *mongo.Collection
+}
+
+func NewStore() *Store <span class="cov0" title="0">{
+        client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb://admin:admin11@localhost/inventory?authSource=admin"))
+        if err != nil </span><span class="cov0" title="0">{
+                log.Fatal("db connection falled", err)
+        }</span>
+        <span class="cov0" title="0">ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
+        err = client.Ping(ctx, nil)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Fatal("db connection falled", err)
+        }</span>
+        <span class="cov0" title="0">users := client.Database("trivia").Collection("users")
+        println("database connected.....")
+        return &amp;Store{
+                users: users,
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file4" style="display: none">package repository
+
+import (
+        "context"
+        "fmt"
+        "time"
+
+        "github.com/Lafetz/showdown-trivia-game/internal/core/user"
+        "github.com/google/uuid"
+        "go.mongodb.org/mongo-driver/bson"
+)
+
+type userMongo struct {
+        Id        uuid.UUID `bson:"_id,omitempty"`
+        Username  string    `bson:"username"`
+        Email     string    `bson:"email"`
+        Password  []byte    `bson:"password"`
+        CreatedAt time.Time `bson:"createdAt"`
+}
+
+// domain converts userMongo to user.User
+func (u *userMongo) domain() *user.User <span class="cov0" title="0">{
+        return &amp;user.User{
+                Id:        u.Id,
+                Username:  u.Username,
+                Email:     u.Email,
+                Password:  u.Password,
+                CreatedAt: u.CreatedAt,
+        }
+}</span>
+
+func newUserMongo(u *user.User) *userMongo <span class="cov0" title="0">{
+        return &amp;userMongo{
+                Id:        u.Id,
+                Username:  u.Username,
+                Email:     u.Email,
+                Password:  u.Password,
+                CreatedAt: u.CreatedAt,
+        }
+}</span>
+
+func (store *Store) AddUser(user *user.User) (*user.User, error) <span class="cov0" title="0">{
+        u := newUserMongo(user)
+        r, err := store.users.InsertOne(context.Background(), u)
+        fmt.Printf("over here %s", r)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov0" title="0">return user, nil</span>
+}
+func (store *Store) GetUser(email string) (*user.User, error) <span class="cov0" title="0">{
+        var user userMongo
+        err := store.users.FindOne(context.TODO(), bson.D{{Key: "email", Value: email}}).Decode(&amp;user)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return user.domain(), nil</span>
+
+}
+
+func (store *Store) DeleteUser(Id uuid.UUID) error <span class="cov0" title="0">{
+        return nil
+}</span>
+</pre>
+		
+		<pre class="file" id="file5" style="display: none">package render
+
+import (
+        "net/http"
+
+        layout "github.com/Lafetz/showdown-trivia-game/internal/web/views/layouts"
+        "github.com/Lafetz/showdown-trivia-game/internal/web/views/pages"
+)
+
+func InternalServer(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+        p := pages.InternalError()
+        err := layout.Base("error", p).Render(r.Context(), w)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "Internal server Error", http.StatusInternalServerError)
+                // return the error
+                return
+        }</span>
+}
+func NotFound(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+        p := pages.NotFound()
+        err := layout.Base("error", p).Render(r.Context(), w)
+        if err != nil </span><span class="cov0" title="0">{
+                InternalServer(w, r)
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file6" style="display: none">package render
+
+import (
+        "net/http"
+
+        "github.com/Lafetz/showdown-trivia-game/internal/web/entity"
+        "github.com/Lafetz/showdown-trivia-game/internal/web/form"
+        "github.com/Lafetz/showdown-trivia-game/internal/web/views/components"
+        layout "github.com/Lafetz/showdown-trivia-game/internal/web/views/layouts"
+        "github.com/Lafetz/showdown-trivia-game/internal/web/views/pages"
+)
+
+func Home(w http.ResponseWriter, r *http.Request, username string) <span class="cov8" title="1">{
+        p := pages.Home(username)
+        err := layout.Base("Home", p).Render(r.Context(), w)
+        if err != nil </span><span class="cov0" title="0">{
+                InternalServer(w, r)
+        }</span>
+
+}
+func InvalidForm(w http.ResponseWriter, r *http.Request, form form.SigninUser) <span class="cov8" title="1">{
+        w.WriteHeader(http.StatusUnprocessableEntity)
+        p := pages.Signin(form, "")
+        err := p.Render(r.Context(), w)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "Error rendering template", http.StatusInternalServerError)
+                return
+        }</span>
+}
+func IncorrectPasswordEmail(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        w.WriteHeader(http.StatusUnauthorized)
+        p := pages.InvalidAuth()
+        err := p.Render(r.Context(), w)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "Error rendering template", http.StatusInternalServerError)
+                return
+        }</span>
+}
+func InvalidForxm(w http.ResponseWriter, r *http.Request) {<span class="cov0" title="0">}</span>
+func ActiveGames(w http.ResponseWriter, r *http.Request, rooms []entity.RoomData) <span class="cov8" title="1">{
+        p := components.ActiveGames(rooms)
+        err := p.Render(r.Context(), w)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "Error rendering template", http.StatusInternalServerError)
+                return
+        }</span>
+
+}
+</pre>
+		
+		<pre class="file" id="file7" style="display: none">package render
+
+import (
+        "bytes"
+        "context"
+        "net/http"
+
+        "github.com/Lafetz/showdown-trivia-game/internal/core/game"
+        "github.com/Lafetz/showdown-trivia-game/internal/web/views/components"
+        layout "github.com/Lafetz/showdown-trivia-game/internal/web/views/layouts"
+        "github.com/a-h/templ"
+)
+
+func SendGamePage(w http.ResponseWriter, r *http.Request, create bool, id string) <span class="cov8" title="1">{
+        p := components.Game(create, id)
+        err := layout.Base("Game", p).Render(r.Context(), w)
+        if err != nil </span><span class="cov0" title="0">{
+                InternalServer(w, r)
+        }</span>
+}
+func RenderPlayers(id string, players []string) *bytes.Buffer <span class="cov0" title="0">{
+        component := components.Players(id, players)
+        return returnBuf(component)
+}</span>
+func RenderQuestion(q game.Question, current int, total int) *bytes.Buffer <span class="cov0" title="0">{
+        component := components.Question(q, current, total)
+        return returnBuf(component)
+}</span>
+func RenderGameMessage(Info game.Info) *bytes.Buffer <span class="cov0" title="0">{
+        component := components.GameMessage(Info.Text)
+        return returnBuf(component)
+}</span>
+
+func GameEnd(winners game.Winners) *bytes.Buffer <span class="cov0" title="0">{
+        component := components.GameEndMessage(winners)
+        return returnBuf(component)
+}</span>
+func RenderUserAnswer(userAnswer string) *bytes.Buffer <span class="cov0" title="0">{
+        component := components.Answer(userAnswer)
+        return returnBuf(component)
+}</span>
+func returnBuf(component templ.Component) *bytes.Buffer <span class="cov0" title="0">{
+        buffer := &amp;bytes.Buffer{}
+        component.Render(context.Background(), buffer)
+        return buffer
+}</span>
+</pre>
+		
+		<pre class="file" id="file8" style="display: none">package web
+
+import (
+        "net/http"
+
+        "github.com/Lafetz/showdown-trivia-game/internal/core/user"
+        "github.com/Lafetz/showdown-trivia-game/internal/ws"
+        "github.com/gorilla/sessions"
+)
+
+type App struct {
+        port        int
+        router      *http.ServeMux
+        userService user.UserServiceApi
+        hub         *ws.Hub
+        store       *sessions.CookieStore
+}
+
+func NewApp(userService user.UserServiceApi, hub *ws.Hub, store *sessions.CookieStore) *App <span class="cov0" title="0">{
+
+        a := &amp;App{
+                router:      http.NewServeMux(),
+                port:        8080,
+                userService: userService,
+                hub:         hub,
+                store:       store,
+        }
+
+        a.initAppRoutes()
+
+        return a
+}</span>
+func (a *App) Run() error <span class="cov0" title="0">{
+        return http.ListenAndServe(":8080", a.router)
+}</span>
+</pre>
+		
+		<pre class="file" id="file9" style="display: none">package form
+
+import (
+        "regexp"
+        "strings"
+        "unicode/utf8"
+)
+
+type SignupUser struct {
+        Username string
+        Email    string
+        Password string
+        Errors   map[string]string
+}
+
+type SigninUser struct {
+        Email    string
+        Password string
+        Errors   map[string]string
+}
+
+var rxEmail = regexp.MustCompile(`^[a-zA-Z\\_\\-\\.]+@[a-zA-Z\\_\\-\\.]+$`)
+
+func (f *SignupUser) Valid() bool <span class="cov8" title="1">{
+
+        f.Errors = make(map[string]string)
+
+        if strings.TrimSpace(f.Username) == "" </span><span class="cov8" title="1">{
+                f.Errors["username"] = "username is required."
+        }</span>
+
+        <span class="cov8" title="1">if strings.TrimSpace(f.Email) == "" </span><span class="cov0" title="0">{
+                f.Errors["email"] = "email is required."
+        }</span> else<span class="cov8" title="1"> if len(f.Email) &gt; 254 || !rxEmail.MatchString(f.Email) </span><span class="cov8" title="1">{
+                f.Errors["email"] = "email is not valid."
+        }</span>
+
+        <span class="cov8" title="1">if utf8.RuneCountInString(f.Password) &lt; 8 </span><span class="cov8" title="1">{
+                f.Errors["password"] = "password is too short."
+        }</span>
+
+        <span class="cov8" title="1">return len(f.Errors) == 0</span>
+}
+
+func (f *SigninUser) Valid() bool <span class="cov8" title="1">{
+
+        f.Errors = make(map[string]string)
+
+        if strings.TrimSpace(f.Email) == "" </span><span class="cov8" title="1">{
+                f.Errors["email"] = "email is required"
+        }</span>
+        <span class="cov8" title="1">if strings.TrimSpace(f.Password) == "" </span><span class="cov8" title="1">{
+                f.Errors["password"] = "password is required"
+        }</span>
+        <span class="cov8" title="1">println("what", len(strings.TrimSpace(f.Password)))
+        if strings.TrimSpace(f.Password) != "" &amp;&amp; len(strings.TrimSpace(f.Password)) &lt; 8 </span><span class="cov8" title="1">{
+
+                f.Errors["password"] = "password length needs to be above 8"
+        }</span>
+
+        <span class="cov8" title="1">return len(f.Errors) == 0</span>
+}
+</pre>
+		
+		<pre class="file" id="file10" style="display: none">package handlers
+
+import (
+        "net/http"
+
+        render "github.com/Lafetz/showdown-trivia-game/internal/web/Render"
+        "github.com/Lafetz/showdown-trivia-game/internal/ws"
+)
+
+func Home() http.HandlerFunc <span class="cov8" title="1">{
+        return func(w http.ResponseWriter, r *http.Request) </span><span class="cov8" title="1">{
+                username, ok := r.Context().Value("username").(string)
+                if !ok </span><span class="cov0" title="0">{
+                        render.InternalServer(w, r)
+                        return
+                }</span>
+
+                <span class="cov8" title="1">render.Home(w, r, username)</span>
+
+        }
+}
+func sendGamePage(w http.ResponseWriter, r *http.Request, create bool, id string) <span class="cov8" title="1">{
+        render.SendGamePage(w, r, create, id)
+
+}</span>
+func CreateGet() http.HandlerFunc <span class="cov8" title="1">{
+        return func(w http.ResponseWriter, r *http.Request) </span><span class="cov8" title="1">{
+                gameOwner := true
+                id := ""
+                sendGamePage(w, r, gameOwner, id)
+        }</span>
+}
+func ActiveGames(hub *ws.Hub) http.HandlerFunc <span class="cov8" title="1">{
+        return func(w http.ResponseWriter, r *http.Request) </span><span class="cov8" title="1">{
+                rooms := hub.ListRooms()
+                render.ActiveGames(w, r, rooms)
+        }</span>
+}
+func Join() http.HandlerFunc <span class="cov8" title="1">{
+        return func(w http.ResponseWriter, r *http.Request) </span><span class="cov8" title="1">{
+                gameOwner := false
+                id := r.PathValue("id")
+                sendGamePage(w, r, gameOwner, id)
+        }</span>
+}
+func CreateWs(hub *ws.Hub) http.HandlerFunc <span class="cov0" title="0">{
+        return func(w http.ResponseWriter, r *http.Request) </span><span class="cov0" title="0">{
+                hub.CreateRoom(w, r)
+        }</span>
+}
+func JoinWs(hub *ws.Hub) http.HandlerFunc <span class="cov0" title="0">{
+        return func(w http.ResponseWriter, r *http.Request) </span><span class="cov0" title="0">{
+                id := r.PathValue("id")
+                hub.JoinRoom(w, r, id)
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file11" style="display: none">package handlers
+
+import (
+        "errors"
+
+        "golang.org/x/crypto/bcrypt"
+)
+
+var (
+        ErrInvalidPassword = errors.New("incorrect password")
+)
+
+func hashPassword(plaintextPassword string) ([]byte, error) <span class="cov8" title="1">{
+        hash, err := bcrypt.GenerateFromPassword([]byte(plaintextPassword), 12)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov8" title="1">return hash, nil</span>
+}
+func matchPassword(plaintextPassword string, hash []byte) error <span class="cov8" title="1">{
+
+        err := bcrypt.CompareHashAndPassword(hash, []byte(plaintextPassword))
+        if err != nil </span><span class="cov8" title="1">{
+                switch </span>{
+                case errors.Is(err, bcrypt.ErrMismatchedHashAndPassword):<span class="cov8" title="1">
+                        return ErrInvalidPassword</span>
+                default:<span class="cov8" title="1">
+                        return err</span>
+                }
+        }
+
+        <span class="cov8" title="1">return err</span>
+}
+</pre>
+		
+		<pre class="file" id="file12" style="display: none">package handlers
+
+import (
+        "net/http"
+
+        "github.com/Lafetz/showdown-trivia-game/internal/core/user"
+        render "github.com/Lafetz/showdown-trivia-game/internal/web/Render"
+        "github.com/Lafetz/showdown-trivia-game/internal/web/form"
+        layout "github.com/Lafetz/showdown-trivia-game/internal/web/views/layouts"
+        "github.com/Lafetz/showdown-trivia-game/internal/web/views/pages"
+        "github.com/gorilla/sessions"
+)
+
+func SigninGet() http.HandlerFunc <span class="cov8" title="1">{
+        return func(w http.ResponseWriter, r *http.Request) </span><span class="cov8" title="1">{
+                p := pages.Signin(form.SigninUser{}, "")
+                err := layout.Base("Sign in", p).Render(r.Context(), w)
+                if err != nil </span><span class="cov0" title="0">{
+                        render.InternalServer(w, r)
+                        return
+                }</span>
+        }
+}
+func SigninPost(userservice user.UserServiceApi, store *sessions.CookieStore) http.HandlerFunc <span class="cov8" title="1">{
+        return func(w http.ResponseWriter, r *http.Request) </span><span class="cov8" title="1">{
+                r.Body = http.MaxBytesReader(w, r.Body, 4096)
+                err := r.ParseForm()
+                if err != nil </span><span class="cov0" title="0">{
+                        render.InternalServer(w, r)
+                        return
+                }</span>
+                <span class="cov8" title="1">form := form.SigninUser{
+                        Email:    r.PostForm.Get("email"),
+                        Password: r.PostForm.Get("password"),
+                }
+                if !form.Valid() </span><span class="cov8" title="1">{
+                        render.InvalidForm(w, r, form)
+                        return
+                }</span>
+                <span class="cov8" title="1">user, err := userservice.GetUser(form.Email)
+                if err != nil </span><span class="cov8" title="1">{
+                        render.IncorrectPasswordEmail(w, r)
+                        return
+                }</span>
+
+                <span class="cov8" title="1">err = matchPassword(form.Password, user.Password)
+                if err != nil </span><span class="cov8" title="1">{
+                        if err == ErrInvalidPassword </span><span class="cov8" title="1">{
+                                render.IncorrectPasswordEmail(w, r)
+                        }</span>
+                        <span class="cov8" title="1">return</span>
+                }
+                <span class="cov8" title="1">session, _ := store.Get(r, "user-session")
+                session.Values["authenticated"] = true
+                session.Values["username"] = user.Username
+                err = session.Save(r, w)
+                if err != nil </span><span class="cov0" title="0">{
+                        http.Error(w, err.Error(), http.StatusInternalServerError)
+                        return
+                }</span>
+                <span class="cov8" title="1">w.Header().Set("HX-Redirect", "/home")
+                w.WriteHeader(http.StatusOK)</span>
+        }
+}
+</pre>
+		
+		<pre class="file" id="file13" style="display: none">package handlers
+
+import (
+        "net/http"
+
+        "github.com/Lafetz/showdown-trivia-game/internal/core/user"
+        render "github.com/Lafetz/showdown-trivia-game/internal/web/Render"
+        "github.com/Lafetz/showdown-trivia-game/internal/web/form"
+        layout "github.com/Lafetz/showdown-trivia-game/internal/web/views/layouts"
+        "github.com/Lafetz/showdown-trivia-game/internal/web/views/pages"
+)
+
+func SignupGet() http.HandlerFunc <span class="cov8" title="1">{
+        return func(w http.ResponseWriter, r *http.Request) </span><span class="cov8" title="1">{
+                p := pages.Signup(form.SignupUser{})
+                err := layout.Base("Sign up", p).Render(r.Context(), w)
+                if err != nil </span><span class="cov0" title="0">{
+                        render.InternalServer(w, r)
+                }</span>
+        }
+}
+func SignupPost(userService user.UserServiceApi) http.HandlerFunc <span class="cov8" title="1">{
+        return func(w http.ResponseWriter, r *http.Request) </span><span class="cov8" title="1">{
+                r.Body = http.MaxBytesReader(w, r.Body, 4096)
+                err := r.ParseForm()
+
+                if err != nil </span><span class="cov0" title="0">{
+                        render.InternalServer(w, r)
+                        return
+                }</span>
+                <span class="cov8" title="1">form := form.SignupUser{
+                        Username: r.PostForm.Get("username"),
+                        Email:    r.PostForm.Get("email"),
+                        Password: r.PostForm.Get("password"),
+                }
+                if !form.Valid() </span><span class="cov8" title="1">{
+                        p := pages.Signup(form)
+                        w.WriteHeader(422)
+                        err = layout.Base("Sign up", p).Render(r.Context(), w)
+                        if err != nil </span><span class="cov0" title="0">{
+                                render.InternalServer(w, r)
+                                return
+                        }</span>
+                        <span class="cov8" title="1">return</span>
+                }
+                <span class="cov8" title="1">hashedPassword, err := hashPassword(form.Password)
+                if err != nil </span><span class="cov0" title="0">{
+
+                        http.Error(w, "Error rendering template", http.StatusInternalServerError)
+                        return
+                }</span>
+                <span class="cov8" title="1">user := user.NewUser(form.Username, form.Email, hashedPassword)
+                _, err = userService.AddUser(user)
+                if err != nil </span><span class="cov0" title="0">{
+                        println(err)
+                        http.Error(w, "Error rendering template", http.StatusInternalServerError)
+                        return
+                }</span>
+                <span class="cov8" title="1">p := pages.SignupSuccess()
+                w.WriteHeader(201)
+                err = layout.Base("Sign up", p).Render(r.Context(), w)
+                if err != nil </span><span class="cov0" title="0">{
+                        http.Error(w, "Error rendering template", http.StatusInternalServerError)
+                        return
+                }</span>
+        }
+}
+func Ssig() http.HandlerFunc <span class="cov0" title="0">{
+        return func(w http.ResponseWriter, r *http.Request) </span>{<span class="cov0" title="0">
+
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file14" style="display: none">package web
+
+import (
+        "context"
+        "net/http"
+)
+
+func (a *App) requireAuth(next http.Handler) http.HandlerFunc <span class="cov0" title="0">{
+        return func(w http.ResponseWriter, r *http.Request) </span><span class="cov0" title="0">{
+                // Retrieve session
+                session, err := a.store.Get(r, "user-session")
+                if err != nil || session.Values["authenticated"] != true </span><span class="cov0" title="0">{
+                        http.Redirect(w, r, "/signin", http.StatusSeeOther)
+                        return
+                }</span>
+
+                <span class="cov0" title="0">username, ok := session.Values["username"].(string)
+                if !ok </span><span class="cov0" title="0">{
+                        http.Error(w, "Username not found in session", http.StatusInternalServerError)
+                        return
+                }</span>
+                <span class="cov0" title="0">ctx := context.WithValue(r.Context(), "username", username)
+                next.ServeHTTP(w, r.WithContext(ctx))</span>
+        }
+}
+</pre>
+		
+		<pre class="file" id="file15" style="display: none">package web
+
+import (
+        "net/http"
+
+        "github.com/Lafetz/showdown-trivia-game/internal/web/handlers"
+)
+
+const (
+        wsUrl = "connect:ws://localhost:8080"
+)
+
+func (a *App) initAppRoutes() <span class="cov0" title="0">{
+        fileServer := http.FileServer(http.Dir("./internal/web/static"))
+        s := http.Handler(handlers.Home())
+        a.router.Handle("/static/", http.StripPrefix("/static/", fileServer))
+        //
+
+        a.router.HandleFunc("GET /signin", handlers.SigninGet())
+        a.router.HandleFunc("POST /signin", handlers.SigninPost(a.userService, a.store))
+        //
+
+        a.router.HandleFunc("GET /signup", handlers.SignupGet())
+        a.router.HandleFunc("POST /signup", handlers.SignupPost(a.userService))
+        //
+
+        a.router.HandleFunc("GET /home", a.requireAuth(s))
+        a.router.HandleFunc("/create", a.requireAuth(handlers.CreateGet()))
+        a.router.HandleFunc("GET /join/{id}", handlers.Join())
+        //ws
+        a.router.HandleFunc("/activegames", a.requireAuth(handlers.ActiveGames(a.hub)))
+        //
+        a.router.HandleFunc("/wscreate", a.requireAuth(handlers.CreateWs(a.hub)))
+        a.router.HandleFunc("/wsjoin/{id}", a.requireAuth(handlers.JoinWs(a.hub)))
+
+}</span>
+</pre>
+		
+		<pre class="file" id="file16" style="display: none">// Code generated by templ - DO NOT EDIT.
+
+// templ: version: v0.2.663
+package components
+
+//lint:file-ignore SA4006 This context is only used if a nested component is present.
+
+import "github.com/a-h/templ"
+import "context"
+import "io"
+import "bytes"
+
+func InternalServer() templ.Component <span class="cov0" title="0">{
+        return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) </span><span class="cov0" title="0">{
+                templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
+                if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Buffer = templ.GetBuffer()
+                        defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
+                }</span>
+                <span class="cov0" title="0">ctx = templ.InitializeContext(ctx)
+                templ_7745c5c3_Var1 := templ.GetChildren(ctx)
+                if templ_7745c5c3_Var1 == nil </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Var1 = templ.NopComponent
+                }</span>
+                <span class="cov0" title="0">ctx = templ.ClearChildren(ctx)
+                if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)
+                }</span>
+                <span class="cov0" title="0">return templ_7745c5c3_Err</span>
+        })
+}
+</pre>
+		
+		<pre class="file" id="file17" style="display: none">// Code generated by templ - DO NOT EDIT.
+
+// templ: version: v0.2.663
+package components
+
+//lint:file-ignore SA4006 This context is only used if a nested component is present.
+
+import "github.com/a-h/templ"
+import "context"
+import "io"
+import "bytes"
+
+import (
+        "fmt"
+        "strconv"
+)
+import "github.com/Lafetz/showdown-trivia-game/internal/web/entity"
+import "github.com/Lafetz/showdown-trivia-game/internal/core/game"
+
+func Game(owner bool, id string) templ.Component <span class="cov8" title="1">{
+        return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) </span><span class="cov8" title="1">{
+                templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
+                if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Buffer = templ.GetBuffer()
+                        defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
+                }</span>
+                <span class="cov8" title="1">ctx = templ.InitializeContext(ctx)
+                templ_7745c5c3_Var1 := templ.GetChildren(ctx)
+                if templ_7745c5c3_Var1 == nil </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Var1 = templ.NopComponent
+                }</span>
+                <span class="cov8" title="1">ctx = templ.ClearChildren(ctx)
+                if owner </span><span class="cov8" title="1">{
+                        _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;div id=\"socket\" hx-ws=\"connect:ws://localhost:8080/wscreate\"&gt;&lt;div id=\"lobby\" class=\"flex flex-col gap-3 justify-center items-center\"&gt;")
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                        <span class="cov8" title="1">templ_7745c5c3_Err = Players("", []string{""}).Render(ctx, templ_7745c5c3_Buffer)
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                        <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;button id=\"keep\" hx-ws=\"send\" hx-vals=\"{\n        &amp;#34;type&amp;#34;: &amp;#34;start_game&amp;#34;,\n        &amp;#34;payload&amp;#34;: &amp;#34;this will do for now&amp;#34;\n    }\" class=\"shadow-md rounded bg-sky-600 py-0.5 px-4 font-bold text-white transition-colors  duration-100 hover:bg-sky-800\"&gt;Start&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;")
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                } else<span class="cov8" title="1"> {
+                        _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;div hx-ws=\"")
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                        <span class="cov8" title="1">var templ_7745c5c3_Var2 string
+                        templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs("connect:ws://localhost:8080/wsjoin/" + id)
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/components/game.templ`, Line: 29, Col: 57}
+                        }</span>
+                        <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                        <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"&gt;&lt;div id=\"lobby\" class=\"flex flex-col gap-3 justify-center items-center\"&gt;")
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                        <span class="cov8" title="1">templ_7745c5c3_Err = Players("", []string{""}).Render(ctx, templ_7745c5c3_Buffer)
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                        <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/div&gt;&lt;/div&gt;")
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                }
+                <span class="cov8" title="1">if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)
+                }</span>
+                <span class="cov8" title="1">return templ_7745c5c3_Err</span>
+        })
+}
+
+func Players(id string, players []string) templ.Component <span class="cov8" title="1">{
+        return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) </span><span class="cov8" title="1">{
+                templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
+                if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Buffer = templ.GetBuffer()
+                        defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
+                }</span>
+                <span class="cov8" title="1">ctx = templ.InitializeContext(ctx)
+                templ_7745c5c3_Var3 := templ.GetChildren(ctx)
+                if templ_7745c5c3_Var3 == nil </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Var3 = templ.NopComponent
+                }</span>
+                <span class="cov8" title="1">ctx = templ.ClearChildren(ctx)
+                _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;div hx-swap=\"outerHTML:#players\" id=\"players\" class=\"flex flex-col gap-1\"&gt;&lt;div class=\"font-semibold\"&gt;Game ID:  ")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">var templ_7745c5c3_Var4 string
+                templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(id)
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/components/game.templ`, Line: 40, Col: 43}
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/div&gt;&lt;div class=\"font-semibold flex gap-1\"&gt;&lt;span&gt;Players: &lt;/span&gt; ")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">for _, player := range players </span><span class="cov8" title="1">{
+                        _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;span&gt;")
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                        <span class="cov8" title="1">var templ_7745c5c3_Var5 string
+                        templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(player)
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/components/game.templ`, Line: 44, Col: 18}
+                        }</span>
+                        <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                        <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/span&gt;")
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                }
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/div&gt;&lt;/div&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)
+                }</span>
+                <span class="cov8" title="1">return templ_7745c5c3_Err</span>
+        })
+}
+
+func ActiveGames(rooms []entity.RoomData) templ.Component <span class="cov8" title="1">{
+        return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) </span><span class="cov8" title="1">{
+                templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
+                if !templ_7745c5c3_IsBuffer </span><span class="cov8" title="1">{
+                        templ_7745c5c3_Buffer = templ.GetBuffer()
+                        defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
+                }</span>
+                <span class="cov8" title="1">ctx = templ.InitializeContext(ctx)
+                templ_7745c5c3_Var6 := templ.GetChildren(ctx)
+                if templ_7745c5c3_Var6 == nil </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Var6 = templ.NopComponent
+                }</span>
+                <span class="cov8" title="1">ctx = templ.ClearChildren(ctx)
+                _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;table class=\"table-fixed min-w-72 text-left border-separate border-spacing-y-1\"&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Game Creator&lt;/th&gt;&lt;th&gt;Game Id&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt; &lt;tbody&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">for _, room := range rooms </span><span class="cov0" title="0">{
+                        _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;tr&gt;&lt;td&gt;")
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                        <span class="cov0" title="0">var templ_7745c5c3_Var7 string
+                        templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(room.Owner)
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/components/game.templ`, Line: 62, Col: 21}
+                        }</span>
+                        <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                        <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/td&gt;&lt;td&gt;")
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                        <span class="cov0" title="0">var templ_7745c5c3_Var8 string
+                        templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(room.Id)
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/components/game.templ`, Line: 63, Col: 18}
+                        }</span>
+                        <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                        <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/td&gt;&lt;td&gt;&lt;button hx-get=\"")
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                        <span class="cov0" title="0">var templ_7745c5c3_Var9 string
+                        templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs("/join/" + room.Id)
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/components/game.templ`, Line: 65, Col: 41}
+                        }</span>
+                        <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                        <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-confirm=\"Join Game?\" hx-swap=\"main\" hx-target=\"main\" hx-swap=\"innerHTML\" class=\"shadow-md rounded bg-green-600 px-4 py-1 font-bold  transition-colors  duration-100 hover:bg-green-800\"&gt;Join&lt;/button&gt;&lt;/td&gt;&lt;/tr&gt;")
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                }
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/tbody&gt;&lt;/table&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">if !templ_7745c5c3_IsBuffer </span><span class="cov8" title="1">{
+                        _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)
+                }</span>
+                <span class="cov8" title="1">return templ_7745c5c3_Err</span>
+        })
+}
+
+func Question(q game.Question, current int, total int) templ.Component <span class="cov0" title="0">{
+        return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) </span><span class="cov0" title="0">{
+                templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
+                if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Buffer = templ.GetBuffer()
+                        defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
+                }</span>
+                <span class="cov0" title="0">ctx = templ.InitializeContext(ctx)
+                templ_7745c5c3_Var10 := templ.GetChildren(ctx)
+                if templ_7745c5c3_Var10 == nil </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Var10 = templ.NopComponent
+                }</span>
+                <span class="cov0" title="0">ctx = templ.ClearChildren(ctx)
+                _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;div id=\"lobby\"&gt;&lt;div class=\"flex flex-col  min-w-80 justify-center items-center gap-5 px-2\" hx-swap-oob=\"outerHTML:#lobby\"&gt;&lt;div class=\"flex flex-col font-bold justify-center items-center max-w-md min-w-xs  gap-3 w-full \"&gt;&lt;div class=\"text-xl text-yellow-500\"&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov0" title="0">var templ_7745c5c3_Var11 string
+                templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(current))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/components/game.templ`, Line: 80, Col: 64}
+                }</span>
+                <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("/")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov0" title="0">var templ_7745c5c3_Var12 string
+                templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(total))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/components/game.templ`, Line: 80, Col: 88}
+                }</span>
+                <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/div&gt;&lt;div class=\"font-medium\"&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov0" title="0">var templ_7745c5c3_Var13 string
+                templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(q.Question)
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/components/game.templ`, Line: 81, Col: 41}
+                }</span>
+                <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/div&gt;&lt;div&gt;Your Answer: &lt;span class=\"text-yellow-500\" id=\"answer\"&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=\"flex flex-col  gap-2 w-full\"&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov0" title="0">for i, c := range q.Options </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Err = choice(c, i).Render(ctx, templ_7745c5c3_Buffer)
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                }
+                <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov0" title="0">if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)
+                }</span>
+                <span class="cov0" title="0">return templ_7745c5c3_Err</span>
+        })
+}
+
+func Answer(userAnswer string) templ.Component <span class="cov0" title="0">{
+        return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) </span><span class="cov0" title="0">{
+                templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
+                if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Buffer = templ.GetBuffer()
+                        defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
+                }</span>
+                <span class="cov0" title="0">ctx = templ.InitializeContext(ctx)
+                templ_7745c5c3_Var14 := templ.GetChildren(ctx)
+                if templ_7745c5c3_Var14 == nil </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Var14 = templ.NopComponent
+                }</span>
+                <span class="cov0" title="0">ctx = templ.ClearChildren(ctx)
+                _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;span class=\"text-yellow-500\" id=\"answer\"&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov0" title="0">var templ_7745c5c3_Var15 string
+                templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(userAnswer)
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/components/game.templ`, Line: 97, Col: 55}
+                }</span>
+                <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/span&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov0" title="0">if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)
+                }</span>
+                <span class="cov0" title="0">return templ_7745c5c3_Err</span>
+        })
+}
+
+func choice(choice string, i int) templ.Component <span class="cov0" title="0">{
+        return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) </span><span class="cov0" title="0">{
+                templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
+                if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Buffer = templ.GetBuffer()
+                        defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
+                }</span>
+                <span class="cov0" title="0">ctx = templ.InitializeContext(ctx)
+                templ_7745c5c3_Var16 := templ.GetChildren(ctx)
+                if templ_7745c5c3_Var16 == nil </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Var16 = templ.NopComponent
+                }</span>
+                <span class="cov0" title="0">ctx = templ.ClearChildren(ctx)
+                _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;button hx-swap-oob=\"outerHTML:#answer\" id=\"keep\" hx-ws=\"send\" hx-vals=\"")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov0" title="0">var templ_7745c5c3_Var17 string
+                templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(jsonvalues(i))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/components/game.templ`, Line: 105, Col: 25}
+                }</span>
+                <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"shadow-md rounded bg-sky-600 py-1.5 font-bold text-white transition-colors  duration-100 hover:bg-sky-800\"&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov0" title="0">var templ_7745c5c3_Var18 string
+                templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.JoinStringErrs(choice)
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/components/game.templ`, Line: 107, Col: 10}
+                }</span>
+                <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var18))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/button&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov0" title="0">if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)
+                }</span>
+                <span class="cov0" title="0">return templ_7745c5c3_Err</span>
+        })
+}
+
+func jsonvalues(i int) string <span class="cov0" title="0">{
+        var choice string
+        switch i </span>{
+        case 0:<span class="cov0" title="0">
+                choice = "A"</span>
+        case 1:<span class="cov0" title="0">
+                choice = "B"</span>
+        case 2:<span class="cov0" title="0">
+                choice = "C"</span>
+        case 3:<span class="cov0" title="0">
+                choice = "D"</span>
+        default:<span class="cov0" title="0">
+                choice = "Z"</span>
+        }
+        <span class="cov0" title="0">return fmt.Sprintf(`{"type": "send_answer", "payload": "%s"}`, choice)</span>
+}
+
+func GameMessage(msg string) templ.Component <span class="cov0" title="0">{
+        return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) </span><span class="cov0" title="0">{
+                templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
+                if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Buffer = templ.GetBuffer()
+                        defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
+                }</span>
+                <span class="cov0" title="0">ctx = templ.InitializeContext(ctx)
+                templ_7745c5c3_Var19 := templ.GetChildren(ctx)
+                if templ_7745c5c3_Var19 == nil </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Var19 = templ.NopComponent
+                }</span>
+                <span class="cov0" title="0">ctx = templ.ClearChildren(ctx)
+                _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;div id=\"lobby\"&gt;&lt;div class=\"flex-col  min-w-80\" hx-swap-oob=\"outerHTML:#lobby\"&gt;&lt;p&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov0" title="0">var templ_7745c5c3_Var20 string
+                templ_7745c5c3_Var20, templ_7745c5c3_Err = templ.JoinStringErrs(msg)
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/components/game.templ`, Line: 131, Col: 9}
+                }</span>
+                <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var20))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov0" title="0">if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)
+                }</span>
+                <span class="cov0" title="0">return templ_7745c5c3_Err</span>
+        })
+}
+
+func GameEndMessage(winners game.Winners) templ.Component <span class="cov0" title="0">{
+        return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) </span><span class="cov0" title="0">{
+                templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
+                if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Buffer = templ.GetBuffer()
+                        defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
+                }</span>
+                <span class="cov0" title="0">ctx = templ.InitializeContext(ctx)
+                templ_7745c5c3_Var21 := templ.GetChildren(ctx)
+                if templ_7745c5c3_Var21 == nil </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Var21 = templ.NopComponent
+                }</span>
+                <span class="cov0" title="0">ctx = templ.ClearChildren(ctx)
+                _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;div id=\"lobby\"&gt;&lt;div class=\"flex flex-col justify-center items-center gap-5\"&gt;&lt;span class=\"text-4xl font-bold\"&gt;Game has ended&lt;/span&gt; &lt;span class=\"text-2xl font-semibold underline\"&gt;Players&lt;/span&gt;&lt;div class=\"flex gap-1 flex-wrap\"&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov0" title="0">for player, score := range winners </span><span class="cov0" title="0">{
+                        _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;div class=\"flex flex-col shadow-md rounded bg-yellow-700 py-2 px-3 font-semibold\"&gt;&lt;div&gt;&lt;span&gt;Username: &lt;/span&gt; &lt;span&gt;")
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                        <span class="cov0" title="0">var templ_7745c5c3_Var22 string
+                        templ_7745c5c3_Var22, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("@"))
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/components/game.templ`, Line: 147, Col: 31}
+                        }</span>
+                        <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var22))
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                        <span class="cov0" title="0">var templ_7745c5c3_Var23 string
+                        templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.JoinStringErrs(player)
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/components/game.templ`, Line: 147, Col: 41}
+                        }</span>
+                        <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var23))
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                        <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;Score: &lt;/span&gt;&lt;span&gt;")
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                        <span class="cov0" title="0">var templ_7745c5c3_Var24 string
+                        templ_7745c5c3_Var24, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(score))
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/components/game.templ`, Line: 149, Col: 58}
+                        }</span>
+                        <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var24))
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                        <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;")
+                        if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                                return templ_7745c5c3_Err
+                        }</span>
+                }
+                <span class="cov0" title="0">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/div&gt;&lt;span class=\"text-2xl font-semibold text-green-500\"&gt;You Lost&lt;/span&gt; &lt;button onclick=\"window.location.href = &amp;#39;/home&amp;#39;;\" class=\"shadow-md rounded bg-sky-600 py-1.5 px-4 font-bold text-white transition-colors  duration-100 hover:bg-sky-800\"&gt;Home&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov0" title="0">if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)
+                }</span>
+                <span class="cov0" title="0">return templ_7745c5c3_Err</span>
+        })
+}
+</pre>
+		
+		<pre class="file" id="file18" style="display: none">// Code generated by templ - DO NOT EDIT.
+
+// templ: version: v0.2.663
+package components
+
+//lint:file-ignore SA4006 This context is only used if a nested component is present.
+
+import "github.com/a-h/templ"
+import "context"
+import "io"
+import "bytes"
+
+import "fmt"
+
+func Header(username string) templ.Component <span class="cov8" title="1">{
+        return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) </span><span class="cov8" title="1">{
+                templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
+                if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Buffer = templ.GetBuffer()
+                        defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
+                }</span>
+                <span class="cov8" title="1">ctx = templ.InitializeContext(ctx)
+                templ_7745c5c3_Var1 := templ.GetChildren(ctx)
+                if templ_7745c5c3_Var1 == nil </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Var1 = templ.NopComponent
+                }</span>
+                <span class="cov8" title="1">ctx = templ.ClearChildren(ctx)
+                _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;header&gt;&lt;nav class=\"bg-white border-gray-200 px-4 lg:px-6 py-2.5 bg-gray-800\"&gt;&lt;div class=\"flex flex-wrap justify-between items-center mx-auto max-w-screen-xl\"&gt;&lt;a href=\"/home\" class=\"flex items-center\"&gt;&lt;span class=\"self-center text-2xl font-semibold whitespace-nowrap  text-yellow-500\"&gt;TG&lt;/span&gt;&lt;/a&gt;&lt;div class=\"flex items-center lg:order-2 \"&gt;&lt;span class=\" rounded-lg font-semibold text-semibold px-4 lg:px-5 py-2 lg:py-2.5 mr-2  focus:outline-none dark:focus:ring-gray-800\"&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">var templ_7745c5c3_Var2 string
+                templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("@%s", username))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/components/header.templ`, Line: 13, Col: 166}
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/span&gt; &lt;a href=\"/signout\" class=\"text-white bg-red-700 hover:bg-red-900 focus:ring-4 transition-colors  duration-300 focus:ring-blue-300 font-semibold rounded-lg text-sm px-3 py-2  focus:outline-none\"&gt;Sign out&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/nav&gt;&lt;/header&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)
+                }</span>
+                <span class="cov8" title="1">return templ_7745c5c3_Err</span>
+        })
+}
+</pre>
+		
+		<pre class="file" id="file19" style="display: none">// Code generated by templ - DO NOT EDIT.
+
+// templ: version: v0.2.663
+package layout
+
+//lint:file-ignore SA4006 This context is only used if a nested component is present.
+
+import "github.com/a-h/templ"
+import "context"
+import "io"
+import "bytes"
+
+func Base(title string, contents templ.Component) templ.Component <span class="cov8" title="1">{
+        return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) </span><span class="cov8" title="1">{
+                templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
+                if !templ_7745c5c3_IsBuffer </span><span class="cov8" title="1">{
+                        templ_7745c5c3_Buffer = templ.GetBuffer()
+                        defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
+                }</span>
+                <span class="cov8" title="1">ctx = templ.InitializeContext(ctx)
+                templ_7745c5c3_Var1 := templ.GetChildren(ctx)
+                if templ_7745c5c3_Var1 == nil </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Var1 = templ.NopComponent
+                }</span>
+                <span class="cov8" title="1">ctx = templ.ClearChildren(ctx)
+                _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;!doctype html&gt;&lt;html lang=\"en\"&gt;&lt;head&gt;&lt;meta charset=\"UTF-8\"&gt;&lt;meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"&gt;&lt;script src=\"https://unpkg.com/htmx.org@1.9.12\" integrity=\"sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;&lt;script src=\"https://unpkg.com/htmx.org/dist/ext/response-targets.js\"&gt;&lt;/script&gt;&lt;script src=\"https://unpkg.com/htmx.org@1.9.12/dist/ext/ws.js\"&gt;&lt;/script&gt;&lt;link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/themes/dark.css\"&gt;&lt;script type=\"module\" src=\"https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/shoelace-autoloader.js\"&gt;&lt;/script&gt;&lt;script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"&gt;&lt;/script&gt;&lt;script src=\"/static/js/script.js\" defer&gt;&lt;/script&gt;&lt;link rel=\"stylesheet\" href=\"/static/css/styles.css\"&gt;&lt;title&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">var templ_7745c5c3_Var2 string
+                templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(title)
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/layouts/base.component.templ`, Line: 19, Col: 17}
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/title&gt;&lt;/head&gt;&lt;body class=\"dark:bg-gray-900 min-h-screen text-white\"&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">templ_7745c5c3_Err = contents.Render(ctx, templ_7745c5c3_Buffer)
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/body&gt;&lt;/html&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">if !templ_7745c5c3_IsBuffer </span><span class="cov8" title="1">{
+                        _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)
+                }</span>
+                <span class="cov8" title="1">return templ_7745c5c3_Err</span>
+        })
+}
+</pre>
+		
+		<pre class="file" id="file20" style="display: none">// Code generated by templ - DO NOT EDIT.
+
+// templ: version: v0.2.663
+package pages
+
+//lint:file-ignore SA4006 This context is only used if a nested component is present.
+
+import "github.com/a-h/templ"
+import "context"
+import "io"
+import "bytes"
+
+import "github.com/Lafetz/showdown-trivia-game/internal/web/views/components"
+
+func Home(username string) templ.Component <span class="cov8" title="1">{
+        return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) </span><span class="cov8" title="1">{
+                templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
+                if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Buffer = templ.GetBuffer()
+                        defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
+                }</span>
+                <span class="cov8" title="1">ctx = templ.InitializeContext(ctx)
+                templ_7745c5c3_Var1 := templ.GetChildren(ctx)
+                if templ_7745c5c3_Var1 == nil </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Var1 = templ.NopComponent
+                }</span>
+                <span class="cov8" title="1">ctx = templ.ClearChildren(ctx)
+                templ_7745c5c3_Err = components.Header(username).Render(ctx, templ_7745c5c3_Buffer)
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;main hx-ext=\"response-targets\" class=\"py-6  \"&gt;&lt;section id=\"create-game\" class=\"flex flex-col items-center justify-center gap-7\"&gt;&lt;button hx-GET=\"/create\" hx-swap=\"main\" hx-target=\"main\" hx-confirm=\"Create Game?\" class=\"shadow-md rounded bg-sky-600 py-1.5 px-4 font-bold text-white transition-colors  duration-100 hover:bg-sky-800\"&gt;Create Game&lt;/button&gt;&lt;div hx-get=\"/activegames\" hx-swap=\"innerHTML\" hx-trigger=\"load\" class=\"flex justify-center\"&gt;&lt;/div&gt;&lt;/section&gt;&lt;/main&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)
+                }</span>
+                <span class="cov8" title="1">return templ_7745c5c3_Err</span>
+        })
+}
+</pre>
+		
+		<pre class="file" id="file21" style="display: none">// Code generated by templ - DO NOT EDIT.
+
+// templ: version: v0.2.663
+package pages
+
+//lint:file-ignore SA4006 This context is only used if a nested component is present.
+
+import "github.com/a-h/templ"
+import "context"
+import "io"
+import "bytes"
+
+func InternalError() templ.Component <span class="cov0" title="0">{
+        return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) </span><span class="cov0" title="0">{
+                templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
+                if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Buffer = templ.GetBuffer()
+                        defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
+                }</span>
+                <span class="cov0" title="0">ctx = templ.InitializeContext(ctx)
+                templ_7745c5c3_Var1 := templ.GetChildren(ctx)
+                if templ_7745c5c3_Var1 == nil </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Var1 = templ.NopComponent
+                }</span>
+                <span class="cov0" title="0">ctx = templ.ClearChildren(ctx)
+                _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;div class=\"w-full h-screen flex flex-col items-center justify-center\"&gt;&lt;svg class=\"w-1/2 md:w-1/3 lg:w-1/4 text-blue-600\" xmlns=\"http://www.w3.org/2000/svg\" data-name=\"Layer 1\" viewBox=\"0 0 1119.60911 699\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"&gt;&lt;circle cx=\"292.60911\" cy=\"213\" r=\"213\" fill=\"#f2f2f2\"&gt;&lt;/circle&gt;&lt;path d=\"M31.39089,151.64237c0,77.49789,48.6181,140.20819,108.70073,140.20819\" transform=\"translate(-31.39089 -100.5)\" fill=\"#2f2e41\"&gt;&lt;/path&gt;&lt;path d=\"M140.09162,291.85056c0-78.36865,54.255-141.78356,121.30372-141.78356\" transform=\"translate(-31.39089 -100.5)\" fill=\"currentColor\"&gt;&lt;/path&gt;&lt;path d=\"M70.77521,158.66768c0,73.61476,31.00285,133.18288,69.31641,133.18288\" transform=\"translate(-31.39089 -100.5)\" fill=\"currentColor\"&gt;&lt;/path&gt;&lt;path d=\"M140.09162,291.85056c0-100.13772,62.7103-181.16788,140.20819-181.16788\" transform=\"translate(-31.39089 -100.5)\" fill=\"#2f2e41\"&gt;&lt;/path&gt;&lt;path d=\"M117.22379,292.83905s15.41555-.47479,20.06141-3.783,23.713-7.2585,24.86553-1.95278,23.16671,26.38821,5.76263,26.5286-40.43935-2.711-45.07627-5.53549S117.22379,292.83905,117.22379,292.83905Z\" transform=\"translate(-31.39089 -100.5)\" fill=\"#a8a8a8\"&gt;&lt;/path&gt;&lt;path d=\"M168.224,311.78489c-17.40408.14042-40.43933-2.71094-45.07626-5.53548-3.53126-2.151-4.93843-9.86945-5.40926-13.43043-.32607.014-.51463.02-.51463.02s.97638,12.43276,5.61331,15.2573,27.67217,5.67589,45.07626,5.53547c5.02386-.04052,6.7592-1.82793,6.66391-4.47526C173.87935,310.756,171.96329,311.75474,168.224,311.78489Z\" transform=\"translate(-31.39089 -100.5)\" opacity=\"0.2\"&gt;&lt;/path&gt;&lt;ellipse cx=\"198.60911\" cy=\"424.5\" rx=\"187\" ry=\"25.43993\" fill=\"#3f3d56\"&gt;&lt;/ellipse&gt;&lt;ellipse cx=\"198.60911\" cy=\"424.5\" rx=\"157\" ry=\"21.35866\" opacity=\"0.1\"&gt;&lt;/ellipse&gt;&lt;ellipse cx=\"836.60911\" cy=\"660.5\" rx=\"283\" ry=\"38.5\" fill=\"#3f3d56\"&gt;&lt;/ellipse&gt;&lt;ellipse cx=\"310.60911\" cy=\"645.5\" rx=\"170\" ry=\"23.12721\" fill=\"#3f3d56\"&gt;&lt;/ellipse&gt;&lt;path d=\"M494,726.5c90,23,263-30,282-90\" transform=\"translate(-31.39089 -100.5)\" fill=\"none\" stroke=\"#2f2e41\" stroke-miterlimit=\"10\" stroke-width=\"2\"&gt;&lt;/path&gt;&lt;path d=\"M341,359.5s130-36,138,80-107,149-17,172\" transform=\"translate(-31.39089 -100.5)\" fill=\"none\" stroke=\"#2f2e41\" stroke-miterlimit=\"10\" stroke-width=\"2\"&gt;&lt;/path&gt;&lt;path d=\"M215.40233,637.78332s39.0723-10.82,41.47675,24.04449-32.15951,44.78287-5.10946,51.69566\" transform=\"translate(-31.39089 -100.5)\" fill=\"none\" stroke=\"#2f2e41\" stroke-miterlimit=\"10\" stroke-width=\"2\"&gt;&lt;/path&gt;&lt;path d=\"M810.09554,663.73988,802.218,714.03505s-38.78182,20.60284-11.51335,21.20881,155.73324,0,155.73324,0,24.84461,0-14.54318-21.81478l-7.87756-52.719Z\" transform=\"translate(-31.39089 -100.5)\" fill=\"#2f2e41\"&gt;&lt;/path&gt;&lt;path d=\"M785.21906,734.69812c6.193-5.51039,16.9989-11.252,16.9989-11.252l7.87756-50.2952,113.9216.10717,7.87756,49.582c9.185,5.08711,14.8749,8.987,18.20362,11.97818,5.05882-1.15422,10.58716-5.44353-18.20362-21.38921l-7.87756-52.719-113.9216,3.02983L802.218,714.03506S769.62985,731.34968,785.21906,734.69812Z\" transform=\"translate(-31.39089 -100.5)\" opacity=\"0.1\"&gt;&lt;/path&gt;&lt;rect x=\"578.43291\" y=\"212.68859\" width=\"513.25314\" height=\"357.51989\" rx=\"18.04568\" fill=\"#2f2e41\"&gt;&lt;/rect&gt;&lt;rect x=\"595.70294\" y=\"231.77652\" width=\"478.71308\" height=\"267.83694\" fill=\"#3f3d56\"&gt;&lt;/rect&gt;&lt;circle cx=\"835.05948\" cy=\"223.29299\" r=\"3.02983\" fill=\"#f2f2f2\"&gt;&lt;/circle&gt;&lt;path d=\"M1123.07694,621.32226V652.6628a18.04341,18.04341,0,0,1-18.04568,18.04568H627.86949A18.04341,18.04341,0,0,1,609.8238,652.6628V621.32226Z\" transform=\"translate(-31.39089 -100.5)\" fill=\"#2f2e41\"&gt;&lt;/path&gt;&lt;polygon points=\"968.978 667.466 968.978 673.526 642.968 673.526 642.968 668.678 643.417 667.466 651.452 645.651 962.312 645.651 968.978 667.466\" fill=\"#2f2e41\"&gt;&lt;/polygon&gt;&lt;path d=\"M1125.828,762.03359c-.59383,2.539-2.83591,5.21743-7.90178,7.75032-18.179,9.08949-55.1429-2.42386-55.1429-2.42386s-28.4804-4.84773-28.4804-17.573a22.72457,22.72457,0,0,1,2.49658-1.48459c7.64294-4.04351,32.98449-14.02122,77.9177.42248a18.73921,18.73921,0,0,1,8.54106,5.59715C1125.07908,756.45353,1126.50669,759.15715,1125.828,762.03359Z\" transform=\"translate(-31.39089 -100.5)\" fill=\"#2f2e41\"&gt;&lt;/path&gt;&lt;path d=\"M1125.828,762.03359c-22.251,8.526-42.0843,9.1622-62.43871-4.975-10.26507-7.12617-19.59089-8.88955-26.58979-8.75618,7.64294-4.04351,32.98449-14.02122,77.9177.42248a18.73921,18.73921,0,0,1,8.54106,5.59715C1125.07908,756.45353,1126.50669,759.15715,1125.828,762.03359Z\" transform=\"translate(-31.39089 -100.5)\" opacity=\"0.1\"&gt;&lt;/path&gt;&lt;ellipse cx=\"1066.53846\" cy=\"654.13477\" rx=\"7.87756\" ry=\"2.42386\" fill=\"#f2f2f2\"&gt;&lt;/ellipse&gt;&lt;circle cx=\"835.05948\" cy=\"545.66686\" r=\"11.51335\" fill=\"#f2f2f2\"&gt;&lt;/circle&gt;&lt;polygon points=\"968.978 667.466 968.978 673.526 642.968 673.526 642.968 668.678 643.417 667.466 968.978 667.466\" opacity=\"0.1\"&gt;&lt;/polygon&gt;&lt;rect x=\"108.60911\" y=\"159\" width=\"208\" height=\"242\" fill=\"#2f2e41\"&gt;&lt;/rect&gt;&lt;rect x=\"87.60911\" y=\"135\" width=\"250\" height=\"86\" fill=\"#3f3d56\"&gt;&lt;/rect&gt;&lt;rect x=\"87.60911\" y=\"237\" width=\"250\" height=\"86\" fill=\"#3f3d56\"&gt;&lt;/rect&gt;&lt;rect x=\"87.60911\" y=\"339\" width=\"250\" height=\"86\" fill=\"#3f3d56\"&gt;&lt;/rect&gt;&lt;rect x=\"271.60911\" y=\"150\" width=\"16\" height=\"16\" fill=\"currentColor\" opacity=\"0.4\"&gt;&lt;/rect&gt;&lt;rect x=\"294.60911\" y=\"150\" width=\"16\" height=\"16\" fill=\"currentColor\" opacity=\"0.8\"&gt;&lt;/rect&gt;&lt;rect x=\"317.60911\" y=\"150\" width=\"16\" height=\"16\" fill=\"currentColor\"&gt;&lt;/rect&gt;&lt;rect x=\"271.60911\" y=\"251\" width=\"16\" height=\"16\" fill=\"currentColor\" opacity=\"0.4\"&gt;&lt;/rect&gt;&lt;rect x=\"294.60911\" y=\"251\" width=\"16\" height=\"16\" fill=\"currentColor\" opacity=\"0.8\"&gt;&lt;/rect&gt;&lt;rect x=\"317.60911\" y=\"251\" width=\"16\" height=\"16\" fill=\"currentColor\"&gt;&lt;/rect&gt;&lt;rect x=\"271.60911\" y=\"352\" width=\"16\" height=\"16\" fill=\"currentColor\" opacity=\"0.4\"&gt;&lt;/rect&gt;&lt;rect x=\"294.60911\" y=\"352\" width=\"16\" height=\"16\" fill=\"currentColor\" opacity=\"0.8\"&gt;&lt;/rect&gt;&lt;rect x=\"317.60911\" y=\"352\" width=\"16\" height=\"16\" fill=\"currentColor\"&gt;&lt;/rect&gt;&lt;circle cx=\"316.60911\" cy=\"538\" r=\"79\" fill=\"#2f2e41\"&gt;&lt;/circle&gt;&lt;rect x=\"280.60911\" y=\"600\" width=\"24\" height=\"43\" fill=\"#2f2e41\"&gt;&lt;/rect&gt;&lt;rect x=\"328.60911\" y=\"600\" width=\"24\" height=\"43\" fill=\"#2f2e41\"&gt;&lt;/rect&gt;&lt;ellipse cx=\"300.60911\" cy=\"643.5\" rx=\"20\" ry=\"7.5\" fill=\"#2f2e41\"&gt;&lt;/ellipse&gt;&lt;ellipse cx=\"348.60911\" cy=\"642.5\" rx=\"20\" ry=\"7.5\" fill=\"#2f2e41\"&gt;&lt;/ellipse&gt;&lt;circle cx=\"318.60911\" cy=\"518\" r=\"27\" fill=\"#fff\"&gt;&lt;/circle&gt;&lt;circle cx=\"318.60911\" cy=\"518\" r=\"9\" fill=\"#3f3d56\"&gt;&lt;/circle&gt;&lt;path d=\"M271.36733,565.03228c-6.37889-28.56758,14.01185-57.43392,45.544-64.47477s62.2651,10.41,68.644,38.9776-14.51861,39.10379-46.05075,46.14464S277.74622,593.59986,271.36733,565.03228Z\" transform=\"translate(-31.39089 -100.5)\" fill=\"currentColor\"&gt;&lt;/path&gt;&lt;ellipse cx=\"417.21511\" cy=\"611.34365\" rx=\"39.5\" ry=\"12.40027\" transform=\"translate(-238.28665 112.98044) rotate(-23.17116)\" fill=\"#2f2e41\"&gt;&lt;/ellipse&gt;&lt;ellipse cx=\"269.21511\" cy=\"664.34365\" rx=\"39.5\" ry=\"12.40027\" transform=\"translate(-271.07969 59.02084) rotate(-23.17116)\" fill=\"#2f2e41\"&gt;&lt;/ellipse&gt;&lt;path d=\"M394,661.5c0,7.732-19.90861,23-42,23s-43-14.268-43-22,20.90861-6,43-6S394,653.768,394,661.5Z\" transform=\"translate(-31.39089 -100.5)\" fill=\"#fff\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;div class=\"flex flex-col items-center justify-center\"&gt;&lt;p class=\"text-5xl md:text-6xl lg:text-7xl font-bold tracking-wider text-gray-600 mt-8\"&gt;500&lt;/p&gt;&lt;p class=\"text-2xl md:text-3xl lg:text-4xl font-bold text-gray-600 mt-2\"&gt;Server Error&lt;/p&gt;&lt;p class=\"md:text-lg xl:text-xl text-gray-500 mt-4\"&gt;Whoops, something went wrong on our servers.&lt;/p&gt;&lt;a href=\"/\" class=\"mt-4 inline-block rounded bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-600\"&gt;Home &lt;/a&gt;&lt;/div&gt;&lt;/div&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov0" title="0">if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)
+                }</span>
+                <span class="cov0" title="0">return templ_7745c5c3_Err</span>
+        })
+}
+</pre>
+		
+		<pre class="file" id="file22" style="display: none">// Code generated by templ - DO NOT EDIT.
+
+// templ: version: v0.2.663
+package pages
+
+//lint:file-ignore SA4006 This context is only used if a nested component is present.
+
+import "github.com/a-h/templ"
+import "context"
+import "io"
+import "bytes"
+
+func NotFound() templ.Component <span class="cov0" title="0">{
+        return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) </span><span class="cov0" title="0">{
+                templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
+                if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Buffer = templ.GetBuffer()
+                        defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
+                }</span>
+                <span class="cov0" title="0">ctx = templ.InitializeContext(ctx)
+                templ_7745c5c3_Var1 := templ.GetChildren(ctx)
+                if templ_7745c5c3_Var1 == nil </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Var1 = templ.NopComponent
+                }</span>
+                <span class="cov0" title="0">ctx = templ.ClearChildren(ctx)
+                _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;div class=\"min-h-screen flex flex-grow items-center justify-center bg-gray-50\"&gt;&lt;div class=\"rounded-lg bg-white p-8 text-center shadow-xl\"&gt;&lt;h1 class=\"mb-4 text-4xl font-bold\"&gt;404&lt;/h1&gt;&lt;p class=\"text-gray-600\"&gt;Oops! The page you are looking for could not be found.&lt;/p&gt;&lt;a href=\"/\" class=\"mt-4 inline-block rounded bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-600\"&gt;Home &lt;/a&gt;&lt;/div&gt;&lt;/div&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov0" title="0">if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)
+                }</span>
+                <span class="cov0" title="0">return templ_7745c5c3_Err</span>
+        })
+}
+</pre>
+		
+		<pre class="file" id="file23" style="display: none">// Code generated by templ - DO NOT EDIT.
+
+// templ: version: v0.2.663
+package pages
+
+//lint:file-ignore SA4006 This context is only used if a nested component is present.
+
+import "github.com/a-h/templ"
+import "context"
+import "io"
+import "bytes"
+
+import "github.com/Lafetz/showdown-trivia-game/internal/web/form"
+
+func Signin(form form.SigninUser, message string) templ.Component <span class="cov8" title="1">{
+        return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) </span><span class="cov8" title="1">{
+                templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
+                if !templ_7745c5c3_IsBuffer </span><span class="cov8" title="1">{
+                        templ_7745c5c3_Buffer = templ.GetBuffer()
+                        defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
+                }</span>
+                <span class="cov8" title="1">ctx = templ.InitializeContext(ctx)
+                templ_7745c5c3_Var1 := templ.GetChildren(ctx)
+                if templ_7745c5c3_Var1 == nil </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Var1 = templ.NopComponent
+                }</span>
+                <span class="cov8" title="1">ctx = templ.ClearChildren(ctx)
+                _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;div id=\"main\" hx-ext=\"response-targets\"&gt;&lt;section class=\"bg-gray-50 dark:bg-gray-900\"&gt;&lt;div class=\"flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0\"&gt;&lt;a href=\"/home\" class=\"flex items-center mb-6 text-3xl font-semibold text-yellow-500 \"&gt;Trivia Game&lt;/a&gt;&lt;div class=\"w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700\"&gt;&lt;div class=\"p-6 space-y-4 md:space-y-6 sm:p-8\"&gt;&lt;h1 class=\"text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center\"&gt;Sign in&lt;/h1&gt;&lt;form hx-post=\"/signin\" hx-target-200=\"#message-box\" hx-target-422=\"#main\" hx-target-401=\"#invalidAuth\" class=\"space-y-4 md:space-y-6 flex flex-col \"&gt;&lt;div&gt;&lt;label for=\"email\" class=\"block mb-2 text-sm font-medium text-gray-900 dark:text-white\"&gt;Your email&lt;/label&gt; &lt;input type=\"email\" name=\"email\" id=\"email\" value=\"")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">var templ_7745c5c3_Var2 string
+                templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(form.Email)
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/pages/signin.templ`, Line: 20, Col: 70}
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500\" placeholder=\"name@company.com\" required=\"\"&gt;&lt;div&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">var templ_7745c5c3_Var3 string
+                templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(form.Errors["email"])
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/pages/signin.templ`, Line: 21, Col: 35}
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;label for=\"password\" class=\"block mb-2 text-sm font-medium text-gray-900 dark:text-white\"&gt;Password&lt;/label&gt; &lt;input type=\"password\" name=\"password\" id=\"password\" value=\"")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">var templ_7745c5c3_Var4 string
+                templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(form.Password)
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/pages/signin.templ`, Line: 25, Col: 82}
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" placeholder=\"••••••••\" class=\"bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500\" required=\"\"&gt;&lt;div&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">var templ_7745c5c3_Var5 string
+                templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(form.Errors["password"])
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/pages/signin.templ`, Line: 26, Col: 38}
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/div&gt;&lt;/div&gt;&lt;div id=\"invalidAuth\"&gt;&lt;/div&gt;&lt;button type=\"submit\" class=\"text-white bg-sky-600 hover:bg-sky-800 focus:ring-4 transition-colors  duration-300 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none\"&gt;sign in&lt;/button&gt;&lt;p class=\"text-sm font-light text-gray-500 dark:text-gray-400 self-center\"&gt;Don't Have an account? &lt;a href=\"/signup\" class=\"font-medium text-primary-600 hover:underline dark:text-primary-500\"&gt;Sign up here&lt;/a&gt;&lt;/p&gt;&lt;/form&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;&lt;/div&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">if !templ_7745c5c3_IsBuffer </span><span class="cov8" title="1">{
+                        _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)
+                }</span>
+                <span class="cov8" title="1">return templ_7745c5c3_Err</span>
+        })
+}
+
+func InvalidAuth() templ.Component <span class="cov8" title="1">{
+        return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) </span><span class="cov8" title="1">{
+                templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
+                if !templ_7745c5c3_IsBuffer </span><span class="cov8" title="1">{
+                        templ_7745c5c3_Buffer = templ.GetBuffer()
+                        defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
+                }</span>
+                <span class="cov8" title="1">ctx = templ.InitializeContext(ctx)
+                templ_7745c5c3_Var6 := templ.GetChildren(ctx)
+                if templ_7745c5c3_Var6 == nil </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Var6 = templ.NopComponent
+                }</span>
+                <span class="cov8" title="1">ctx = templ.ClearChildren(ctx)
+                _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;div id=\"#invalidAuth\"&gt;incorrect email or password&lt;/div&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">if !templ_7745c5c3_IsBuffer </span><span class="cov8" title="1">{
+                        _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)
+                }</span>
+                <span class="cov8" title="1">return templ_7745c5c3_Err</span>
+        })
+}
+</pre>
+		
+		<pre class="file" id="file24" style="display: none">// Code generated by templ - DO NOT EDIT.
+
+// templ: version: v0.2.663
+package pages
+
+//lint:file-ignore SA4006 This context is only used if a nested component is present.
+
+import "github.com/a-h/templ"
+import "context"
+import "io"
+import "bytes"
+
+import "github.com/Lafetz/showdown-trivia-game/internal/web/form"
+
+func Signup(form form.SignupUser) templ.Component <span class="cov8" title="1">{
+        return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) </span><span class="cov8" title="1">{
+                templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
+                if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Buffer = templ.GetBuffer()
+                        defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
+                }</span>
+                <span class="cov8" title="1">ctx = templ.InitializeContext(ctx)
+                templ_7745c5c3_Var1 := templ.GetChildren(ctx)
+                if templ_7745c5c3_Var1 == nil </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Var1 = templ.NopComponent
+                }</span>
+                <span class="cov8" title="1">ctx = templ.ClearChildren(ctx)
+                _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;div id=\"main\" hx-ext=\"response-targets\" class=\"w-100 pt-5\"&gt;&lt;section class=\"bg-gray-50 dark:bg-gray-900\"&gt;&lt;div class=\"flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0\"&gt;&lt;a href=\"/home\" class=\"flex items-center mb-6 text-3xl font-bold text-yellow-500\"&gt;Trivia Game&lt;/a&gt;&lt;div class=\"w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700\"&gt;&lt;div class=\"p-6 space-y-4 md:space-y-6 sm:p-8\"&gt;&lt;h1 class=\"text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center\"&gt;Sign up&lt;/h1&gt;&lt;form hx-post=\"/signup\" hx-target-201=\"#message-box\" hx-target-422=\"#main\" class=\"space-y-4 md:space-y-6 flex flex-col \"&gt;&lt;div&gt;&lt;label for=\"email\" class=\"block mb-2 text-sm font-medium text-gray-900 dark:text-white\"&gt;Your email&lt;/label&gt; &lt;input type=\"email\" name=\"email\" id=\"email\" value=\"")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">var templ_7745c5c3_Var2 string
+                templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(form.Email)
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/pages/signup.templ`, Line: 20, Col: 70}
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500\" placeholder=\"name@company.com\" required=\"\"&gt;&lt;div&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">var templ_7745c5c3_Var3 string
+                templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(form.Errors["email"])
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/pages/signup.templ`, Line: 21, Col: 35}
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;label for=\"username\" class=\"block mb-2 text-sm font-medium text-gray-900 dark:text-white\"&gt;Your Username&lt;/label&gt; &lt;input type=\"username\" name=\"username\" id=\"username\" value=\"")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">var templ_7745c5c3_Var4 string
+                templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(form.Username)
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/pages/signup.templ`, Line: 25, Col: 82}
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500\" placeholder=\"name@company.com\" required=\"\"&gt;&lt;div&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">var templ_7745c5c3_Var5 string
+                templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(form.Errors["username"])
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/pages/signup.templ`, Line: 26, Col: 38}
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;label for=\"password\" class=\"block mb-2 text-sm font-medium text-gray-900 dark:text-white\"&gt;Password&lt;/label&gt; &lt;input type=\"password\" name=\"password\" id=\"password\" value=\"")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">var templ_7745c5c3_Var6 string
+                templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(form.Password)
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/pages/signup.templ`, Line: 30, Col: 82}
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" placeholder=\"••••••••\" class=\"bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500\" required=\"\"&gt;&lt;div&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">var templ_7745c5c3_Var7 string
+                templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(form.Errors["password"])
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/pages/signup.templ`, Line: 31, Col: 38}
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;/div&gt;&lt;/div&gt;&lt;button type=\"submit\" class=\"text-white bg-sky-600 hover:bg-sky-800 focus:ring-4 focus:ring-blue-300 transition-colors  duration-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none\"&gt;Create an account&lt;/button&gt;&lt;p class=\"text-sm font-light text-gray-500 dark:text-gray-400 self-center\"&gt;Already have an account? &lt;a href=\"/signin\" class=\"font-medium text-primary-600 hover:underline dark:text-primary-500\"&gt;Signin here&lt;/a&gt;&lt;/p&gt;&lt;/form&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;&lt;/div&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)
+                }</span>
+                <span class="cov8" title="1">return templ_7745c5c3_Err</span>
+        })
+}
+
+func SignupSuccess() templ.Component <span class="cov8" title="1">{
+        return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) </span><span class="cov8" title="1">{
+                templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
+                if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Buffer = templ.GetBuffer()
+                        defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
+                }</span>
+                <span class="cov8" title="1">ctx = templ.InitializeContext(ctx)
+                templ_7745c5c3_Var8 := templ.GetChildren(ctx)
+                if templ_7745c5c3_Var8 == nil </span><span class="cov0" title="0">{
+                        templ_7745c5c3_Var8 = templ.NopComponent
+                }</span>
+                <span class="cov8" title="1">ctx = templ.ClearChildren(ctx)
+                _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("&lt;div id=\"message-box\"&gt;account created! Sign in to continue&lt;/div&gt;")
+                if templ_7745c5c3_Err != nil </span><span class="cov0" title="0">{
+                        return templ_7745c5c3_Err
+                }</span>
+                <span class="cov8" title="1">if !templ_7745c5c3_IsBuffer </span><span class="cov0" title="0">{
+                        _, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)
+                }</span>
+                <span class="cov8" title="1">return templ_7745c5c3_Err</span>
+        })
+}
+</pre>
+		
+		<pre class="file" id="file25" style="display: none">package ws
+
+import (
+        "encoding/json"
+        "fmt"
+        "log"
+        "strconv"
+        "time"
+
+        "github.com/Lafetz/showdown-trivia-game/internal/core/game"
+        render "github.com/Lafetz/showdown-trivia-game/internal/web/Render"
+        "github.com/gorilla/websocket"
+)
+
+var (
+        pongWait     = 10 * time.Second
+        pingInterval = (pongWait * 9) / 10
+)
+
+type ClientList map[*Client]bool
+type Client struct {
+        Username   string
+        connection *websocket.Conn
+        room       *Room
+        egress     chan []byte
+}
+
+func NewClient(conn *websocket.Conn, room *Room) *Client <span class="cov0" title="0">{
+        c := &amp;Client{
+                Username:   fmt.Sprintf("user%s", strconv.Itoa(len(room.clients))),
+                connection: conn,
+                room:       room,
+                egress:     make(chan []byte),
+        }
+
+        return c
+}</span>
+func (c *Client) readMessage() <span class="cov0" title="0">{
+        defer func() </span><span class="cov0" title="0">{
+                c.room.removeClient(c)
+        }</span>()
+        <span class="cov0" title="0">if err := c.connection.SetReadDeadline(time.Now().Add(pongWait)); err != nil </span><span class="cov0" title="0">{
+                log.Println(err)
+                return
+        }</span>
+        <span class="cov0" title="0">c.connection.SetReadLimit(512)
+        c.connection.SetPongHandler(c.pongHandler)
+        for </span><span class="cov0" title="0">{
+                _, msg, err := c.connection.ReadMessage()
+                if err != nil </span><span class="cov0" title="0">{
+                        if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway,
+                                websocket.CloseAbnormalClosure) </span><span class="cov0" title="0">{
+                                log.Println("error reading msg: ", err)
+                        }</span>
+                        <span class="cov0" title="0">break</span>
+                }
+
+                <span class="cov0" title="0">var req Event
+                if err := json.Unmarshal(msg, &amp;req); err != nil </span><span class="cov0" title="0">{
+                        log.Println("error reading message", err)
+                        break</span>
+                }
+                //check if valid
+                //
+                <span class="cov0" title="0">switch req.EventType </span>{
+                case StartGame:<span class="cov0" title="0">
+                        var players []*game.Player
+                        for c := range c.room.clients </span><span class="cov0" title="0">{
+
+                                players = append(players, game.NewPlayer(c.Username))
+                        }</span>
+                        <span class="cov0" title="0">go c.room.Game.Start(players)</span>
+                case SendAnswer:<span class="cov0" title="0">
+                        answer := game.NewAnswer(c.Username, req.Payload)
+                        c.room.Game.AnswerCh &lt;- answer
+                        buff := render.RenderUserAnswer(req.Payload)
+                        c.egress &lt;- buff.Bytes()</span>
+                default:<span class="cov0" title="0">
+                        log.Println("unknown event type:", req.EventType)</span>
+                }
+
+        }
+}
+func (c *Client) writeMessage() <span class="cov0" title="0">{
+        defer func() </span><span class="cov0" title="0">{
+                c.room.removeClient(c)
+        }</span>()
+        <span class="cov0" title="0">ticker := time.NewTicker(pingInterval)
+        //
+        // buf := render.RenderWS()
+        // err := c.connection.WriteMessage(websocket.TextMessage, buf.Bytes())
+        // println("ping")
+        // if err != nil {
+        //         return
+        // }
+        //
+        for </span><span class="cov0" title="0">{
+                select </span>{
+                case message, ok := &lt;-c.egress:<span class="cov0" title="0">
+
+                        if !ok </span><span class="cov0" title="0">{
+                                if err := c.connection.WriteMessage(websocket.CloseMessage, nil); err != nil </span><span class="cov0" title="0">{
+                                        log.Println("connection is closed", err)
+                                }</span>
+                                <span class="cov0" title="0">return</span>
+                        }
+
+                        <span class="cov0" title="0">if err := c.connection.WriteMessage(websocket.TextMessage, message); err != nil </span><span class="cov0" title="0">{
+                                log.Println("failed to send msg", err)
+                        }</span>
+                        <span class="cov0" title="0">log.Print("message sent")</span>
+
+                case &lt;-ticker.C:<span class="cov0" title="0">
+
+                        if err := c.connection.WriteMessage(websocket.PingMessage, []byte("")); err != nil </span><span class="cov0" title="0">{
+                                log.Println("ping failed", err)
+                                return
+                        }</span>
+                }
+        }
+}
+func (c *Client) pongHandler(pongMsg string) error <span class="cov0" title="0">{
+
+        return c.connection.SetReadDeadline(time.Now().Add(pongWait))
+}</span>
+</pre>
+		
+		<pre class="file" id="file26" style="display: none">package ws
+
+type Event struct {
+        EventType string `json:"type"`
+        Payload   string `json:"payload"`
+}
+
+func (e *Event) valid() error <span class="cov0" title="0">{
+        return nil
+}</span>
+
+// type EventHandler func(event Event, c *Client) error
+
+const (
+        EventSendMessage = "send_message"
+        NewPlayer        = "new_player"
+        StartGame        = "start_game"
+        SendAnswer       = "send_answer"
+)
+
+// type SendMessageEvent struct {
+//         Message string `json:"message"`
+//         From    string `json:"from"`
+// }
+
+// func sendMessage(event Event, c *Client) error {
+//         fmt.Println(event.EventType, event.Payload)
+//         return nil
+// }
+</pre>
+		
+		<pre class="file" id="file27" style="display: none">package ws
+
+import (
+        "errors"
+        "net/http"
+        "sync"
+
+        "github.com/Lafetz/showdown-trivia-game/internal/web/entity"
+        "github.com/gorilla/websocket"
+)
+
+var (
+        WebsocketUpgrader = websocket.Upgrader{
+                ReadBufferSize:  1024,
+                WriteBufferSize: 1024,
+                CheckOrigin:     checkOrigin,
+        }
+)
+
+type Hub struct {
+        rooms RoomList
+        sync.RWMutex
+}
+
+func (h *Hub) getRoom(roomId string) (*Room, error) <span class="cov0" title="0">{
+        if room, ok := h.rooms[roomId]; ok </span><span class="cov0" title="0">{
+                return room, nil
+        }</span> else<span class="cov0" title="0"> {
+                return nil, errors.New(("room doens't exist"))
+        }</span>
+}
+func (h *Hub) addRoom(room *Room) <span class="cov0" title="0">{
+        h.Lock()
+        defer h.Unlock()
+        h.rooms[room.Id] = room
+}</span>
+func (h *Hub) ListRooms() []entity.RoomData <span class="cov8" title="1">{
+        h.Lock()
+        defer h.Unlock()
+        var rooms []entity.RoomData
+        for _, r := range h.rooms </span><span class="cov0" title="0">{
+
+                rooms = append(rooms, entity.RoomData{
+                        Owner:   r.owner,
+                        Id:      r.Id,
+                        Players: r.getUsers(),
+                })
+        }</span>
+        <span class="cov8" title="1">return rooms</span>
+}
+func (h *Hub) removeRoom(room *Room) <span class="cov0" title="0">{
+        h.Lock()
+        defer h.Unlock()
+        delete(h.rooms, room.Id)
+}</span>
+
+func NewHub() *Hub <span class="cov0" title="0">{
+        h := &amp;Hub{
+                rooms: make(RoomList),
+                // handlers: make(map[string]EventHandler),
+        }
+        return h
+}</span>
+func checkOrigin(r *http.Request) bool <span class="cov0" title="0">{
+        // origin := r.Header.Get("Origin")
+        // switch origin {
+        // case "http://localhost:300":
+        //         return true
+        // default:
+        //         return false
+        // }
+        //        id := uuid.New().String()[:7]
+
+        return true
+}</span>
+</pre>
+		
+		<pre class="file" id="file28" style="display: none">package ws
+
+import (
+        "sync"
+
+        "github.com/Lafetz/showdown-trivia-game/internal/core/game"
+        render "github.com/Lafetz/showdown-trivia-game/internal/web/Render"
+)
+
+type RoomList map[string]*Room
+type Room struct {
+        hub     *Hub
+        clients ClientList
+        Game    game.Game
+        Id      string
+        owner   string
+        sync.RWMutex
+}
+
+func (r *Room) sendMsg(msg []byte) <span class="cov0" title="0">{
+
+        for c := range r.clients </span><span class="cov0" title="0">{
+
+                c.egress &lt;- msg
+        }</span>
+
+}
+
+func NewRoom(id string) *Room <span class="cov0" title="0">{
+        questions := []game.Question{
+                {Question: "What is 2+2?", Options: []string{"A. 2", "B. 4", "C. 43", "D. 1"}, CorrectAnswer: "B"},
+                {Question: "What is the capital of France?", Options: []string{"A. London", "B. Berlin", "C. Paris", "D. Rome"}, CorrectAnswer: "C"},
+        }
+        g := *game.NewGame(questions)
+        r := &amp;Room{
+                Id:      id,
+                clients: make(ClientList),
+                owner:   "unkownd_owner",
+                Game:    g,
+        }
+        go func() </span><span class="cov0" title="0">{
+                for m := range g.Message </span><span class="cov0" title="0">{
+                        switch m.MsgType </span>{
+                        case "question":<span class="cov0" title="0">
+                                if payload, ok := m.Payload.(game.Question); ok </span><span class="cov0" title="0">{
+                                        println(g.CurrentQues, "from here")
+                                        buff := render.RenderQuestion(payload, r.Game.CurrentQues, len(g.Questions))
+                                        r.sendMsg(buff.Bytes())
+                                }</span> else<span class="cov0" title="0"> {
+                                        continue</span>
+                                }
+                        case "info":<span class="cov0" title="0">
+                                if payload, ok := m.Payload.(game.Info); ok </span><span class="cov0" title="0">{
+                                        buff := render.RenderGameMessage(payload)
+                                        r.sendMsg(buff.Bytes())
+                                }</span> else<span class="cov0" title="0"> {
+                                        continue</span>
+                                }
+                        case "game_end":<span class="cov0" title="0">
+                                if payload, ok := m.Payload.(game.Winners); ok </span><span class="cov0" title="0">{
+                                        buff := render.GameEnd(payload)
+                                        r.sendMsg(buff.Bytes())
+                                }</span> else<span class="cov0" title="0"> {
+                                        continue</span>
+                                }
+                        }
+
+                }
+        }()
+        <span class="cov0" title="0">return r</span>
+}
+func (r *Room) addClient(client *Client) <span class="cov0" title="0">{
+        r.Lock()
+        defer r.Unlock()
+        r.clients[client] = true
+        buff := render.RenderPlayers(r.Id, r.getUsers())
+        r.sendMsg(buff.Bytes())
+}</span>
+func (r *Room) removeClient(client *Client) <span class="cov0" title="0">{
+        r.Lock()
+        defer r.Unlock()
+        if _, ok := r.clients[client]; ok </span><span class="cov0" title="0">{
+                client.connection.Close()
+                delete(r.clients, client)
+        }</span>
+}
+func (r *Room) getUsers() []string <span class="cov0" title="0">{
+        var users []string
+        for c := range r.clients </span><span class="cov0" title="0">{
+                users = append(users, c.Username)
+        }</span>
+        <span class="cov0" title="0">return users</span>
+}
+</pre>
+		
+		<pre class="file" id="file29" style="display: none">package ws
+
+import (
+        "log"
+        "net/http"
+
+        "github.com/google/uuid"
+)
+
+func (h *Hub) CreateRoom(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+
+        conn, err := WebsocketUpgrader.Upgrade(w, r, nil)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Println(err)
+                return
+        }</span>
+        <span class="cov0" title="0">id := uuid.New().String()[:7]
+        room := NewRoom(id)
+        h.addRoom(room)
+
+        client := NewClient(conn, room)
+        //println("wtfc")
+        go client.readMessage()
+        go client.writeMessage()
+        room.addClient(client)</span>
+
+}
+func (h *Hub) JoinRoom(w http.ResponseWriter, r *http.Request, roomId string) <span class="cov0" title="0">{
+
+        if roomId == "" </span><span class="cov0" title="0">{
+                w.WriteHeader(http.StatusUnauthorized)
+                return
+        }</span>
+        <span class="cov0" title="0">room, err := h.getRoom(roomId)
+        if err != nil </span><span class="cov0" title="0">{
+                println(err)
+                return
+        }</span>
+        <span class="cov0" title="0">conn, err := WebsocketUpgrader.Upgrade(w, r, nil)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Println(err)
+                return
+        }</span>
+        <span class="cov0" title="0">client := NewClient(conn, room)
+        go client.readMessage()
+        go client.writeMessage()
+        room.addClient(client)</span>
+
+}
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>

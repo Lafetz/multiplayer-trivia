@@ -1,46 +1,61 @@
 package handlers
 
 import (
+	"errors"
+	"log"
 	"net/http"
 
 	render "github.com/Lafetz/showdown-trivia-game/internal/web/Render"
-	"github.com/Lafetz/showdown-trivia-game/internal/ws"
+	"github.com/Lafetz/showdown-trivia-game/internal/web/ws"
 )
 
-func Home() http.HandlerFunc {
+func Home(logger *log.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		username, ok := r.Context().Value("username").(string)
 		if !ok {
-			render.InternalServer(w, r)
+			ServerError(w, r, errors.New("username couldn't"), logger)
 			return
 		}
 
-		render.Home(w, r, username)
+		err := render.Home(w, r, username)
+		if err != nil {
+			ServerError(w, r, err, logger)
+		}
 
 	}
 }
-func sendGamePage(w http.ResponseWriter, r *http.Request, create bool, id string) {
-	render.SendGamePage(w, r, create, id)
+func sendGamePage(w http.ResponseWriter, r *http.Request, create bool, id string) error {
+	return render.SendGamePage(w, r, create, id)
 
 }
-func CreateGet() http.HandlerFunc {
+func CreateGet(logger *log.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		gameOwner := true
 		id := ""
-		sendGamePage(w, r, gameOwner, id)
+		err := sendGamePage(w, r, gameOwner, id)
+		if err != nil {
+			ServerError(w, r, err, logger)
+		}
+
 	}
 }
-func ActiveGames(hub *ws.Hub) http.HandlerFunc {
+func ActiveGames(hub *ws.Hub, logger *log.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rooms := hub.ListRooms()
-		render.ActiveGames(w, r, rooms)
+		err := render.ActiveGames(w, r, rooms)
+		if err != nil {
+			ServerError(w, r, err, logger)
+		}
 	}
 }
-func Join() http.HandlerFunc {
+func Join(logger *log.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		gameOwner := false
 		id := r.PathValue("id")
-		sendGamePage(w, r, gameOwner, id)
+		err := sendGamePage(w, r, gameOwner, id)
+		if err != nil {
+			ServerError(w, r, err, logger)
+		}
 	}
 }
 func CreateWs(hub *ws.Hub) http.HandlerFunc {

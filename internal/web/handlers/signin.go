@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/Lafetz/showdown-trivia-game/internal/core/user"
@@ -11,22 +12,22 @@ import (
 	"github.com/gorilla/sessions"
 )
 
-func SigninGet() http.HandlerFunc {
+func SigninGet(logger *log.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		p := pages.Signin(form.SigninUser{}, "")
 		err := layout.Base("Sign in", p).Render(r.Context(), w)
 		if err != nil {
-			render.InternalServer(w, r)
+			ServerError(w, r, err, logger)
 			return
 		}
 	}
 }
-func SigninPost(userservice user.UserServiceApi, store *sessions.CookieStore) http.HandlerFunc {
+func SigninPost(userservice user.UserServiceApi, store *sessions.CookieStore, logger *log.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		r.Body = http.MaxBytesReader(w, r.Body, 4096)
 		err := r.ParseForm()
 		if err != nil {
-			render.InternalServer(w, r)
+			ServerError(w, r, err, logger)
 			return
 		}
 		form := form.SigninUser{
@@ -34,19 +35,24 @@ func SigninPost(userservice user.UserServiceApi, store *sessions.CookieStore) ht
 			Password: r.PostForm.Get("password"),
 		}
 		if !form.Valid() {
-			render.InvalidForm(w, r, form)
+			if err := render.InvalidForm(w, r, form); err != nil {
+				ServerError(w, r, err, logger)
+			}
 			return
 		}
 		user, err := userservice.GetUser(form.Email)
 		if err != nil {
-			render.IncorrectPasswordEmail(w, r)
+
+			if err := render.IncorrectPasswordEmail(w, r); err != nil {
+				ServerError(w, r, err, logger)
+			}
 			return
 		}
 
 		err = matchPassword(form.Password, user.Password)
 		if err != nil {
-			if err == ErrInvalidPassword {
-				render.IncorrectPasswordEmail(w, r)
+			if err := render.IncorrectPasswordEmail(w, r); err != nil {
+				ServerError(w, r, err, logger)
 			}
 			return
 		}
@@ -55,7 +61,7 @@ func SigninPost(userservice user.UserServiceApi, store *sessions.CookieStore) ht
 		session.Values["username"] = user.Username
 		err = session.Save(r, w)
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			ServerError(w, r, err, logger)
 			return
 		}
 		w.Header().Set("HX-Redirect", "/home")
