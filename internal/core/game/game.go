@@ -1,11 +1,12 @@
 package game
 
 import (
+	"sync"
 	"time"
 )
 
 const (
-	DefaultTimerSpan = 3 * time.Second
+	DefaultTimerSpan = 1 * time.Second
 )
 
 type Message struct {
@@ -21,45 +22,51 @@ func NewMessage(MsgType string, payload interface{}) Message {
 }
 
 type Game struct {
-	Questions     []Question
-	Players       []*Player
-	CurrentQues   int
-	AnswerCh      chan Answer
-	Message       chan Message
-	timerSpan     time.Duration
-	gameStarted   bool
-	playerAnswers map[int][]Answer
+	Questions   []Question
+	Players     []*Player
+	CurrentQues int
+	AnswerCh    chan Answer
+	Message     chan Message
+	timerSpan   time.Duration
+	gameStarted bool
+	//	playerAnswers map[int][]Answer
+	sync.RWMutex
 }
 
 func (g *Game) Start(players []*Player) {
+
 	g.Players = players
 	g.gameStarted = true
 	for _, question := range g.Questions {
+		doneCh := make(chan struct{})
 		g.CurrentQues++
-		g.AskQuestion(question)
-		//time.Sleep(g.timerSpan)
+		g.AskQuestion(question, doneCh)
 
 	}
 
 }
 
-func (g *Game) AskQuestion(question Question) {
+func (g *Game) AskQuestion(question Question, doneCh chan struct{}) {
+
 	timer := time.NewTimer(g.timerSpan)
+
 	g.Message <- NewMessage("question", question)
-	println(g.CurrentQues)
-	//go func() {
 
 	answers := make(map[string]string)
+
 	for {
+
 		select {
 		case answer := <-g.AnswerCh:
 			answers[answer.username] = answer.answer
-		case <-timer.C:
 
+		case <-timer.C:
 			for username, answer := range answers {
-				println(username, answer)
+
 				if question.CorrectAnswer == answer {
+
 					for _, player := range g.Players {
+
 						if player.Username == username {
 
 							player.Score++
@@ -68,12 +75,17 @@ func (g *Game) AskQuestion(question Question) {
 
 				}
 
-				if len(g.Questions) == (g.CurrentQues) {
-					g.DisplayWinner()
-				}
-
-				return
 			}
+
+			if len(g.Questions) == (g.CurrentQues) {
+				g.DisplayWinner()
+			}
+			answers = make(map[string]string)
+			close(doneCh)
+		case <-doneCh:
+			return
+		default:
+			continue
 
 		}
 	}
@@ -86,16 +98,16 @@ func (g *Game) DisplayWinner() {
 		winners[player.Username] = player.Score
 	}
 	g.Message <- NewMessage("game_end", winners)
+	println("closed")
+	close(g.Message)
 }
 func NewGame(questions []Question) *Game {
 	return &Game{
-		Questions: questions,
-		//	Players:   players,
-		AnswerCh:      make(chan Answer),
-		Message:       make(chan Message),
-		timerSpan:     DefaultTimerSpan,
-		CurrentQues:   0,
-		gameStarted:   false,
-		playerAnswers: make(map[int][]Answer),
+		Questions:   questions,
+		AnswerCh:    make(chan Answer),
+		Message:     make(chan Message),
+		timerSpan:   DefaultTimerSpan,
+		CurrentQues: 0,
+		gameStarted: false,
 	}
 }

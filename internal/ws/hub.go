@@ -19,7 +19,6 @@ var (
 
 type Hub struct {
 	rooms RoomList
-	// handlers map[string]EventHandler
 	sync.RWMutex
 }
 

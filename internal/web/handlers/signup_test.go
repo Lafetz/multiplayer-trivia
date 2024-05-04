@@ -51,7 +51,7 @@ func TestSignupPost(t *testing.T) {
 	handler := SignupPost(userService)
 
 	t.Run("ValidSignup", func(t *testing.T) {
-		formData := strings.NewReader("username=test&email=test@example.com&password=pass123")
+		formData := strings.NewReader("username=test&email=test@example.com&password=pass123456")
 		req := httptest.NewRequest("POST", "/signup", formData)
 		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 		w := httptest.NewRecorder()

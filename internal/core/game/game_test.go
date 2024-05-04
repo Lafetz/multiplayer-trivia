@@ -16,31 +16,37 @@ func TestGame(t *testing.T) {
 	}
 	game := NewGame(questions)
 	//change default timer so that tests finishes quicker
-	span := 500 * time.Microsecond
+	span := 100 * time.Microsecond
 	game.timerSpan = span
-	// go func() {
-	// 	for msg := range game.Message {
-	// 		//println(msg)
-	// 	}
-	// }()
+
 	// start the game
 	go game.Start(players)
-	// simulate players answering questions
-	go func() {
-		game.AnswerCh <- NewAnswer("panzer", "1")
-		game.AnswerCh <- NewAnswer("leopard", "1")
-		time.Sleep(span)
-		game.AnswerCh <- NewAnswer("panzer", "2") //playe a answers first
-		time.Sleep(span / 100)
-		game.AnswerCh <- NewAnswer("leopard", "2")
-	}()
 
-	// wait for the game to finish
-	<-time.After(span * 1000)
+loop:
+	for m := range game.Message {
+		switch m.MsgType {
+		case "question":
+			if game.CurrentQues == 1 {
+				game.AnswerCh <- NewAnswer("panzer", "B")
+				game.AnswerCh <- NewAnswer("leopard", "B")
+			} else {
+
+				game.AnswerCh <- NewAnswer("panzer", "C")
+				game.AnswerCh <- NewAnswer("leopard", "B")
+				//continue
+			}
+		case "info":
+			continue
+		case "game_end":
+			break loop
+		}
+
+	}
 
 	// verify player scores
-	expectedScores := []int{1, 2} // expected scores for each player
+	expectedScores := []int{2, 1} // expected scores for each player
 	for i, player := range game.Players {
+
 		if player.Score != expectedScores[i] {
 			t.Errorf("Player %s: got score %d, expected %d", player.Username, player.Score, expectedScores[i])
 		}

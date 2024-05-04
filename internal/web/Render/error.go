@@ -12,7 +12,7 @@ func InternalServer(w http.ResponseWriter, r *http.Request) {
 	err := layout.Base("error", p).Render(r.Context(), w)
 	if err != nil {
 		http.Error(w, "Internal server Error", http.StatusInternalServerError)
-		//log here so return the error
+		// return the error
 		return
 	}
 }

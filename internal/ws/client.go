@@ -66,7 +66,7 @@ func (c *Client) readMessage() {
 		case StartGame:
 			var players []*game.Player
 			for c := range c.room.clients {
-				println(c.Username, "hmmm")
+
 				players = append(players, game.NewPlayer(c.Username))
 			}
 			go c.room.Game.Start(players)
