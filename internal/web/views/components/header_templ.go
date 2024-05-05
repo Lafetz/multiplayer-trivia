@@ -25,7 +25,7 @@ func Header(username string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<header><nav class=\"bg-white border-gray-200 px-4 lg:px-6 py-2.5 bg-gray-800\"><div class=\"flex flex-wrap justify-between items-center mx-auto max-w-screen-xl\"><a href=\"/home\" class=\"flex items-center\"><span class=\"self-center text-2xl font-semibold whitespace-nowrap  text-yellow-500\">TG</span></a><div class=\"flex items-center lg:order-2 \"><span class=\" rounded-lg font-semibold text-semibold px-4 lg:px-5 py-2 lg:py-2.5 mr-2  focus:outline-none dark:focus:ring-gray-800\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<header><nav class=\"bg-gray-300 border-gray-200 px-4 lg:px-6 py-2.5 bg-gray-800\"><div class=\"flex flex-wrap justify-between items-center mx-auto max-w-screen-xl\"><a href=\"/home\" class=\"flex items-center\"><span class=\"self-center text-2xl font-semibold whitespace-nowrap  text-yellow-500\">TG</span></a><div class=\"flex items-center lg:order-2 \"><span class=\" rounded-lg font-semibold text-semibold px-4 lg:px-5 py-2 lg:py-2.5 mr-2  focus:outline-none dark:focus:ring-gray-800\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

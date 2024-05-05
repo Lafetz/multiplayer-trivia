@@ -70,13 +70,16 @@ func (store *Store) AddUser(userData *user.User) (*user.User, error) {
 	return userData, nil
 }
 func (store *Store) GetUser(email string) (*user.User, error) {
-	var user userMongo
-	err := store.users.FindOne(context.TODO(), bson.D{{Key: "email", Value: email}}).Decode(&user)
+	var userData userMongo
+	err := store.users.FindOne(context.TODO(), bson.D{{Key: "email", Value: email}}).Decode(&userData)
 	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return nil, user.ErrUserNotFound
+		}
 		return nil, err
 	}
 
-	return user.domain(), nil
+	return userData.domain(), nil
 
 }
 

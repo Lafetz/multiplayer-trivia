@@ -48,7 +48,7 @@ func TestSignupGet(t *testing.T) {
 		t.Fatal(err)
 	}
 	expectedHTML := `hx-post="/signup" `
-	println(s)
+
 	if !strings.Contains(s, expectedHTML) {
 		t.Errorf("Expected HTML %q not found in rendered output", expectedHTML)
 	}

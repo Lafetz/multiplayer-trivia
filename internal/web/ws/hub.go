@@ -2,6 +2,7 @@ package ws
 
 import (
 	"errors"
+	"log"
 	"net/http"
 	"sync"
 
@@ -16,6 +17,9 @@ var (
 		CheckOrigin:     checkOrigin,
 	}
 )
+var (
+	ErrRoomNotExist = errors.New("room doens't exist")
+)
 
 type Hub struct {
 	rooms RoomList
@@ -26,7 +30,7 @@ func (h *Hub) getRoom(roomId string) (*Room, error) {
 	if room, ok := h.rooms[roomId]; ok {
 		return room, nil
 	} else {
-		return nil, errors.New(("room doens't exist"))
+		return nil, ErrRoomNotExist
 	}
 }
 func (h *Hub) addRoom(room *Room) {
@@ -51,6 +55,11 @@ func (h *Hub) ListRooms() []entity.RoomData {
 func (h *Hub) removeRoom(room *Room) {
 	h.Lock()
 	defer h.Unlock()
+	if _, ok := h.rooms[room.Id]; !ok {
+		// Room does not exist, handle this case gracefully (e.g., log an error)
+		log.Printf("attempted to remove non-existent room: %s", room.Id)
+		return
+	}
 	delete(h.rooms, room.Id)
 }
 

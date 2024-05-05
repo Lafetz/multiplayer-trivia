@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"errors"
 	"log"
 	"net/http"
 
@@ -40,16 +41,20 @@ func SigninPost(userservice user.UserServiceApi, store *sessions.CookieStore, lo
 			}
 			return
 		}
-		user, err := userservice.GetUser(form.Email)
+		userData, err := userservice.GetUser(form.Email)
 		if err != nil {
-
-			if err := render.IncorrectPasswordEmail(w, r); err != nil {
+			if errors.Is(err, user.ErrUserNotFound) {
+				if err := render.IncorrectPasswordEmail(w, r); err != nil {
+					ServerError(w, r, err, logger)
+				}
+				return
+			} else {
 				ServerError(w, r, err, logger)
 			}
-			return
+
 		}
 
-		err = matchPassword(form.Password, user.Password)
+		err = matchPassword(form.Password, userData.Password)
 		if err != nil {
 			if err := render.IncorrectPasswordEmail(w, r); err != nil {
 				ServerError(w, r, err, logger)
@@ -58,7 +63,7 @@ func SigninPost(userservice user.UserServiceApi, store *sessions.CookieStore, lo
 		}
 		session, _ := store.Get(r, "user-session")
 		session.Values["authenticated"] = true
-		session.Values["username"] = user.Username
+		session.Values["username"] = userData.Username
 		err = session.Save(r, w)
 		if err != nil {
 			ServerError(w, r, err, logger)

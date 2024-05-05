@@ -16,7 +16,7 @@ func (a *App) requireAuth(next http.Handler) http.HandlerFunc {
 
 		username, ok := session.Values["username"].(string)
 		if !ok {
-			http.Error(w, "Username not found in session", http.StatusInternalServerError)
+			http.Redirect(w, r, "/signin", http.StatusSeeOther)
 			return
 		}
 		ctx := context.WithValue(r.Context(), "username", username)

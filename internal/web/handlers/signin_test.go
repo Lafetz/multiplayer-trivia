@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"errors"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -29,7 +28,7 @@ func (m *mockUserService) GetUser(email string) (*user.User, error) {
 			Password: p, // This should be a hashed password
 		}, nil
 	}
-	return nil, errors.New("not found") // Simulate user not found or error
+	return nil, user.ErrUserNotFound // Simulate user not found or error
 }
 func TestSigninGetHandler(t *testing.T) {
 	// Create a mock HTTP request for the SigninGet handler (GET request)
@@ -52,7 +51,7 @@ func TestSigninGetHandler(t *testing.T) {
 		t.Fatal(err)
 	}
 	expectedHTML := `hx-post="/signin"`
-	println(s)
+
 	if !strings.Contains(s, expectedHTML) {
 		t.Errorf("Expected HTML %q not found in rendered output", expectedHTML)
 	}

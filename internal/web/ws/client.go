@@ -66,7 +66,6 @@ func (c *Client) readMessage() {
 		case StartGame:
 			var players []*game.Player
 			for c := range c.room.clients {
-
 				players = append(players, game.NewPlayer(c.Username))
 			}
 			go c.room.Game.Start(players)
@@ -86,14 +85,7 @@ func (c *Client) writeMessage() {
 		c.room.removeClient(c)
 	}()
 	ticker := time.NewTicker(pingInterval)
-	//
-	// buf := render.RenderWS()
-	// err := c.connection.WriteMessage(websocket.TextMessage, buf.Bytes())
-	// println("ping")
-	// if err != nil {
-	// 	return
-	// }
-	//
+
 	for {
 		select {
 		case message, ok := <-c.egress:
@@ -108,7 +100,6 @@ func (c *Client) writeMessage() {
 			if err := c.connection.WriteMessage(websocket.TextMessage, message); err != nil {
 				log.Println("failed to send msg", err)
 			}
-			log.Print("message sent")
 
 		case <-ticker.C:
 
