@@ -3,6 +3,7 @@ package ws
 import (
 	"sync"
 
+	"github.com/Lafetz/showdown-trivia-game/internal/core/entities"
 	"github.com/Lafetz/showdown-trivia-game/internal/core/game"
 	render "github.com/Lafetz/showdown-trivia-game/internal/web/Render"
 )
@@ -27,7 +28,7 @@ func (r *Room) sendMsg(msg []byte) {
 }
 
 func NewRoom(id string) *Room {
-	questions := []game.Question{
+	questions := []entities.Question{
 		{Question: "What is 2+2?", Options: []string{"A. 2", "B. 4", "C. 43", "D. 1"}, CorrectAnswer: "B"},
 		{Question: "What is the capital of France?", Options: []string{"A. London", "B. Berlin", "C. Paris", "D. Rome"}, CorrectAnswer: "C"},
 	}
@@ -42,7 +43,7 @@ func NewRoom(id string) *Room {
 		for m := range g.Message {
 			switch m.MsgType {
 			case game.MsgQuestion:
-				if payload, ok := m.Payload.(game.Question); ok {
+				if payload, ok := m.Payload.(entities.Question); ok {
 					buff := render.RenderQuestion(payload, r.Game.CurrentQues, len(g.Questions))
 					r.sendMsg(buff.Bytes())
 				} else {

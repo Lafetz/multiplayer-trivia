@@ -3,6 +3,8 @@ package game
 import (
 	"sync"
 	"time"
+
+	"github.com/Lafetz/showdown-trivia-game/internal/core/entities"
 )
 
 const (
@@ -10,7 +12,7 @@ const (
 )
 
 type Game struct {
-	Questions   []Question
+	Questions   []entities.Question
 	Players     []*Player
 	CurrentQues int
 	AnswerCh    chan Answer
@@ -34,7 +36,7 @@ func (g *Game) Start(players []*Player) {
 
 }
 
-func (g *Game) AskQuestion(question Question, doneCh chan struct{}) {
+func (g *Game) AskQuestion(question entities.Question, doneCh chan struct{}) {
 
 	timer := time.NewTimer(g.timerSpan)
 
@@ -89,7 +91,7 @@ func (g *Game) DisplayWinner() {
 
 	close(g.Message)
 }
-func NewGame(questions []Question) *Game {
+func NewGame(questions []entities.Question) *Game {
 	return &Game{
 		Questions:   questions,
 		AnswerCh:    make(chan Answer),

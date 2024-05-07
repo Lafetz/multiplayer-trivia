@@ -3,10 +3,12 @@ package game
 import (
 	"testing"
 	"time"
+
+	"github.com/Lafetz/showdown-trivia-game/internal/core/entities"
 )
 
 func TestGame(t *testing.T) {
-	questions := []Question{
+	questions := []entities.Question{
 		{Question: "What is 2+2?", Options: []string{"A) 3", "B) 4", "C) 5", "D) 6"}, CorrectAnswer: "B"},
 		{Question: "What is the capital of France?", Options: []string{"A) London", "B) Berlin", "C) Paris", "D) Rome"}, CorrectAnswer: "C"},
 	}

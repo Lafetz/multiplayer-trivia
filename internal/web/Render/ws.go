@@ -5,6 +5,7 @@ import (
 	"context"
 	"net/http"
 
+	"github.com/Lafetz/showdown-trivia-game/internal/core/entities"
 	"github.com/Lafetz/showdown-trivia-game/internal/core/game"
 	"github.com/Lafetz/showdown-trivia-game/internal/web/views/components"
 	layout "github.com/Lafetz/showdown-trivia-game/internal/web/views/layouts"
@@ -23,7 +24,7 @@ func RenderPlayers(id string, players []string) *bytes.Buffer {
 	component := components.Players(id, players)
 	return returnBuf(component)
 }
-func RenderQuestion(q game.Question, current int, total int) *bytes.Buffer {
+func RenderQuestion(q entities.Question, current int, total int) *bytes.Buffer {
 	component := components.Question(q, current, total)
 	return returnBuf(component)
 }

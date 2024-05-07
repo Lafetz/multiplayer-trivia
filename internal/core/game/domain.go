@@ -6,16 +6,6 @@ const (
 	MsgInfo     = "info"
 )
 
-type Question struct {
-	Question      string
-	Options       []string
-	CorrectAnswer string
-}
-
-func NewQuestion() {
-
-}
-
 type Message struct {
 	MsgType string
 	Payload interface{}

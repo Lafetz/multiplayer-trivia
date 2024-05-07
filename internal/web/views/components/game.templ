@@ -3,6 +3,7 @@ package components
 import (
 	"strconv"
 	"fmt"
+	"github.com/Lafetz/showdown-trivia-game/internal/core/entities"
 )
 import "github.com/Lafetz/showdown-trivia-game/internal/web/entity"
 import "github.com/Lafetz/showdown-trivia-game/internal/core/game"
@@ -72,7 +73,7 @@ templ ActiveGames(rooms []entity.RoomData) {
 	</table>
 }
 
-templ Question(q game.Question, current int, total int) {
+templ Question(q entities.Question, current int, total int) {
 	<div id="lobby">
 		<div class="flex flex-col  min-w-80 justify-center items-center gap-5 px-2" hx-swap-oob="outerHTML:#lobby">
 			<div class="flex flex-col font-bold justify-center items-center max-w-md min-w-xs  gap-3 w-full ">

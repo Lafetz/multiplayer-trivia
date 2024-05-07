@@ -6,3 +6,5 @@ templ:
 	templ generate --watch
 air:
 	air -c .air.toml
+test:
+	go test ./...
