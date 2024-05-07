@@ -85,8 +85,8 @@ templ Question(q entities.Question, current int, total int) {
 					<span class="text-yellow-500" id="answer"></span>
 				</div>
 				<div class="flex flex-col  gap-2 w-full">
-					for i,c :=range q.Options {
-						@choice(c, i)
+					for _,c :=range q.Options {
+						@choice(c)
 					}
 				</div>
 			</div>
@@ -98,30 +98,18 @@ templ Answer(userAnswer string) {
 	<span class="text-yellow-500" id="answer">{ userAnswer }</span>
 }
 
-templ choice(choice string, i int) {
+templ choice(choice string) {
 	<button
 		hx-swap-oob="outerHTML:#answer"
 		id="keep"
 		hx-ws="send"
-		hx-vals={ jsonvalues(i) }
+		hx-vals={ jsonvalues(choice) }
 		class="shadow-md rounded bg-sky-600 py-1.5 font-bold text-white transition-colors  duration-100 hover:bg-sky-800"
 	>{ choice }</button>
 }
 
-func jsonvalues(i int) string {
-	var choice string
-	switch i {
-	case 0:
-		choice = "A"
-	case 1:
-		choice = "B"
-	case 2:
-		choice = "C"
-	case 3:
-		choice = "D"
-	default:
-		choice = "Z"
-	}
+func jsonvalues(choice string) string {
+
 	return fmt.Sprintf(`{"type": "send_answer", "payload": "%s"}`, choice)
 }
 

@@ -9,8 +9,8 @@ import (
 
 func TestGame(t *testing.T) {
 	questions := []entities.Question{
-		{Question: "What is 2+2?", Options: []string{"A) 3", "B) 4", "C) 5", "D) 6"}, CorrectAnswer: "B"},
-		{Question: "What is the capital of France?", Options: []string{"A) London", "B) Berlin", "C) Paris", "D) Rome"}, CorrectAnswer: "C"},
+		{Question: "What is 2+2?", Options: []string{"3", "4", "5", "6"}, CorrectAnswer: "4"},
+		{Question: "What is the capital of France?", Options: []string{"London", "Berlin", "Paris", "Rome"}, CorrectAnswer: "Paris"},
 	}
 	players := []*Player{
 		NewPlayer("panzer"),
@@ -29,12 +29,12 @@ loop:
 		switch m.MsgType {
 		case "question":
 			if game.CurrentQues == 1 {
-				game.AnswerCh <- NewAnswer("panzer", "B")
-				game.AnswerCh <- NewAnswer("leopard", "B")
+				game.AnswerCh <- NewAnswer("panzer", "4")
+				game.AnswerCh <- NewAnswer("leopard", "4")
 			} else {
 
-				game.AnswerCh <- NewAnswer("panzer", "C")
-				game.AnswerCh <- NewAnswer("leopard", "B")
+				game.AnswerCh <- NewAnswer("panzer", "Paris")
+				game.AnswerCh <- NewAnswer("leopard", "London")
 				//continue
 			}
 		case "info":

@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	DefaultTimerSpan = 1 * time.Second
+	DefaultTimerSpan = 3 * time.Second
 )
 
 type Game struct {

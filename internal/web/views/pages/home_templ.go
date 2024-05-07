@@ -29,7 +29,7 @@ func Home(username string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<main hx-ext=\"response-targets\" class=\"py-6  \"><section id=\"create-game\" class=\"flex flex-col items-center justify-center gap-7\"><button hx-GET=\"/create\" hx-swap=\"main\" hx-target=\"main\" hx-confirm=\"Create Game?\" class=\"shadow-md rounded bg-sky-600 py-1.5 px-4 font-bold text-white transition-colors  duration-100 hover:bg-sky-800\">Create Game</button><div hx-get=\"/activegames\" hx-swap=\"innerHTML\" hx-trigger=\"load\" class=\"flex justify-center\"></div></section></main>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
