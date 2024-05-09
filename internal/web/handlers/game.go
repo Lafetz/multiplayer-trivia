@@ -39,7 +39,6 @@ func CreateFormGet(logger *log.Logger, questionService question.QuestionServiceA
 			ServerError(w, r, err, logger)
 		}
 		err = render.CreateGameForm(w, r, form.NewGame{}, cat)
-		println(err)
 		if err != nil {
 			ServerError(w, r, err, logger)
 		}

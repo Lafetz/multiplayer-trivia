@@ -33,6 +33,12 @@ func NewClient(conn *websocket.Conn, room *Room, username string) *Client {
 
 	return c
 }
+func (c *Client) sendErrormsg(err error) {
+	c.room.hub.Logger.Fatal(err)
+	bufferr := render.WsServerError()
+	c.egress <- bufferr.Bytes()
+
+}
 func (c *Client) readMessage() {
 	defer func() {
 		c.room.removeClient(c)
@@ -48,6 +54,7 @@ func (c *Client) readMessage() {
 		if err != nil {
 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway,
 				websocket.CloseAbnormalClosure) {
+
 				log.Println("error reading msg: ", err)
 			}
 			break
@@ -103,7 +110,6 @@ func (c *Client) writeMessage() {
 		case <-ticker.C:
 
 			if err := c.connection.WriteMessage(websocket.PingMessage, []byte("")); err != nil {
-				log.Println("ping failed", err)
 				return
 			}
 		}

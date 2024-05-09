@@ -35,11 +35,7 @@ func Home(username string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = components.Countdown(3).Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<main hx-ext=\"response-targets\" class=\"py-6 px-3\"><section id=\"create-game\" class=\"flex flex-col items-center justify-center gap-9\"><button hx-GET=\"/create\" hx-swap=\"main\" hx-target=\"main\" class=\"shadow-md rounded bg-sky-600 py-1.5 px-4 font-bold text-white transition-colors  duration-100 hover:bg-sky-800\">Create Game</button><div class=\"flex flex-col gap-8 justify-center items-center\"><h1 class=\"text-4xl font-extrabold dark:text-white text-center\">Playable Game Sessions</h1><div hx-get=\"/activegames\" hx-swap=\"innerHTML\" hx-trigger=\"load\" class=\"flex justify-center\"></div></div></section></main>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"toast\"></div><main id=\"main\" hx-ext=\"response-targets\" class=\"py-6 px-3\"><section id=\"create-game\" class=\"flex flex-col items-center justify-center gap-9\"><button hx-GET=\"/create\" hx-target=\"#main\" hx-target-500=\"#toast\" class=\"shadow-md rounded bg-sky-600 py-1.5 px-4 font-bold text-white transition-colors  duration-100 hover:bg-sky-800\">Create Game</button><div class=\"flex flex-col gap-8 justify-center items-center\"><h1 class=\"text-4xl font-extrabold dark:text-white text-center\">Playable Game Sessions</h1><div hx-get=\"/activegames\" hx-swap=\"innerHTML\" hx-trigger=\"load\" class=\"flex justify-center\"></div></div></section></main>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

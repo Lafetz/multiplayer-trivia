@@ -1,6 +1,6 @@
 
 
-document.addEventListener("htmx:confirm", function(e) {
+document.addEventListener("htmx:confirm", function(e) { // confirm before sending
   e.preventDefault()
   if (!e.target.hasAttribute('hx-confirm')) {
     e.detail.issueRequest(true);
@@ -18,15 +18,13 @@ confirmButtonColor: '#0284c7',
     if(result.isConfirmed) e.detail.issueRequest(true) 
   })
 })
-///
-//
-function countdownTimer(initialTime) {
+
+function countdownTimer(initialTime) { // timer
   return {
       timeRemaining: 0,
 
       startCountdown() {
           this.timeRemaining = initialTime;
-          // Decrement time remaining every second until it reaches 0
           const countdownInterval = setInterval(() => {
               if (this.timeRemaining > 0) {
                   this.timeRemaining--;
@@ -42,6 +40,28 @@ function countdownTimer(initialTime) {
           } else {
               return `${this.timeRemaining} seconds`;
           }
+      }
+  };
+}
+// toast
+function toastComponent() {
+  return {
+      visible: false,
+      msg: "Hello, this is a toast message!",
+
+      isVisible() {
+          return this.visible;
+      },
+
+      message() {
+          return this.msg;
+      },
+
+      showToast() {
+          this.visible = true;
+          setTimeout(() => {
+              this.visible = false;
+          }, 3000); 
       }
   };
 }

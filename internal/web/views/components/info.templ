@@ -1,0 +1,20 @@
+package components
+
+import "fmt"
+
+templ InfoToast(msg string, isErr bool) {
+	<div id="toast" x-data="toastComponent()" x-init="showToast()" class="fixed top-4 left-0 right-0 flex justify-center">
+		<div x-show="isVisible()" class={ fmt.Sprintf("%s text-white p-3 rounded-md shadow-lg text-center", errorColor(isErr)) }>
+			<div>{ msg }</div>
+		</div>
+	</div>
+}
+
+func errorColor(isErr bool) string {
+	if isErr {
+		return "bg-red-500"
+	} else {
+		return "bg-green-500"
+	}
+
+}

@@ -1,0 +1,69 @@
+package components
+
+import (
+	"github.com/Lafetz/showdown-trivia-game/internal/core/entities"
+	"strconv"
+	"fmt"
+	"github.com/Lafetz/showdown-trivia-game/internal/core/game"
+)
+
+templ Question(q entities.Question, current int, total int, timer int, players []*game.Player) {
+	<div id="lobby">
+		<div class="flex flex-col  min-w-80 justify-center items-center gap-5 px-2" hx-swap-oob="outerHTML:#lobby">
+			<div class="flex flex-col font-bold justify-center items-center max-w-md min-w-xs  gap-3 w-full ">
+				@LiveScores(players)
+				<div class="text-xl text-yellow-500">{ strconv.Itoa(current) }/{ strconv.Itoa(total) }</div>
+				<div class="font-medium">
+					@templ.Raw(q.Question)
+				</div>
+				@Countdown(timer)
+				<div>
+					Your Answer:
+					<span class="text-yellow-500" id="answer"></span>
+				</div>
+				<div class="flex flex-col  gap-2 w-full">
+					for _,c :=range q.Options {
+						@choice(c)
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+templ Countdown(timer int) {
+	<div x-data={ fmt.Sprintf("countdownTimer(%d)", timer) } x-init="startCountdown()">
+		<div x-text="formatTimeRemaining()" x-show="timeRemaining >= 0"></div>
+		<div x-show="timeRemaining < 0">0 seconds</div>
+	</div>
+}
+
+templ LiveScores(players []*game.Player) {
+	<div class="flex gap-3 flex-wrap justify-center items-center">
+		for _,player :=range players {
+			<span class="border border-white rounded-lg p-2 text-lg shadow-md rounded  font-semibold">{ fmt.Sprintf("@") }{ player.Username }:{ strconv.Itoa(player.Score) }</span>
+		}
+	</div>
+}
+
+templ Answer(userAnswer string) {
+	<span class="text-yellow-500" id="answer">
+		@templ.Raw(userAnswer)
+	</span>
+}
+
+templ choice(choice string) {
+	<button
+		hx-swap-oob="outerHTML:#answer"
+		id="keep"
+		hx-ws="send"
+		hx-vals={ jsonvalues(choice) }
+		class="shadow-md rounded bg-sky-600 py-1.5 font-bold text-white transition-colors  duration-100 hover:bg-sky-800"
+	>
+		@templ.Raw(choice)
+	</button>
+}
+
+func jsonvalues(choice string) string {
+	return fmt.Sprintf(`{"type": "send_answer", "payload": "%s"}`, choice)
+}

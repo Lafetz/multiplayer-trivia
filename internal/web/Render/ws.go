@@ -41,11 +41,10 @@ func RenderUserAnswer(userAnswer string) *bytes.Buffer {
 	component := components.Answer(userAnswer)
 	return returnBuf(component)
 }
-
-//	func RenderLiveScores(players []*game.Player) *bytes.Buffer {
-//		component := components.LiveScores(players)
-//		return returnBuf(component)
-//	}
+func WsServerError() *bytes.Buffer {
+	component := components.InfoToast("Internal server error", true)
+	return returnBuf(component)
+}
 func returnBuf(component templ.Component) *bytes.Buffer {
 	buffer := &bytes.Buffer{}
 	component.Render(context.Background(), buffer)

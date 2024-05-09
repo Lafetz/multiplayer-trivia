@@ -21,6 +21,7 @@ func Home(w http.ResponseWriter, r *http.Request, username string) error {
 
 }
 func CreateGameForm(w http.ResponseWriter, r *http.Request, form form.NewGame, catagories []question.Category) error {
+	w.WriteHeader(http.StatusOK)
 	p := components.CreateGame(form, catagories)
 	err := p.Render(r.Context(), w)
 	if err != nil {
@@ -63,6 +64,15 @@ func InvalidFormSignup(w http.ResponseWriter, r *http.Request, form form.SignupU
 }
 func ActiveGames(w http.ResponseWriter, r *http.Request, rooms []webentities.RoomData) error {
 	p := components.ActiveGames(rooms)
+	err := p.Render(r.Context(), w)
+	if err != nil {
+		return err
+	}
+	return nil
+
+}
+func DisplayToast(w http.ResponseWriter, r *http.Request, msg string, isErr bool) error {
+	p := components.InfoToast(msg, isErr)
 	err := p.Render(r.Context(), w)
 	if err != nil {
 		return err

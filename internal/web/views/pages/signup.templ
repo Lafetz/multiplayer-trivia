@@ -4,6 +4,7 @@ import "github.com/Lafetz/showdown-trivia-game/internal/web/form"
 
 templ Signup(form form.SignupUser) {
 	<div id="main" hx-ext="response-targets" class="w-100 pt-5">
+		<div id="toast"></div>
 		<section class="bg-gray-50 dark:bg-gray-900">
 			<div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
 				<a href="/home" class="flex items-center mb-6 text-3xl font-bold text-yellow-500">
@@ -14,7 +15,7 @@ templ Signup(form form.SignupUser) {
 						<h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
 							Sign up
 						</h1>
-						<form hx-post="/signup" hx-target-201="#message-box" hx-target-422="#main" hx-target-500="#main" class="space-y-4 md:space-y-6 flex flex-col ">
+						<form hx-post="/signup" hx-target-422="#main" hx-target-500="#toast" class="space-y-4 md:space-y-6 flex flex-col ">
 							<div>
 								<label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
 								<input type="email" name="email" id="email" value={ form.Email } class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required=""/>

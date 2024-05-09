@@ -23,6 +23,7 @@ func SignupGet(logger *log.Logger) http.HandlerFunc {
 }
 func SignupPost(userService user.UserServiceApi, logger *log.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+
 		r.Body = http.MaxBytesReader(w, r.Body, 4096)
 		err := r.ParseForm()
 
