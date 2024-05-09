@@ -59,7 +59,15 @@ func TestSignupUserValid(t *testing.T) {
 	if missingUsername.Valid() {
 		t.Errorf("Expected invalid user (missing username), got valid")
 	}
-
+	// Test case: invalid username
+	invalidUsername := &SignupUser{
+		Username: "@hello", // Empty username
+		Email:    "jane@example.com",
+		Password: "password123",
+	}
+	if invalidUsername.Valid() {
+		t.Errorf("Expected invalid user (missing username), got valid")
+	}
 	// Test case: Invalid email format
 	invalidEmail := &SignupUser{
 		Username: "jane_doe",

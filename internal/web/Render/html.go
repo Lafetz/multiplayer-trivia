@@ -3,7 +3,8 @@ package render
 import (
 	"net/http"
 
-	"github.com/Lafetz/showdown-trivia-game/internal/web/entity"
+	"github.com/Lafetz/showdown-trivia-game/internal/core/question"
+	webentities "github.com/Lafetz/showdown-trivia-game/internal/web/entity"
 	"github.com/Lafetz/showdown-trivia-game/internal/web/form"
 	"github.com/Lafetz/showdown-trivia-game/internal/web/views/components"
 	layout "github.com/Lafetz/showdown-trivia-game/internal/web/views/layouts"
@@ -18,6 +19,23 @@ func Home(w http.ResponseWriter, r *http.Request, username string) error {
 	}
 	return nil
 
+}
+func CreateGameForm(w http.ResponseWriter, r *http.Request, form form.NewGame, catagories []question.Category) error {
+	p := components.CreateGame(form, catagories)
+	err := p.Render(r.Context(), w)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+func InvliadCreateGameForm(w http.ResponseWriter, r *http.Request, form form.NewGame, catagories []question.Category) error {
+	w.WriteHeader(http.StatusUnprocessableEntity)
+	p := components.CreateGame(form, catagories)
+	err := p.Render(r.Context(), w)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 func InvalidFormSignin(w http.ResponseWriter, r *http.Request, form form.SigninUser) error {
 	w.WriteHeader(http.StatusUnprocessableEntity)
@@ -43,7 +61,7 @@ func InvalidFormSignup(w http.ResponseWriter, r *http.Request, form form.SignupU
 	err := layout.Base("Sign up", p).Render(r.Context(), w)
 	return err
 }
-func ActiveGames(w http.ResponseWriter, r *http.Request, rooms []entity.RoomData) error {
+func ActiveGames(w http.ResponseWriter, r *http.Request, rooms []webentities.RoomData) error {
 	p := components.ActiveGames(rooms)
 	err := p.Render(r.Context(), w)
 	if err != nil {

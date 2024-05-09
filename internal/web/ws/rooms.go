@@ -2,6 +2,7 @@ package ws
 
 import (
 	"sync"
+	"time"
 
 	"github.com/Lafetz/showdown-trivia-game/internal/core/entities"
 	"github.com/Lafetz/showdown-trivia-game/internal/core/game"
@@ -27,25 +28,22 @@ func (r *Room) sendMsg(msg []byte) {
 
 }
 
-func NewRoom(id string) *Room {
-	questions := []entities.Question{
-		{Question: "What is 2+2?", Options: []string{"3", "4", "5", "6"}, CorrectAnswer: "4"},
-		{Question: "What is the capital of France?", Options: []string{"London", "Berlin", "Paris", "Rome"}, CorrectAnswer: "Paris"},
-	}
+func NewRoom(id string, owner string, timer int, questions []entities.Question, hub *Hub) *Room {
+	time := time.Duration(timer) * time.Second
 
-	g := *game.NewGame(questions)
 	r := &Room{
 		Id:      id,
 		clients: make(ClientList),
-		owner:   "unkownd_owner",
-		Game:    g,
+		owner:   owner,
+		Game:    *game.NewGame(questions, time),
+		hub:     hub,
 	}
 	go func() {
-		for m := range g.Message {
+		for m := range r.Game.Message {
 			switch m.MsgType {
 			case game.MsgQuestion:
 				if payload, ok := m.Payload.(entities.Question); ok {
-					buff := render.RenderQuestion(payload, r.Game.CurrentQues, len(g.Questions))
+					buff := render.RenderQuestion(payload, r.Game.CurrentQues, len(r.Game.Questions), timer, r.Game.Players)
 					r.sendMsg(buff.Bytes())
 				} else {
 					continue
@@ -61,6 +59,7 @@ func NewRoom(id string) *Room {
 				if payload, ok := m.Payload.(game.Winners); ok {
 					buff := render.GameEnd(payload)
 					r.sendMsg(buff.Bytes())
+					r.hub.removeRoom(r)
 				} else {
 					continue
 				}
@@ -83,6 +82,12 @@ func (r *Room) removeClient(client *Client) {
 	if _, ok := r.clients[client]; ok {
 		client.connection.Close()
 		delete(r.clients, client)
+	}
+	if len(r.clients) == 0 {
+		if _, ok := r.hub.rooms[r.Id]; ok {
+			r.hub.removeRoom(r)
+			return
+		}
 	}
 }
 func (r *Room) getUsers() []string {

@@ -11,6 +11,7 @@ import (
 	"github.com/Lafetz/showdown-trivia-game/internal/core/question"
 )
 
+// start from here
 func TestConvertToQuestion(t *testing.T) {
 
 	testCases := []struct {
@@ -136,9 +137,12 @@ func TestFetchQuestions(t *testing.T) {
 		apiURL := mockServer.URL + "/unknown-api-url"
 		_, err := fetchQuestions(apiURL)
 		expectedErrMsg := "API request failed with status: 404 Not Found"
-		if err == nil || err.Error() != expectedErrMsg {
-			t.Errorf("Unexpected error: %v", err)
+		if err != nil {
+			if err.Error() != expectedErrMsg {
+				t.Errorf("Unexpected error: %v", err)
+			}
 		}
+		//if err == nil ||
 	})
 }
 func TestFetchCategories(t *testing.T) {

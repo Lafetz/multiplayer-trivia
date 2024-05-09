@@ -20,6 +20,7 @@ type SigninUser struct {
 }
 
 var rxEmail = regexp.MustCompile(`^[a-zA-Z-0-9\\_\\-\\.]+@[a-zA-Z\\_\\-\\.]+$`)
+var rxUsername = regexp.MustCompile(`^[a-zA-Z-0-9\\_\\-\\.]`)
 
 func (f *SignupUser) Valid() bool {
 
@@ -28,7 +29,12 @@ func (f *SignupUser) Valid() bool {
 	if strings.TrimSpace(f.Username) == "" {
 		f.Errors["username"] = "username is required."
 	}
-
+	if utf8.RuneCountInString(f.Username) > 10 || utf8.RuneCountInString(f.Username) < 3 {
+		f.Errors["username"] = "username length must be between 3 and 10"
+	}
+	if !rxUsername.MatchString(f.Username) {
+		f.Errors["username"] = "username be characters must be letters"
+	}
 	if strings.TrimSpace(f.Email) == "" {
 		f.Errors["email"] = "email is required."
 	} else if len(f.Email) > 254 || !rxEmail.MatchString(f.Email) {

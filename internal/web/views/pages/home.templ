@@ -1,13 +1,23 @@
 package pages
 
 import "github.com/Lafetz/showdown-trivia-game/internal/web/views/components"
+import "github.com/Lafetz/showdown-trivia-game/internal/core/game"
+
+var players = []*game.Player{
+	game.NewPlayer("panzer"),
+	game.NewPlayer("leopard"),
+}
 
 templ Home(username string) {
 	@components.Header(username)
-	<main hx-ext="response-targets" class="py-6  ">
-		<section id="create-game" class="flex flex-col items-center justify-center gap-7">
-			<button hx-GET="/create" hx-swap="main" hx-target="main" hx-confirm="Create Game?" class="shadow-md rounded bg-sky-600 py-1.5 px-4 font-bold text-white transition-colors  duration-100 hover:bg-sky-800">Create Game</button>
-			<div hx-get="/activegames" hx-swap="innerHTML" hx-trigger="load" class="flex justify-center"></div>
+	@components.Countdown(3)
+	<main hx-ext="response-targets" class="py-6 px-3">
+		<section id="create-game" class="flex flex-col items-center justify-center gap-9">
+			<button hx-GET="/create" hx-swap="main" hx-target="main" class="shadow-md rounded bg-sky-600 py-1.5 px-4 font-bold text-white transition-colors  duration-100 hover:bg-sky-800">Create Game</button>
+			<div class="flex flex-col gap-8 justify-center items-center">
+				<h1 class="text-4xl font-extrabold dark:text-white text-center">Playable Game Sessions</h1>
+				<div hx-get="/activegames" hx-swap="innerHTML" hx-trigger="load" class="flex justify-center"></div>
+			</div>
 		</section>
 	</main>
 }

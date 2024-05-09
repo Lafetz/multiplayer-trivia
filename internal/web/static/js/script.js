@@ -18,9 +18,30 @@ confirmButtonColor: '#0284c7',
     if(result.isConfirmed) e.detail.issueRequest(true) 
   })
 })
-// function openJoinModal() {
-//     document.querySelector('.dialog-join').show();
-//   }
-//   function closeJoinModal() {
-//     document.querySelector('.dialog-join').hide();
-//   }  
+///
+//
+function countdownTimer(initialTime) {
+  return {
+      timeRemaining: 0,
+
+      startCountdown() {
+          this.timeRemaining = initialTime;
+          // Decrement time remaining every second until it reaches 0
+          const countdownInterval = setInterval(() => {
+              if (this.timeRemaining > 0) {
+                  this.timeRemaining--;
+              } else {
+                  clearInterval(countdownInterval);
+              }
+          }, 1000);
+      },
+
+      formatTimeRemaining() {
+          if (this.timeRemaining < 0) {
+              return '0 seconds';
+          } else {
+              return `${this.timeRemaining} seconds`;
+          }
+      }
+  };
+}

@@ -6,6 +6,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/Lafetz/showdown-trivia-game/internal/core/entities"
+
 	"github.com/gorilla/websocket"
 )
 
@@ -20,10 +22,15 @@ func TestRoomAddClientRemoveClient(t *testing.T) {
 
 		// Create a new room for testing
 		roomID := "testRoom"
-		room := NewRoom(roomID)
+		questions := []entities.Question{
+			{Question: "What is 2+2?", Options: []string{"3", "4", "5", "6"}, CorrectAnswer: "4"},
+			{Question: "What is the capital of France?", Options: []string{"London", "Berlin", "Paris", "Rome"}, CorrectAnswer: "Paris"},
+		}
+		owner := "test"
+		room := NewRoom(roomID, owner, 2, questions, &Hub{})
 
 		// Add a client to the room
-		client := NewClient(conn, room)
+		client := NewClient(conn, room, "1")
 		room.addClient(client)
 
 		// Ensure the client is added to the room's client list

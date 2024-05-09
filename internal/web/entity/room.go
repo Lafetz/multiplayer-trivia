@@ -1,4 +1,4 @@
-package entity
+package webentities
 
 type RoomData struct {
 	Owner   string

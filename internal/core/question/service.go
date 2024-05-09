@@ -12,3 +12,6 @@ func (q *QuestionService) GetQuestions(amount int, category int) ([]entities.Que
 func (q *QuestionService) GetCategories() ([]Category, error) {
 	return q.questionClient.GetCategories()
 }
+func NewQuestionService(client QuestionClientApi) *QuestionService {
+	return &QuestionService{questionClient: client}
+}

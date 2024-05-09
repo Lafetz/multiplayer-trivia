@@ -7,7 +7,6 @@ import (
 	"testing"
 
 	"github.com/Lafetz/showdown-trivia-game/internal/core/user"
-	"github.com/PuerkitoBio/goquery"
 	"github.com/gorilla/sessions"
 	// Import the package containing SigninPost
 )
@@ -40,21 +39,9 @@ func TestSigninGetHandler(t *testing.T) {
 	if w.Code != http.StatusOK {
 		t.Errorf("SigninGet handler returned unexpected status code: %d", w.Code)
 	}
-	doc, err := goquery.NewDocumentFromReader(w.Body)
-	if err != nil {
-		t.Fatalf("Error parsing HTML response: %v", err)
-	}
 
-	// Example validation using goquery selectors
-	s, err := doc.Html()
-	if err != nil {
-		t.Fatal(err)
-	}
 	expectedHTML := `hx-post="/signin"`
-
-	if !strings.Contains(s, expectedHTML) {
-		t.Errorf("Expected HTML %q not found in rendered output", expectedHTML)
-	}
+	verifyHtml(t, w, expectedHTML)
 
 }
 func TestSigninPost(t *testing.T) {

@@ -18,15 +18,14 @@ type Game struct {
 	AnswerCh    chan Answer
 	Message     chan Message
 	timerSpan   time.Duration
-	gameStarted bool
-	//	playerAnswers map[int][]Answer
+	GameStarted bool
 	sync.RWMutex
 }
 
 func (g *Game) Start(players []*Player) {
 
 	g.Players = players
-	g.gameStarted = true
+	g.GameStarted = true
 	for _, question := range g.Questions {
 		doneCh := make(chan struct{})
 		g.CurrentQues++
@@ -91,13 +90,14 @@ func (g *Game) DisplayWinner() {
 
 	close(g.Message)
 }
-func NewGame(questions []entities.Question) *Game {
+func NewGame(questions []entities.Question, timer time.Duration) *Game {
+
 	return &Game{
 		Questions:   questions,
 		AnswerCh:    make(chan Answer),
 		Message:     make(chan Message),
-		timerSpan:   DefaultTimerSpan,
+		timerSpan:   timer,
 		CurrentQues: 0,
-		gameStarted: false,
+		GameStarted: false,
 	}
 }

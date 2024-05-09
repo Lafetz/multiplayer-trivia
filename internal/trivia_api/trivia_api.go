@@ -15,21 +15,27 @@ type triviaClient struct {
 	baseURL string
 }
 
-func (t *triviaClient) GetQuestions(amount int, category int) ([]triviaQuestion, error) {
+func (t *triviaClient) GetQuestions(amount int, category int) ([]entities.Question, error) {
 	apiURL := fmt.Sprintf("%s/api.php?amount=%d&type=multiple&category=%d", t.baseURL, amount, category)
 	questions, err := fetchQuestions(apiURL)
 	if err != nil {
 		return nil, err
 	}
-	return questions, nil
+	var questionsDomain []entities.Question
+
+	for _, tq := range questions {
+		question := ConvertToQuestion(tq)
+		questionsDomain = append(questionsDomain, question)
+	}
+	return questionsDomain, nil
 }
 
 func (t *triviaClient) GetCategories() ([]question.Category, error) {
 	url := fmt.Sprintf("%s/api_category.php", t.baseURL) //https://opentdb.com/
 	return fetchCategories(url)
 }
-func NewTriviaClient() triviaClient {
-	return triviaClient{
+func NewTriviaClient() *triviaClient {
+	return &triviaClient{
 		baseURL: "https://opentdb.com",
 	}
 }

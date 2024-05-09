@@ -12,8 +12,8 @@ import (
 	"github.com/a-h/templ"
 )
 
-func SendGamePage(w http.ResponseWriter, r *http.Request, create bool, id string) error {
-	p := components.Game(create, id)
+func SendGamePage(w http.ResponseWriter, r *http.Request, create bool, id string, catagory int, timer int, amount int) error {
+	p := components.Game(create, id, catagory, timer, amount)
 	err := layout.Base("Game", p).Render(r.Context(), w)
 	if err != nil {
 		return err
@@ -24,8 +24,8 @@ func RenderPlayers(id string, players []string) *bytes.Buffer {
 	component := components.Players(id, players)
 	return returnBuf(component)
 }
-func RenderQuestion(q entities.Question, current int, total int) *bytes.Buffer {
-	component := components.Question(q, current, total)
+func RenderQuestion(q entities.Question, current int, total int, timer int, players []*game.Player) *bytes.Buffer {
+	component := components.Question(q, current, total, timer, players)
 	return returnBuf(component)
 }
 func RenderGameMessage(Info game.Info) *bytes.Buffer {
@@ -41,6 +41,11 @@ func RenderUserAnswer(userAnswer string) *bytes.Buffer {
 	component := components.Answer(userAnswer)
 	return returnBuf(component)
 }
+
+//	func RenderLiveScores(players []*game.Player) *bytes.Buffer {
+//		component := components.LiveScores(players)
+//		return returnBuf(component)
+//	}
 func returnBuf(component templ.Component) *bytes.Buffer {
 	buffer := &bytes.Buffer{}
 	component.Render(context.Background(), buffer)

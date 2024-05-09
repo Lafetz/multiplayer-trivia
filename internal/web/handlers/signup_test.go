@@ -10,7 +10,6 @@ import (
 	"testing"
 
 	"github.com/Lafetz/showdown-trivia-game/internal/core/user"
-	"github.com/PuerkitoBio/goquery"
 )
 
 var (
@@ -37,21 +36,9 @@ func TestSignupGet(t *testing.T) {
 		t.Errorf("SignupGet handler returned unexpected status code: %d", w.Code)
 	}
 
-	doc, err := goquery.NewDocumentFromReader(w.Body)
-	if err != nil {
-		t.Fatalf("Error parsing HTML response: %v", err)
-	}
-
-	// Example validation using goquery selectors
-	s, err := doc.Html()
-	if err != nil {
-		t.Fatal(err)
-	}
 	expectedHTML := `hx-post="/signup" `
+	verifyHtml(t, w, expectedHTML)
 
-	if !strings.Contains(s, expectedHTML) {
-		t.Errorf("Expected HTML %q not found in rendered output", expectedHTML)
-	}
 }
 func TestSignupPost(t *testing.T) {
 	userService := &mockUserService{}

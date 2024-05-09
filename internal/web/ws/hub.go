@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/Lafetz/showdown-trivia-game/internal/web/entity"
+	webentities "github.com/Lafetz/showdown-trivia-game/internal/web/entity"
 	"github.com/gorilla/websocket"
 )
 
@@ -22,7 +22,8 @@ var (
 )
 
 type Hub struct {
-	rooms RoomList
+	Logger *log.Logger
+	rooms  RoomList
 	sync.RWMutex
 }
 
@@ -38,13 +39,15 @@ func (h *Hub) addRoom(room *Room) {
 	defer h.Unlock()
 	h.rooms[room.Id] = room
 }
-func (h *Hub) ListRooms() []entity.RoomData {
+func (h *Hub) ListRooms() []webentities.RoomData {
 	h.Lock()
 	defer h.Unlock()
-	var rooms []entity.RoomData
+	var rooms []webentities.RoomData
 	for _, r := range h.rooms {
-
-		rooms = append(rooms, entity.RoomData{
+		if r.Game.GameStarted {
+			continue
+		}
+		rooms = append(rooms, webentities.RoomData{
 			Owner:   r.owner,
 			Id:      r.Id,
 			Players: r.getUsers(),
@@ -56,16 +59,16 @@ func (h *Hub) removeRoom(room *Room) {
 	h.Lock()
 	defer h.Unlock()
 	if _, ok := h.rooms[room.Id]; !ok {
-		// Room does not exist, handle this case gracefully (e.g., log an error)
 		log.Printf("attempted to remove non-existent room: %s", room.Id)
 		return
 	}
 	delete(h.rooms, room.Id)
 }
 
-func NewHub() *Hub {
+func NewHub(logger *log.Logger) *Hub {
 	h := &Hub{
-		rooms: make(RoomList),
+		rooms:  make(RoomList),
+		Logger: logger,
 		// handlers: make(map[string]EventHandler),
 	}
 	return h

@@ -2,18 +2,25 @@ package ws
 
 import (
 	"errors"
+	"log"
 	"reflect"
 	"testing"
 
-	"github.com/Lafetz/showdown-trivia-game/internal/web/entity"
+	"github.com/Lafetz/showdown-trivia-game/internal/core/entities"
+	webentities "github.com/Lafetz/showdown-trivia-game/internal/web/entity"
 )
 
 func TestHubGetRoom(t *testing.T) {
-	hub := NewHub()
+	hub := NewHub(log.Default())
 
 	// Create a test room
 	roomId := "testRoom"
-	room := NewRoom(roomId)
+	questions := []entities.Question{
+		{Question: "What is 2+2?", Options: []string{"3", "4", "5", "6"}, CorrectAnswer: "4"},
+		{Question: "What is the capital of France?", Options: []string{"London", "Berlin", "Paris", "Rome"}, CorrectAnswer: "Paris"},
+	}
+	owner := "test"
+	room := NewRoom(roomId, owner, 2, questions, hub)
 	hub.addRoom(room)
 
 	// Test getting an existing room
@@ -43,11 +50,16 @@ func TestHubGetRoom(t *testing.T) {
 }
 
 func TestHubAddRoomRemoveRoom(t *testing.T) {
-	hub := NewHub()
+	hub := NewHub(log.Default())
 
 	// Create a test room
+	questions := []entities.Question{
+		{Question: "What is 2+2?", Options: []string{"3", "4", "5", "6"}, CorrectAnswer: "4"},
+		{Question: "What is the capital of France?", Options: []string{"London", "Berlin", "Paris", "Rome"}, CorrectAnswer: "Paris"},
+	}
+	owner := "test"
 	roomId := "testRoom"
-	room := NewRoom(roomId)
+	room := NewRoom(roomId, owner, 2, questions, hub)
 
 	// Test adding a room
 	hub.addRoom(room)
@@ -69,18 +81,23 @@ func TestHubAddRoomRemoveRoom(t *testing.T) {
 }
 
 func TestHubListRooms(t *testing.T) {
-	hub := NewHub()
+	hub := NewHub(log.Default())
 
+	questions := []entities.Question{
+		{Question: "What is 2+2?", Options: []string{"3", "4", "5", "6"}, CorrectAnswer: "4"},
+		{Question: "What is the capital of France?", Options: []string{"London", "Berlin", "Paris", "Rome"}, CorrectAnswer: "Paris"},
+	}
+	owner := "test"
 	// Create test rooms
-	room1 := NewRoom("room1")
-	room2 := NewRoom("room2")
+	room1 := NewRoom("room1", owner, 2, questions, hub)
+	room2 := NewRoom("room2", owner, 2, questions, hub)
 
 	// Add rooms to hub
 	hub.addRoom(room1)
 	hub.addRoom(room2)
 
 	// Test listing rooms
-	expectedRooms := []entity.RoomData{
+	expectedRooms := []webentities.RoomData{
 		{Owner: room1.owner, Id: room1.Id, Players: room1.getUsers()},
 		{Owner: room2.owner, Id: room2.Id, Players: room2.getUsers()},
 	}

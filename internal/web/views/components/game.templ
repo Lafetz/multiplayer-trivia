@@ -4,13 +4,50 @@ import (
 	"strconv"
 	"fmt"
 	"github.com/Lafetz/showdown-trivia-game/internal/core/entities"
+	"github.com/Lafetz/showdown-trivia-game/internal/web/form"
+	"github.com/Lafetz/showdown-trivia-game/internal/core/question"
+	webentities "github.com/Lafetz/showdown-trivia-game/internal/web/entity"
 )
-import "github.com/Lafetz/showdown-trivia-game/internal/web/entity"
+
 import "github.com/Lafetz/showdown-trivia-game/internal/core/game"
 
-templ Game(owner bool, id string) {
+//bg-white  shadow dark:border md:mt-0  xl:p-0 dark:bg-gray-800 dark:border-gray-700
+templ CreateGame(form form.NewGame, catagories []question.Category) {
+	<div class="w-full flex justify-center" id="create" hx-ext="response-targets">
+		<div class="p-6 space-y-4 md:space-y-6 max-w-96 rounded-lg dark:border">
+			<h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
+				Create New Game
+			</h1>
+			<form hx-POST="/create" hx-target="#create" hx-target-500="#create" hx-confirm="Create Game?" hx-target-422="#create" hx-target-401="#invalidAuth" class="space-y-4 md:space-y-6 flex flex-col justify-center">
+				<div>
+					<label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
+					<select value={ form.Category } name="category" id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+						<option value="" disabled selected>Choose category</option>
+						for _,category := range catagories {
+							<option value={ fmt.Sprintf("%d", category.Id) }>{ category.Name }</option>
+						}
+					</select>
+					<div>{ form.Errors["category"] }</div>
+				</div>
+				<div>
+					<label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter an amount:</label>
+					<input type="number" name="amount" id="amount" value={ form.Amount } class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter amount" required/>
+					<div>{ form.Errors["amount"] }</div>
+				</div>
+				<div>
+					<label for="timer" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter a timer value:</label>
+					<input type="number" name="timer" id="timer" value={ form.Timer } class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter timer value" required/>
+					<div>{ form.Errors["timer"] }</div>
+				</div>
+				<button type="submit" class="shadow-md rounded bg-sky-600 py-1.5 px-4 font-bold text-white transition-colors duration-100 hover:bg-sky-800">Create Game</button>
+			</form>
+		</div>
+	</div>
+}
+
+templ Game(owner bool, id string, catagory int, timer int, amount int) {
 	if owner {
-		<div id="socket" hx-ws="connect:ws://localhost:8080/wscreate">
+		<div id="socket" hx-ws={ fmt.Sprintf("connect:ws://localhost:8080/wscreate?category=%d&amount=%d&timer=%d", catagory, amount, timer) }>
 			<div id="lobby" class="flex flex-col gap-3 justify-center items-center">
 				@Players("", []string{""})
 				<button
@@ -48,7 +85,7 @@ templ Players(id string, players []string) {
 	</div>
 }
 
-templ ActiveGames(rooms []entity.RoomData) {
+templ ActiveGames(rooms []webentities.RoomData) {
 	<table class="table-fixed min-w-72 text-left border-separate border-spacing-y-1">
 		<thead>
 			<tr>
@@ -73,13 +110,17 @@ templ ActiveGames(rooms []entity.RoomData) {
 	</table>
 }
 
-templ Question(q entities.Question, current int, total int) {
+templ Question(q entities.Question, current int, total int, timer int, players []*game.Player) {
 	<div id="lobby">
 		<div class="flex flex-col  min-w-80 justify-center items-center gap-5 px-2" hx-swap-oob="outerHTML:#lobby">
 			<div class="flex flex-col font-bold justify-center items-center max-w-md min-w-xs  gap-3 w-full ">
 				//<div id="countdown" class="text-2xl text-sky-600">3</div>
+				@LiveScores(players)
 				<div class="text-xl text-yellow-500">{ strconv.Itoa(current) }/{ strconv.Itoa(total) }</div>
-				<div class="font-medium">{ q.Question }</div>
+				<div class="font-medium">
+					@templ.Raw(q.Question)
+				</div>
+				@Countdown(timer)
 				<div>
 					Your Answer:
 					<span class="text-yellow-500" id="answer"></span>
@@ -94,8 +135,26 @@ templ Question(q entities.Question, current int, total int) {
 	</div>
 }
 
+templ Countdown(timer int) {
+	<div x-data={ fmt.Sprintf("countdownTimer(%d)", timer) } x-init="startCountdown()">
+		<div x-text="formatTimeRemaining()" x-show="timeRemaining >= 0"></div>
+		<div x-show="timeRemaining < 0">0 seconds</div>
+	</div>
+}
+
+//"countdownTimer()" {}
+templ LiveScores(players []*game.Player) {
+	<div class="flex gap-3 flex-wrap justify-center items-center">
+		for _,player :=range players {
+			<span class="border border-white rounded-lg p-2 text-lg shadow-md rounded  font-semibold">{ fmt.Sprintf("@") }{ player.Username }:{ strconv.Itoa(player.Score) }</span>
+		}
+	</div>
+}
+
 templ Answer(userAnswer string) {
-	<span class="text-yellow-500" id="answer">{ userAnswer }</span>
+	<span class="text-yellow-500" id="answer">
+		@templ.Raw(userAnswer)
+	</span>
 }
 
 templ choice(choice string) {
@@ -105,11 +164,12 @@ templ choice(choice string) {
 		hx-ws="send"
 		hx-vals={ jsonvalues(choice) }
 		class="shadow-md rounded bg-sky-600 py-1.5 font-bold text-white transition-colors  duration-100 hover:bg-sky-800"
-	>{ choice }</button>
+	>
+		@templ.Raw(choice)
+	</button>
 }
 
 func jsonvalues(choice string) string {
-
 	return fmt.Sprintf(`{"type": "send_answer", "payload": "%s"}`, choice)
 }
 
@@ -139,7 +199,7 @@ templ GameEndMessage(winners game.Winners) {
 					</div>
 				}
 			</div>
-			<span class="text-2xl font-semibold text-green-500">You Lost</span>
+			// <span class="text-2xl font-semibold text-green-500">You Lost</span>
 			<button onclick="window.location.href = '/home';" class="shadow-md rounded bg-sky-600 py-1.5 px-4 font-bold text-white transition-colors  duration-100 hover:bg-sky-800">Home</button>
 		</div>
 	</div>

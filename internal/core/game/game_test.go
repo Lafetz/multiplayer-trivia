@@ -16,10 +16,11 @@ func TestGame(t *testing.T) {
 		NewPlayer("panzer"),
 		NewPlayer("leopard"),
 	}
-	game := NewGame(questions)
-	//change default timer so that tests finishes quicker
 	span := 100 * time.Microsecond
-	game.timerSpan = span
+	game := NewGame(questions, span)
+	//change default timer so that tests finishes quicker
+	//span := 100 * time.Microsecond
+	//game.timerSpan = span
 
 	// start the game
 	go game.Start(players)

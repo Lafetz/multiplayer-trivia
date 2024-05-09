@@ -2,9 +2,7 @@ package ws
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
-	"strconv"
 	"time"
 
 	"github.com/Lafetz/showdown-trivia-game/internal/core/game"
@@ -25,9 +23,9 @@ type Client struct {
 	egress     chan []byte
 }
 
-func NewClient(conn *websocket.Conn, room *Room) *Client {
+func NewClient(conn *websocket.Conn, room *Room, username string) *Client {
 	c := &Client{
-		Username:   fmt.Sprintf("user%s", strconv.Itoa(len(room.clients))),
+		Username:   username,
 		connection: conn,
 		room:       room,
 		egress:     make(chan []byte),
@@ -68,6 +66,7 @@ func (c *Client) readMessage() {
 			for c := range c.room.clients {
 				players = append(players, game.NewPlayer(c.Username))
 			}
+
 			go c.room.Game.Start(players)
 		case SendAnswer:
 			answer := game.NewAnswer(c.Username, req.Payload)

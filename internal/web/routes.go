@@ -25,12 +25,13 @@ func (a *App) initAppRoutes() {
 	//
 
 	a.router.HandleFunc("GET /home", a.requireAuth(s))
-	a.router.HandleFunc("/create", a.requireAuth(handlers.CreateGet(a.logger)))
+	a.router.HandleFunc("GET /create", a.requireAuth(handlers.CreateFormGet(a.logger, a.questionService)))
+	a.router.HandleFunc("POST /create", a.requireAuth(handlers.CreateFormPost(a.logger, a.questionService)))
 	a.router.HandleFunc("GET /join/{id}", handlers.Join(a.logger))
 	//ws
 	a.router.HandleFunc("/activegames", a.requireAuth(handlers.ActiveGames(a.hub, a.logger)))
 	//
-	a.router.HandleFunc("/wscreate", a.requireAuth(handlers.CreateWs(a.hub)))
+	a.router.HandleFunc("/wscreate", a.requireAuth(handlers.CreateWs(a.hub, a.questionService)))
 	a.router.HandleFunc("/wsjoin/{id}", a.requireAuth(handlers.JoinWs(a.hub)))
 
 }
