@@ -38,7 +38,7 @@ func Header(username string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span> <a href=\"/signout\" class=\"text-white bg-red-700 hover:bg-red-900 focus:ring-4 transition-colors  duration-300 focus:ring-blue-300 font-semibold rounded-lg text-sm px-3 py-2  focus:outline-none\">Sign out</a></div></div></nav></header>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span> <button hx-confirm=\"Signout ?\" hx-post=\"/signout\" hx-target-500=\"#toast\" class=\"text-white bg-red-700 hover:bg-red-900 focus:ring-4 transition-colors  duration-300 focus:ring-blue-300 font-semibold rounded-lg text-sm px-3 py-2  focus:outline-none\">signout</button></div></div></nav></header>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

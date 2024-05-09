@@ -6,10 +6,6 @@ import (
 	"github.com/Lafetz/showdown-trivia-game/internal/web/handlers"
 )
 
-const (
-	wsUrl = "connect:ws://localhost:8080"
-)
-
 func (a *App) initAppRoutes() {
 	fileServer := http.FileServer(http.Dir("./internal/web/static"))
 	s := http.Handler(handlers.Home(a.logger))
@@ -22,6 +18,7 @@ func (a *App) initAppRoutes() {
 
 	a.router.HandleFunc("GET /signup", handlers.SignupGet(a.logger))
 	a.router.HandleFunc("POST /signup", handlers.SignupPost(a.userService, a.logger))
+	a.router.HandleFunc("POST /signout", a.requireAuth(handlers.Signout(a.logger, a.store)))
 	//
 
 	a.router.HandleFunc("GET /home", a.requireAuth(s))

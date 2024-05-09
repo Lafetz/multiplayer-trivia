@@ -3,6 +3,7 @@ package ws
 import (
 	"encoding/json"
 	"log"
+	"runtime/debug"
 	"time"
 
 	"github.com/Lafetz/showdown-trivia-game/internal/core/game"
@@ -34,7 +35,7 @@ func NewClient(conn *websocket.Conn, room *Room, username string) *Client {
 	return c
 }
 func (c *Client) sendErrormsg(err error) {
-	c.room.hub.Logger.Fatal(err)
+	c.room.hub.Logger.Printf("%s\n%s", err.Error(), debug.Stack())
 	bufferr := render.WsServerError()
 	c.egress <- bufferr.Bytes()
 
@@ -55,14 +56,14 @@ func (c *Client) readMessage() {
 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway,
 				websocket.CloseAbnormalClosure) {
 
-				log.Println("error reading msg: ", err)
+				c.sendErrormsg(err)
 			}
 			break
 		}
 
 		var req Event
 		if err := json.Unmarshal(msg, &req); err != nil {
-			log.Println("error reading message", err)
+			c.sendErrormsg(err)
 			break
 		}
 		//check if valid
@@ -81,7 +82,7 @@ func (c *Client) readMessage() {
 			buff := render.RenderUserAnswer(req.Payload)
 			c.egress <- buff.Bytes()
 		default:
-			log.Println("unknown event type:", req.EventType)
+			c.sendErrormsg(err)
 		}
 
 	}
@@ -98,13 +99,13 @@ func (c *Client) writeMessage() {
 
 			if !ok {
 				if err := c.connection.WriteMessage(websocket.CloseMessage, nil); err != nil {
-					log.Println("connection is closed", err)
+					c.sendErrormsg(err)
 				}
 				return
 			}
 
 			if err := c.connection.WriteMessage(websocket.TextMessage, message); err != nil {
-				log.Println("failed to send msg", err)
+				c.sendErrormsg(err)
 			}
 
 		case <-ticker.C:

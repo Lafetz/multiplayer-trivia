@@ -11,7 +11,7 @@ templ Header(username string) {
 				</a>
 				<div class="flex items-center lg:order-2 ">
 					<span class=" rounded-lg font-semibold text-semibold px-4 lg:px-5 py-2 lg:py-2.5 mr-2  focus:outline-none dark:focus:ring-gray-800">{ fmt.Sprintf("@%s",username) }</span>
-					<a href="/signout" class="text-white bg-red-700 hover:bg-red-900 focus:ring-4 transition-colors  duration-300 focus:ring-blue-300 font-semibold rounded-lg text-sm px-3 py-2  focus:outline-none">Sign out</a>
+					<button hx-confirm="Signout ?" hx-post="/signout" hx-target-500="#toast" class="text-white bg-red-700 hover:bg-red-900 focus:ring-4 transition-colors  duration-300 focus:ring-blue-300 font-semibold rounded-lg text-sm px-3 py-2  focus:outline-none">signout</button>
 				</div>
 			</div>
 		</nav>
