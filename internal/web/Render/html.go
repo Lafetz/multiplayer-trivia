@@ -38,24 +38,16 @@ func InvliadCreateGameForm(w http.ResponseWriter, r *http.Request, form form.New
 	}
 	return nil
 }
-func InvalidFormSignin(w http.ResponseWriter, r *http.Request, form form.SigninUser) error {
-	w.WriteHeader(http.StatusUnprocessableEntity)
-	p := pages.Signin(form, "")
+func InvalidFormSignin(w http.ResponseWriter, r *http.Request, form form.SigninUser, authError string, status int) error {
+	w.WriteHeader(status)
+	p := pages.Signin(form, "", authError)
 	err := p.Render(r.Context(), w)
 	if err != nil {
 		return err
 	}
 	return nil
 }
-func IncorrectPasswordEmail(w http.ResponseWriter, r *http.Request) error {
-	w.WriteHeader(http.StatusUnauthorized)
-	p := pages.InvalidAuth()
-	err := p.Render(r.Context(), w)
-	if err != nil {
-		return err
-	}
-	return nil
-}
+
 func InvalidFormSignup(w http.ResponseWriter, r *http.Request, form form.SignupUser) error {
 	p := pages.Signup(form)
 	w.WriteHeader(http.StatusUnprocessableEntity)

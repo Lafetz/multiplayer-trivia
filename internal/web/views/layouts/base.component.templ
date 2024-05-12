@@ -14,13 +14,26 @@ templ Base(title string, contents templ.Component) {
 			//
 			<script src="/static/js/script.js" defer></script>
 			<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.10/dist/cdn.min.js"></script>
-			//
+			//loading
+			<script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/loading-states.js"></script>
+			//loading
 			<script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 			//
 			<link rel="stylesheet" href="/static/css/styles.css"/>
 			<title>{ title }</title>
 		</head>
 		<body class="dark:bg-gray-900 min-h-screen text-white">
+			<style>
+         .htmx-indicator{
+          display:none;
+    }
+    .htmx-request .htmx-indicator{
+        display:inline;
+    }
+    .htmx-request.htmx-indicator{
+         display:inline;
+    }
+    </style>
 			@contents
 		</body>
 	</html>

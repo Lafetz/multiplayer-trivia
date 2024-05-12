@@ -21,11 +21,11 @@ type App struct {
 	logger          *log.Logger
 }
 
-func NewApp(userService user.UserServiceApi, store *sessions.CookieStore, questionService question.QuestionServiceApi) *App {
+func NewApp(port int, userService user.UserServiceApi, store *sessions.CookieStore, questionService question.QuestionServiceApi) *App {
 	logger := log.New(os.Stdout, "", log.LstdFlags)
 	a := &App{
 		router:          http.NewServeMux(),
-		port:            8080,
+		port:            port,
 		userService:     userService,
 		hub:             ws.NewHub(logger),
 		store:           store,

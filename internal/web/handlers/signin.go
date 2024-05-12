@@ -13,9 +13,11 @@ import (
 	"github.com/gorilla/sessions"
 )
 
+const IncorrectEmailPass = "Incorrect Email or Password"
+
 func SigninGet(logger *log.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		p := pages.Signin(form.SigninUser{}, "")
+		p := pages.Signin(form.SigninUser{}, "", "")
 		err := layout.Base("Sign in", p).Render(r.Context(), w)
 		if err != nil {
 			ServerError(w, r, err, logger)
@@ -37,7 +39,7 @@ func SigninPost(userservice user.UserServiceApi, store *sessions.CookieStore, lo
 			Password: r.PostForm.Get("password"),
 		}
 		if !form.Valid() {
-			if err := render.InvalidFormSignin(w, r, form); err != nil {
+			if err := render.InvalidFormSignin(w, r, form, "", http.StatusUnprocessableEntity); err != nil {
 				ServerError(w, r, err, logger)
 			}
 			return
@@ -45,7 +47,7 @@ func SigninPost(userservice user.UserServiceApi, store *sessions.CookieStore, lo
 		userData, err := userservice.GetUser(form.Email)
 		if err != nil {
 			if errors.Is(err, user.ErrUserNotFound) {
-				if err := render.IncorrectPasswordEmail(w, r); err != nil {
+				if err := render.InvalidFormSignin(w, r, form, IncorrectEmailPass, http.StatusUnauthorized); err != nil {
 					ServerError(w, r, err, logger)
 				}
 				return
@@ -57,9 +59,13 @@ func SigninPost(userservice user.UserServiceApi, store *sessions.CookieStore, lo
 
 		err = matchPassword(form.Password, userData.Password)
 		if err != nil {
-			if err := render.IncorrectPasswordEmail(w, r); err != nil {
-				ServerError(w, r, err, logger)
+			if errors.Is(err, ErrInvalidPassword) {
+				if err := render.InvalidFormSignin(w, r, form, IncorrectEmailPass, http.StatusUnauthorized); err != nil {
+					ServerError(w, r, err, logger)
+				}
+				return
 			}
+			ServerError(w, r, err, logger)
 			return
 		}
 		session, _ := store.Get(r, "user-session")

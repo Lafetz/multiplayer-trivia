@@ -15,8 +15,8 @@ type Store struct {
 	users *mongo.Collection
 }
 
-func NewStore() *Store {
-	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb://admin:admin11@localhost/inventory?authSource=admin"))
+func NewDb(url string) *mongo.Client {
+	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(url))
 	if err != nil {
 		log.Fatal("db connection falled", err)
 	}
@@ -25,9 +25,13 @@ func NewStore() *Store {
 	if err != nil {
 		log.Fatal("db connection falled", err)
 	}
+	return client
+}
+
+func NewStore(client *mongo.Client) *Store {
 
 	users := client.Database("trivia").Collection("users")
-	err = createUniqueIndex(context.Background(), users, "email")
+	err := createUniqueIndex(context.Background(), users, "email")
 	if err != nil {
 		log.Fatal("Failed to create unique index:", err)
 	}
@@ -35,7 +39,6 @@ func NewStore() *Store {
 	if err != nil {
 		log.Fatal("Failed to create unique index:", err)
 	}
-	//
 	println("database connected.....")
 	return &Store{
 		users: users,

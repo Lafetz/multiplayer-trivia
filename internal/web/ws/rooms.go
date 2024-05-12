@@ -75,9 +75,6 @@ func (r *Room) addClient(client *Client) {
 	r.clients[client] = true
 	buff := render.RenderPlayers(r.Id, r.getUsers())
 	r.sendMsg(buff.Bytes())
-	//
-
-	//
 }
 func (r *Room) removeClient(client *Client) {
 	r.Lock()
