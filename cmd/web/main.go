@@ -14,7 +14,6 @@ import (
 
 func main() {
 	cfg := config.NewConfig()
-
 	store := sessions.NewCookieStore([]byte(cfg.HashKey), []byte(cfg.BlockKey))
 	db := repository.NewDb(cfg.DbUrl)
 	repo := repository.NewStore(db)
