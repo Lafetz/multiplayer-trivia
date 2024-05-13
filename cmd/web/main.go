@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"os"
 
 	"github.com/Lafetz/showdown-trivia-game/internal/config"
 	"github.com/Lafetz/showdown-trivia-game/internal/core/question"
@@ -20,9 +21,11 @@ func main() {
 	userservice := user.NewUserService(repo)
 	triviaClient := triviaapi.NewTriviaClient()
 	questionService := question.NewQuestionService(triviaClient)
-	app := web.NewApp(cfg.Port, userservice, store, questionService)
+	logger := log.New(os.Stdout, "", log.LstdFlags)
+	app := web.NewApp(cfg.Port, logger, userservice, store, questionService)
 	err := app.Run()
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
+
 }

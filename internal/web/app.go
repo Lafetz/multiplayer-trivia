@@ -3,7 +3,6 @@ package web
 import (
 	"log"
 	"net/http"
-	"os"
 
 	"github.com/Lafetz/showdown-trivia-game/internal/core/question"
 	"github.com/Lafetz/showdown-trivia-game/internal/core/user"
@@ -21,8 +20,8 @@ type App struct {
 	logger          *log.Logger
 }
 
-func NewApp(port int, userService user.UserServiceApi, store *sessions.CookieStore, questionService question.QuestionServiceApi) *App {
-	logger := log.New(os.Stdout, "", log.LstdFlags)
+func NewApp(port int, logger *log.Logger, userService user.UserServiceApi, store *sessions.CookieStore, questionService question.QuestionServiceApi) *App {
+
 	a := &App{
 		router:          http.NewServeMux(),
 		port:            port,

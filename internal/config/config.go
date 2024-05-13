@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"strconv"
 
 	"github.com/joho/godotenv"
@@ -17,9 +18,14 @@ type Config struct {
 }
 
 func (c *Config) loadEnv() {
-	err := godotenv.Load()
+	pwd, err := os.Getwd()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		panic(err)
+	}
+	err = godotenv.Load(filepath.Join(pwd, "../.env"))
+
+	if err != nil {
+		log.Fatal("Error loading .env file", err)
 	}
 	dbUrl := os.Getenv("DB_URL")
 	if dbUrl == "" {
