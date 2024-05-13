@@ -22,7 +22,7 @@ func (c *Config) loadEnv() {
 	if err != nil {
 		panic(err)
 	}
-	err = godotenv.Load(filepath.Join(pwd, "../../.env"))
+	err = godotenv.Load(filepath.Join(pwd, "./.env"))
 
 	if err != nil {
 		log.Fatal("Error loading .env file", err)
