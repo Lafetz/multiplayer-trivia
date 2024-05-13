@@ -14,6 +14,11 @@ import (
 )
 
 func main() {
+	pwd, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+	println(pwd)
 	cfg := config.NewConfig()
 	store := sessions.NewCookieStore([]byte(cfg.HashKey), []byte(cfg.BlockKey))
 	db := repository.NewDb(cfg.DbUrl)
@@ -23,7 +28,7 @@ func main() {
 	questionService := question.NewQuestionService(triviaClient)
 	logger := log.New(os.Stdout, "", log.LstdFlags)
 	app := web.NewApp(cfg.Port, logger, userservice, store, questionService)
-	err := app.Run()
+	err = app.Run()
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
