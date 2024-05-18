@@ -57,7 +57,7 @@ templ CreateGame(form form.NewGame, catagories []question.Category) {
 
 templ Game(owner bool, id string, catagory int, timer int, amount int) {
 	if owner {
-		<div id="socket" hx-ws={ fmt.Sprintf("connect:ws://showdown-trivia-game-1.onrender.com/wscreate?category=%d&amount=%d&timer=%d", catagory, amount, timer) }>
+		<div id="socket" hx-ws={ fmt.Sprintf("connect:wss://showdown-trivia-game-1.onrender.com/wscreate?category=%d&amount=%d&timer=%d", catagory, amount, timer) }>
 			<div id="lobby" class="flex flex-col gap-3 justify-center items-center">
 				@Players("", []string{""})
 				<button
@@ -74,7 +74,7 @@ templ Game(owner bool, id string, catagory int, timer int, amount int) {
 			</div>
 		</div>
 	} else {
-		<div hx-ws={ "connect:ws://showdown-trivia-game-1.onrender.com/wsjoin/" + id }>
+		<div hx-ws={ "connect:wss://showdown-trivia-game-1.onrender.com/wsjoin/" + id }>
 			<div id="lobby" class="flex flex-col gap-3 justify-center items-center">
 				@Players("", []string{""})
 			</div>
