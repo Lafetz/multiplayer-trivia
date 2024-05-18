@@ -122,9 +122,9 @@ func CreateWs(hub *ws.Hub, questionService question.QuestionServiceApi) http.Han
 			ServerError(w, r, err, hub.Logger)
 			return
 		}
-		username, ok := r.Context().Value("username").(string)
+		username, ok := r.Context().Value(UsernameKey).(string)
 		if !ok {
-			ServerError(w, r, errors.New("username couldn't"), hub.Logger)
+			ServerError(w, r, errors.New("username couldn't be found"), hub.Logger)
 			return
 		}
 		questions, err := questionService.GetQuestions(amount, category)
@@ -137,9 +137,9 @@ func CreateWs(hub *ws.Hub, questionService question.QuestionServiceApi) http.Han
 }
 func JoinWs(hub *ws.Hub) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		username, ok := r.Context().Value("username").(string)
+		username, ok := r.Context().Value(UsernameKey).(string)
 		if !ok {
-			ServerError(w, r, errors.New("username couldn't"), hub.Logger)
+			ServerError(w, r, errors.New("username couldn't be found"), hub.Logger)
 			return
 		}
 		id := r.PathValue("id")
