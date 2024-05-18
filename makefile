@@ -12,5 +12,7 @@ test:
 coverage:
 	go test  -coverprofile=coverage.out ./... ;
 	go tool cover -func=coverage.out
+build:
+	go build -o ./bin/web ./cmd/web
 
 # go test $(go list ./... | grep -v /views/)  -coverprofile=coverage.out ./... ;

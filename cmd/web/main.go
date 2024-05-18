@@ -10,17 +10,13 @@ import (
 	"github.com/Lafetz/showdown-trivia-game/internal/repository"
 	triviaapi "github.com/Lafetz/showdown-trivia-game/internal/trivia_api"
 	"github.com/Lafetz/showdown-trivia-game/internal/web"
+	"github.com/gorilla/securecookie"
 	"github.com/gorilla/sessions"
 )
 
 func main() {
-	pwd, err := os.Getwd()
-	if err != nil {
-		panic(err)
-	}
-	println(pwd)
 	cfg := config.NewConfig()
-	store := sessions.NewCookieStore([]byte(cfg.HashKey), []byte(cfg.BlockKey))
+	store := sessions.NewCookieStore(securecookie.GenerateRandomKey(16), securecookie.GenerateRandomKey(16))
 	db := repository.NewDb(cfg.DbUrl)
 	repo := repository.NewStore(db)
 	userservice := user.NewUserService(repo)
@@ -28,7 +24,7 @@ func main() {
 	questionService := question.NewQuestionService(triviaClient)
 	logger := log.New(os.Stdout, "", log.LstdFlags)
 	app := web.NewApp(cfg.Port, logger, userservice, store, questionService)
-	err = app.Run()
+	err := app.Run()
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}

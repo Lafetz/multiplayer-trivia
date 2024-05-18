@@ -1,17 +1,23 @@
 package web
 
 import (
+	"embed"
+	"io/fs"
 	"net/http"
 
 	"github.com/Lafetz/showdown-trivia-game/internal/web/handlers"
 )
 
-func (a *App) initAppRoutes() {
-	fileServer := http.FileServer(http.Dir("./internal/web/static"))
-	s := http.Handler(handlers.Home(a.logger))
-	a.router.Handle("/static/", http.StripPrefix("/static/", fileServer))
-	//
+//go:embed static/*
+var staticFiles embed.FS
 
+func (a *App) initAppRoutes() {
+	staticFs, err := fs.Sub(staticFiles, "static")
+	if err != nil {
+		a.logger.Fatal(err)
+	}
+
+	a.router.Handle("GET /static/", http.StripPrefix("/static/", http.FileServer(http.FS(staticFs))))
 	a.router.HandleFunc("GET /signin", handlers.SigninGet(a.logger))
 	a.router.HandleFunc("POST /signin", handlers.SigninPost(a.userService, a.store, a.logger))
 	//
@@ -21,7 +27,7 @@ func (a *App) initAppRoutes() {
 	a.router.HandleFunc("POST /signout", a.requireAuth(handlers.Signout(a.logger, a.store)))
 	//
 
-	a.router.HandleFunc("GET /home", a.requireAuth(s))
+	a.router.HandleFunc("GET /home", a.requireAuth(handlers.Home(a.logger)))
 	a.router.HandleFunc("GET /create", a.requireAuth(handlers.CreateFormGet(a.logger, a.questionService)))
 	a.router.HandleFunc("POST /create", a.requireAuth(handlers.CreateFormPost(a.logger, a.questionService)))
 	a.router.HandleFunc("GET /join/{id}", handlers.Join(a.logger))

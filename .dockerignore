@@ -1,0 +1,9 @@
+coverage.out
+.env
+bin
+tmp
+makefile
+tailwind.config.js
+docker-compose.yaml
+.gitignore
+.air.toml
