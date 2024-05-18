@@ -15,34 +15,35 @@ type Store struct {
 	users *mongo.Collection
 }
 
-func NewDb(url string) *mongo.Client {
+func NewDb(url string) (*mongo.Client, error) {
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(url))
 	if err != nil {
 		log.Fatal("db connection falled", err)
 	}
-	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
 	err = client.Ping(ctx, nil)
 	if err != nil {
-		log.Fatal("db connection falled", err)
+		return nil, err
 	}
-	return client
+	return client, nil
 }
 
-func NewStore(client *mongo.Client) *Store {
+func NewStore(client *mongo.Client) (*Store, error) {
 
 	users := client.Database("trivia").Collection("users")
 	err := createUniqueIndex(context.Background(), users, "email")
 	if err != nil {
-		log.Fatal("Failed to create unique index:", err)
+		return nil, err
 	}
 	err = createUniqueIndex(context.Background(), users, "username")
 	if err != nil {
-		log.Fatal("Failed to create unique index:", err)
+		return nil, err
 	}
 	println("database connected.....")
 	return &Store{
 		users: users,
-	}
+	}, nil
 }
 func createUniqueIndex(ctx context.Context, collection *mongo.Collection, fieldName string) error {
 	// Create a unique index model for the specified field

@@ -1,10 +1,14 @@
 package config
 
 import (
-	"fmt"
-	"log"
+	"errors"
 	"os"
 	"strconv"
+)
+
+var (
+	ErrInvalidDbUrl = errors.New("db url is invalid")
+	ErrInvalidPort  = errors.New("port number is invalid")
 )
 
 type Config struct {
@@ -12,25 +16,26 @@ type Config struct {
 	DbUrl string
 }
 
-func (c *Config) loadEnv() {
+func (c *Config) loadEnv() error {
 
 	dbUrl := os.Getenv("DB_URL")
 	if dbUrl == "" {
-		log.Fatal("couldn't find Db Url")
+		return ErrInvalidDbUrl
 	}
 	portStr := os.Getenv("PORT")
 	port, err := strconv.Atoi(portStr)
 	if err != nil {
-		fmt.Printf("Error converting PORT to int: %v\n", err)
-		return
+		return ErrInvalidPort
 	}
 
 	c.DbUrl = dbUrl
 	c.Port = port
-
+	return nil
 }
-func NewConfig() *Config {
+func NewConfig() (*Config, error) {
 	config := Config{}
-	config.loadEnv()
-	return &config
+	if err := config.loadEnv(); err != nil {
+		return nil, err
+	}
+	return &config, nil
 }

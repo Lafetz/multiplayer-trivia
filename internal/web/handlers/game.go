@@ -12,9 +12,15 @@ import (
 	"github.com/Lafetz/showdown-trivia-game/internal/web/ws"
 )
 
+type key string
+
+const (
+	UsernameKey key = "username"
+)
+
 func Home(logger *log.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		username, ok := r.Context().Value("username").(string)
+		username, ok := r.Context().Value(UsernameKey).(string)
 		if !ok {
 			ServerError(w, r, errors.New("username couldn't"), logger)
 			return

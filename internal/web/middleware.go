@@ -21,7 +21,7 @@ func (a *App) requireAuth(next http.Handler) http.HandlerFunc {
 			http.Redirect(w, r, "/signin", http.StatusSeeOther)
 			return
 		}
-		ctx := context.WithValue(r.Context(), "username", username)
+		ctx := context.WithValue(r.Context(), handlers.UsernameKey, username)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	}
 }

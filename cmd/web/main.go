@@ -15,16 +15,26 @@ import (
 )
 
 func main() {
-	cfg := config.NewConfig()
+	logger := log.New(os.Stdout, "", log.LstdFlags)
+	cfg, err := config.NewConfig()
+	if err != nil {
+		logger.Fatal(err)
+	}
 	store := sessions.NewCookieStore(securecookie.GenerateRandomKey(16), securecookie.GenerateRandomKey(16))
-	db := repository.NewDb(cfg.DbUrl)
-	repo := repository.NewStore(db)
+	db, err := repository.NewDb(cfg.DbUrl)
+	if err != nil {
+		logger.Fatal(err)
+	}
+	repo, err := repository.NewStore(db)
+	if err != nil {
+		logger.Fatal(err)
+	}
 	userservice := user.NewUserService(repo)
 	triviaClient := triviaapi.NewTriviaClient()
 	questionService := question.NewQuestionService(triviaClient)
-	logger := log.New(os.Stdout, "", log.LstdFlags)
+
 	app := web.NewApp(cfg.Port, logger, userservice, store, questionService)
-	err := app.Run()
+	err = app.Run()
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}

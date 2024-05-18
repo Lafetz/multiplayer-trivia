@@ -27,7 +27,7 @@ func (m *mockapi) GetQuestions(amount int, category int) ([]entities.Question, e
 }
 func TestHome(t *testing.T) {
 	req := httptest.NewRequest("GET", "/", nil)
-	req = req.WithContext(context.WithValue(req.Context(), "username", "testuser"))
+	req = req.WithContext(context.WithValue(req.Context(), UsernameKey, "testuser"))
 
 	w := httptest.NewRecorder()
 
