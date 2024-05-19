@@ -19,7 +19,9 @@ const (
 )
 
 func Home(logger *log.Logger) http.HandlerFunc {
+
 	return func(w http.ResponseWriter, r *http.Request) {
+
 		username, ok := r.Context().Value(UsernameKey).(string)
 		if !ok {
 			ServerError(w, r, errors.New("username couldn't"), logger)

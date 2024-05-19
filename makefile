@@ -8,6 +8,9 @@ tailwind:
 templ:
 	templ generate --watch
 air:
+	@echo "Loading environment variables from .env file"
+	@set -o allexport; source ./load_env.sh; set +o allexport; \
+	echo "Running air"; \
 	air -c .air.toml
 test:
 	go test $(go list ./... | grep -v /views/)  -coverprofile=coverage.out ./... ;

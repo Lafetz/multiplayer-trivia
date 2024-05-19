@@ -16,7 +16,7 @@ type Config struct {
 	Port  int
 	DbUrl string
 	WsUrl string
-}
+} //
 
 func (c *Config) loadEnv() error {
 	wsUrl := os.Getenv("WS_URL")

@@ -19,11 +19,15 @@ ARG PORT
 ARG DB_URL
 ARG WS_URL
 
-ENV PORT ${Port}
+ENV PORT=${Port}
 ENV DB_URL=${DB_URL}
-ENV HOST_URL=${WS_URL}
+ENV WS_URL=${WS_URL}
 COPY --from=builder "$APP_HOME"/bin/web $APP_HOME
 
 EXPOSE 8080
 
-CMD ["./web"]
+CMD ["/bin/sh", "-c", "\
+    [ -z \"$PORT\" ] && echo 'Warning: PORT is not set'; \
+    [ -z \"$DB_URL\" ] && echo 'Warning: DB_URL is not set'; \
+    [ -z \"$WS_URL\" ] && echo 'Warning: WS_URL is not set'; \
+    ./web"]
