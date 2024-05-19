@@ -1,4 +1,7 @@
 run:
+	@echo "Loading environment variables from .env file"
+	@set -o allexport; source ./load_env.sh; set +o allexport; \
+	echo "Running Go application"; \
 	go run ./cmd/web/main.go
 tailwind:
 	tailwindcss -i ./internal/web/static/css/input.css -o ./internal/web/static/css/styles.css --watch

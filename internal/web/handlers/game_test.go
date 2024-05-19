@@ -80,7 +80,7 @@ func TestJoin(t *testing.T) {
 	req := httptest.NewRequest("GET", "/", nil)
 	w := httptest.NewRecorder()
 
-	handler := Join(mockLogger)
+	handler := Join(mockLogger, "connect:ws://localhost:8080")
 	handler.ServeHTTP(w, req)
 
 	// Check response status code
@@ -139,7 +139,7 @@ func TestCreateFormPost(t *testing.T) {
 
 			w := httptest.NewRecorder()
 
-			handler := CreateFormPost(logger, mockQuestionService)
+			handler := CreateFormPost(logger, mockQuestionService, "connect:ws://localhost:8080")
 			handler.ServeHTTP(w, req)
 			verifyHtml(t, w, tc.expectation)
 		})

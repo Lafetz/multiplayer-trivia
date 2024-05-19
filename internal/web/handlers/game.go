@@ -33,8 +33,8 @@ func Home(logger *log.Logger) http.HandlerFunc {
 
 	}
 }
-func sendGamePage(w http.ResponseWriter, r *http.Request, create bool, id string, catagory int, timer int, amount int) error {
-	return render.SendGamePage(w, r, create, id, catagory, timer, amount)
+func sendGamePage(w http.ResponseWriter, r *http.Request, wsUrl string, create bool, id string, catagory int, timer int, amount int) error {
+	return render.SendGamePage(w, r, wsUrl, create, id, catagory, timer, amount)
 
 }
 
@@ -50,7 +50,7 @@ func CreateFormGet(logger *log.Logger, questionService question.QuestionServiceA
 		}
 	}
 }
-func CreateFormPost(logger *log.Logger, questionService question.QuestionServiceApi) http.HandlerFunc { // sends ws component with /wscreate
+func CreateFormPost(logger *log.Logger, questionService question.QuestionServiceApi, wsUrl string) http.HandlerFunc { // sends ws component with /wscreate
 	return func(w http.ResponseWriter, r *http.Request) {
 		cat, err := questionService.GetCategories()
 		if err != nil {
@@ -78,7 +78,7 @@ func CreateFormPost(logger *log.Logger, questionService question.QuestionService
 		amount, _ := strconv.Atoi(form.Amount)
 		gameOwner := true
 		id := ""
-		err = sendGamePage(w, r, gameOwner, id, category, time, amount)
+		err = sendGamePage(w, r, wsUrl, gameOwner, id, category, time, amount)
 		if err != nil {
 			ServerError(w, r, err, logger)
 		}
@@ -95,11 +95,11 @@ func ActiveGames(hub *ws.Hub, logger *log.Logger) http.HandlerFunc {
 		}
 	}
 }
-func Join(logger *log.Logger) http.HandlerFunc {
+func Join(logger *log.Logger, wsUrl string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		gameOwner := false
 		id := r.PathValue("id")
-		err := sendGamePage(w, r, gameOwner, id, 0, 0, 0)
+		err := sendGamePage(w, r, wsUrl, gameOwner, id, 0, 0, 0)
 		if err != nil {
 			ServerError(w, r, err, logger)
 		}

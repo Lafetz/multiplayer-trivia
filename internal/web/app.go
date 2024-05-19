@@ -18,9 +18,10 @@ type App struct {
 	hub             *ws.Hub
 	store           *sessions.CookieStore
 	logger          *log.Logger
+	wsUrl           string
 }
 
-func NewApp(port int, logger *log.Logger, userService user.UserServiceApi, store *sessions.CookieStore, questionService question.QuestionServiceApi) *App {
+func NewApp(port int, wsUrl string, logger *log.Logger, userService user.UserServiceApi, store *sessions.CookieStore, questionService question.QuestionServiceApi) *App {
 
 	a := &App{
 		router:          http.NewServeMux(),
@@ -30,6 +31,7 @@ func NewApp(port int, logger *log.Logger, userService user.UserServiceApi, store
 		store:           store,
 		questionService: questionService,
 		logger:          logger,
+		wsUrl:           wsUrl,
 	}
 
 	a.initAppRoutes()

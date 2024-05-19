@@ -12,8 +12,8 @@ import (
 	"github.com/a-h/templ"
 )
 
-func SendGamePage(w http.ResponseWriter, r *http.Request, create bool, id string, catagory int, timer int, amount int) error {
-	p := components.Game(create, id, catagory, timer, amount)
+func SendGamePage(w http.ResponseWriter, r *http.Request, wsUrl string, create bool, id string, catagory int, timer int, amount int) error {
+	p := components.Game(wsUrl, create, id, catagory, timer, amount)
 	err := layout.Base("Game", p).Render(r.Context(), w)
 	if err != nil {
 		return err
