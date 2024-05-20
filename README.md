@@ -21,7 +21,7 @@ To run the application using the provided Makefile, you can follow these steps:
 2. Make sure you have a `.env` file containing the necessary environment variables:
    
  ```sh
-   WS_HOST=WebSocket host address. e.g connect:wss://exmple.com or connect:ws://localhost.com
+   WS_HOST=WebSocket host address. e.g connect:wss://exmple.com or connect:ws://localhost:8080
    DB_URL= Database URL.
    PORT= Port number.
    ```

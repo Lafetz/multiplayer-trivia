@@ -11,7 +11,7 @@ RUN go mod download
 RUN go mod verify
 RUN go build -o ./bin/web ./cmd/web
 
-FROM golang:1.22.3-alpine3.18 
+FROM alpine:latest
 ENV APP_HOME /go/src/web
 RUN mkdir -p "${APP_HOME}"
 WORKDIR "${APP_HOME}"
