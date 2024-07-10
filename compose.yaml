@@ -17,3 +17,5 @@ services:
       - MONGO_INITDB_DATABASE=trivia
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=admin11
+    ports:
+      - "27017:27017"
