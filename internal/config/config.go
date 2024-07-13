@@ -32,11 +32,16 @@ var Environment = map[string]string{
 
 func (c *Config) loadEnv() error {
 	env := os.Getenv("ENV")
+
 	if env == "" {
 		return ErrInvliadEnv
 	}
-	if _, ok := Environment[env]; !ok {
+	if evalue, ok := Environment[env]; !ok {
+
 		return ErrInvliadEnv
+	} else {
+		c.Env = evalue
+
 	}
 
 	wsUrl := os.Getenv("WS_URL")
@@ -62,7 +67,7 @@ func (c *Config) loadEnv() error {
 	if err != nil {
 		return ErrInvalidPort
 	}
-	c.Env = env
+
 	c.DbUrl = dbUrl
 	c.Port = port
 	c.WsUrl = wsUrl

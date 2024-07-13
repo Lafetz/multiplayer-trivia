@@ -13,6 +13,7 @@ var LogLevels = map[string]slog.Level{
 }
 
 func NewLogger(level string, env string) *slog.Logger {
+
 	logLevel := LogLevels[level]
 
 	var logHandler slog.Handler
