@@ -32,7 +32,7 @@ func (app *App) recoverPanic(next http.Handler) http.HandlerFunc {
 				if e, ok := err.(error); ok {
 					handlers.ServerError(w, r, e, app.logger)
 				} else {
-					app.logger.Println(err)
+					app.logger.Error(e.Error())
 				}
 
 			}

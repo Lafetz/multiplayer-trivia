@@ -2,8 +2,7 @@ package repository
 
 import (
 	"context"
-	"fmt"
-	"log"
+
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -18,7 +17,7 @@ type Store struct {
 func NewDb(url string) (*mongo.Client, error) {
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(url))
 	if err != nil {
-		log.Fatal("db connection falled", err)
+		return nil, err
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
@@ -40,7 +39,7 @@ func NewStore(client *mongo.Client) (*Store, error) {
 	if err != nil {
 		return nil, err
 	}
-	println("database connected.....")
+
 	return &Store{
 		users: users,
 	}, nil
@@ -57,6 +56,6 @@ func createUniqueIndex(ctx context.Context, collection *mongo.Collection, fieldN
 	if err != nil {
 		return err
 	}
-	fmt.Printf("Unique index created on field '%s'\n", fieldName)
+
 	return nil
 }

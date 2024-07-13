@@ -14,7 +14,7 @@ var staticFiles embed.FS
 func (a *App) initAppRoutes() {
 	staticFs, err := fs.Sub(staticFiles, "static")
 	if err != nil {
-		a.logger.Fatal(err)
+		a.logger.Error(err.Error())
 	}
 
 	a.router.Handle("GET /static/", a.recoverPanic(http.StripPrefix("/static/", http.FileServer(http.FS(staticFs)))))

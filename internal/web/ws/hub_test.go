@@ -2,7 +2,7 @@ package ws
 
 import (
 	"errors"
-	"log"
+	"log/slog"
 	"reflect"
 	"testing"
 
@@ -11,7 +11,7 @@ import (
 )
 
 func TestHubGetRoom(t *testing.T) {
-	hub := NewHub(log.Default())
+	hub := NewHub(&slog.Logger{})
 
 	// Create a test room
 	roomId := "testRoom"
@@ -50,7 +50,7 @@ func TestHubGetRoom(t *testing.T) {
 }
 
 func TestHubAddRoomRemoveRoom(t *testing.T) {
-	hub := NewHub(log.Default())
+	hub := NewHub(slog.Default())
 
 	// Create a test room
 	questions := []entities.Question{
@@ -81,7 +81,7 @@ func TestHubAddRoomRemoveRoom(t *testing.T) {
 }
 
 func TestHubListRooms(t *testing.T) {
-	hub := NewHub(log.Default())
+	hub := NewHub(slog.Default())
 
 	questions := []entities.Question{
 		{Question: "What is 2+2?", Options: []string{"3", "4", "5", "6"}, CorrectAnswer: "4"},

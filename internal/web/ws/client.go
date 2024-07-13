@@ -3,7 +3,6 @@ package ws
 import (
 	"encoding/json"
 	"log"
-	"runtime/debug"
 	"time"
 
 	"github.com/Lafetz/showdown-trivia-game/internal/core/game"
@@ -35,7 +34,7 @@ func NewClient(conn *websocket.Conn, room *Room, username string) *Client {
 	return c
 }
 func (c *Client) sendErrormsg(err error) {
-	c.room.hub.Logger.Printf("%s\n%s", err.Error(), debug.Stack())
+	c.room.hub.Logger.Error(err.Error())
 	bufferr := render.WsServerError()
 	c.egress <- bufferr.Bytes()
 

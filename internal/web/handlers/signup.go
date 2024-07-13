@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"errors"
-	"log"
+	"log/slog"
 	"net/http"
 
 	"github.com/Lafetz/showdown-trivia-game/internal/core/user"
@@ -12,7 +12,7 @@ import (
 	"github.com/Lafetz/showdown-trivia-game/internal/web/views/pages"
 )
 
-func SignupGet(logger *log.Logger) http.HandlerFunc {
+func SignupGet(logger *slog.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		p := pages.Signup(form.SignupUser{})
 		err := layout.Base("Sign up", p).Render(r.Context(), w)
@@ -21,7 +21,7 @@ func SignupGet(logger *log.Logger) http.HandlerFunc {
 		}
 	}
 }
-func SignupPost(userService user.UserServiceApi, logger *log.Logger) http.HandlerFunc {
+func SignupPost(userService user.UserServiceApi, logger *slog.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		r.Body = http.MaxBytesReader(w, r.Body, 4096)

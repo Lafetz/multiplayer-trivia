@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"errors"
-	"log"
+	"log/slog"
 	"net/http"
 
 	"github.com/Lafetz/showdown-trivia-game/internal/core/user"
@@ -15,7 +15,7 @@ import (
 
 const IncorrectEmailPass = "Incorrect Email or Password"
 
-func SigninGet(logger *log.Logger) http.HandlerFunc {
+func SigninGet(logger *slog.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		p := pages.Signin(form.SigninUser{}, "", "")
 		err := layout.Base("Sign in", p).Render(r.Context(), w)
@@ -25,7 +25,7 @@ func SigninGet(logger *log.Logger) http.HandlerFunc {
 		}
 	}
 }
-func SigninPost(userservice user.UserServiceApi, store *sessions.CookieStore, logger *log.Logger) http.HandlerFunc {
+func SigninPost(userservice user.UserServiceApi, store *sessions.CookieStore, logger *slog.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		r.Body = http.MaxBytesReader(w, r.Body, 4096)

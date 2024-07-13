@@ -3,6 +3,7 @@ package ws
 import (
 	"errors"
 	"log"
+	"log/slog"
 	"net/http"
 	"sync"
 
@@ -22,7 +23,7 @@ var (
 )
 
 type Hub struct {
-	Logger *log.Logger
+	Logger *slog.Logger
 	rooms  RoomList
 	sync.RWMutex
 }
@@ -65,7 +66,7 @@ func (h *Hub) removeRoom(room *Room) {
 	delete(h.rooms, room.Id)
 }
 
-func NewHub(logger *log.Logger) *Hub {
+func NewHub(logger *slog.Logger) *Hub {
 	h := &Hub{
 		rooms:  make(RoomList),
 		Logger: logger,

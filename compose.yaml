@@ -11,6 +11,8 @@ services:
       - PORT=8080
       - DB_URL=mongodb://admin:admin11@mongo/trivia?authSource=admin
       - WS_URL=connect:ws://localhost:8080
+        - LOG_LEVEL=info
+        - ENV=dev  
   mongo:
     image: 'mongo:7.0.5'
     environment:

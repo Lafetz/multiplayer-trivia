@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"errors"
-	"log"
+	"log/slog"
 	"net/http"
 	"strconv"
 
@@ -18,7 +18,7 @@ const (
 	UsernameKey key = "username"
 )
 
-func Home(logger *log.Logger) http.HandlerFunc {
+func Home(logger *slog.Logger) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
 
@@ -40,7 +40,7 @@ func sendGamePage(w http.ResponseWriter, r *http.Request, wsUrl string, create b
 
 }
 
-func CreateFormGet(logger *log.Logger, questionService question.QuestionServiceApi) http.HandlerFunc { // sends create game form
+func CreateFormGet(logger *slog.Logger, questionService question.QuestionServiceApi) http.HandlerFunc { // sends create game form
 	return func(w http.ResponseWriter, r *http.Request) {
 		cat, err := questionService.GetCategories()
 		if err != nil {
@@ -52,7 +52,7 @@ func CreateFormGet(logger *log.Logger, questionService question.QuestionServiceA
 		}
 	}
 }
-func CreateFormPost(logger *log.Logger, questionService question.QuestionServiceApi, wsUrl string) http.HandlerFunc { // sends ws component with /wscreate
+func CreateFormPost(logger *slog.Logger, questionService question.QuestionServiceApi, wsUrl string) http.HandlerFunc { // sends ws component with /wscreate
 	return func(w http.ResponseWriter, r *http.Request) {
 		cat, err := questionService.GetCategories()
 		if err != nil {
@@ -88,7 +88,7 @@ func CreateFormPost(logger *log.Logger, questionService question.QuestionService
 	}
 }
 
-func ActiveGames(hub *ws.Hub, logger *log.Logger) http.HandlerFunc {
+func ActiveGames(hub *ws.Hub, logger *slog.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rooms := hub.ListRooms()
 		err := render.ActiveGames(w, r, rooms)
@@ -97,7 +97,7 @@ func ActiveGames(hub *ws.Hub, logger *log.Logger) http.HandlerFunc {
 		}
 	}
 }
-func Join(logger *log.Logger, wsUrl string) http.HandlerFunc {
+func Join(logger *slog.Logger, wsUrl string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		gameOwner := false
 		id := r.PathValue("id")

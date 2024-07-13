@@ -2,11 +2,9 @@ package handlers
 
 import (
 	"context"
-	"log"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
-	"os"
 	"strconv"
 	"strings"
 	"testing"
@@ -104,7 +102,7 @@ func (m *MockQuestionService) GetQuestions(amount int, category int) ([]entities
 }
 func TestCreateFormPost(t *testing.T) {
 
-	logger := log.New(os.Stdout, "test ", log.LstdFlags)
+	logger := mockLogger
 
 	testCases := []struct {
 		name        string

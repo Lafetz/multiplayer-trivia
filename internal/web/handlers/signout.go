@@ -1,13 +1,13 @@
 package handlers
 
 import (
-	"log"
+	"log/slog"
 	"net/http"
 
 	"github.com/gorilla/sessions"
 )
 
-func Signout(logger *log.Logger, store *sessions.CookieStore) http.HandlerFunc {
+func Signout(logger *slog.Logger, store *sessions.CookieStore) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		session, _ := store.Get(r, "user-session")
 		session.Values["authenticated"] = false

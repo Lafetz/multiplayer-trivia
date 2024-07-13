@@ -28,6 +28,8 @@ To run the application using the provided Makefile, you can follow these steps:
   WS_HOST=WebSocket host address. e.g connect:wss://exmple.com or connect:ws://localhost:8080
   DB_URL= Database URL.
   PORT= Port number.
+  LOG_LEVEL=info||warn
+  ENV=dev||prod
 ```
 
 ### With Docker

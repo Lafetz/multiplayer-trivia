@@ -4,21 +4,41 @@ import (
 	"errors"
 	"os"
 	"strconv"
+
+	"github.com/Lafetz/showdown-trivia-game/internal/logger"
 )
 
 var (
 	ErrInvalidDbUrl = errors.New("db url is invalid")
 	ErrInvalidPort  = errors.New("port number is invalid")
 	ErrInvalidHost  = errors.New("ws url is invalid")
+	ErrLogLevel     = errors.New("log level not set")
+	ErrInvliadEnv   = errors.New("env not set or invliad")
+	ErrInvalidLevel = errors.New("invliad log level")
 )
 
 type Config struct {
-	Port  int
-	DbUrl string
-	WsUrl string
-} //
+	Port     int
+	DbUrl    string
+	WsUrl    string
+	LogLevel string
+	Env      string
+}
+
+var Environment = map[string]string{
+	"dev":  "development",
+	"prod": "production",
+}
 
 func (c *Config) loadEnv() error {
+	env := os.Getenv("ENV")
+	if env == "" {
+		return ErrInvliadEnv
+	}
+	if _, ok := Environment[env]; !ok {
+		return ErrInvliadEnv
+	}
+
 	wsUrl := os.Getenv("WS_URL")
 	if wsUrl == "" {
 		return ErrInvalidHost
@@ -27,15 +47,26 @@ func (c *Config) loadEnv() error {
 	if dbUrl == "" {
 		return ErrInvalidDbUrl
 	}
+	//
+	logLevel := os.Getenv("LOG_LEVEL")
+	if logLevel == "" {
+		return ErrLogLevel
+	}
+	_, ok := logger.LogLevels[logLevel]
+	if !ok {
+		return ErrInvalidLevel
+	}
+	//
 	portStr := os.Getenv("PORT")
 	port, err := strconv.Atoi(portStr)
 	if err != nil {
 		return ErrInvalidPort
 	}
-
+	c.Env = env
 	c.DbUrl = dbUrl
 	c.Port = port
 	c.WsUrl = wsUrl
+	c.LogLevel = logLevel
 	return nil
 }
 func NewConfig() (*Config, error) {

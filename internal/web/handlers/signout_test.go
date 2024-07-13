@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -23,7 +22,7 @@ func TestSignout(t *testing.T) {
 	rr := httptest.NewRecorder()
 
 	// Create a new Signout handler function with a mock logger
-	handler := Signout(log.New(rr, "", 0), store)
+	handler := Signout(mockLogger, store)
 
 	// Serve the HTTP request using the Signout handler function
 	handler.ServeHTTP(rr, req)

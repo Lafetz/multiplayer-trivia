@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"bytes"
-	"log"
 	"net/http"
 	"net/http/httptest"
 
@@ -10,11 +9,12 @@ import (
 	"testing"
 
 	"github.com/Lafetz/showdown-trivia-game/internal/core/user"
+	"github.com/Lafetz/showdown-trivia-game/internal/logger"
 )
 
 var (
 	buff       bytes.Buffer
-	mockLogger = log.New(&buff, "", log.LstdFlags)
+	mockLogger = logger.NewLogger("debug", "dev")
 )
 
 type mockUserService struct{}
