@@ -71,7 +71,7 @@ func TestFetchQuestions(t *testing.T) {
 		case "/success-api-url":
 			// Simulate a successful API response with trivia questions
 			w.WriteHeader(http.StatusOK)
-			w.Write([]byte(`{
+			_, err := w.Write([]byte(`{
 				"response_code": 0,
 				"results": [
 					{
@@ -84,13 +84,20 @@ func TestFetchQuestions(t *testing.T) {
 					}
 				]
 			}`))
+			if err != nil {
+				t.Fatal(err)
+			}
+
 		case "/error-api-url":
 			// Simulate an API response with a non-zero response code (indicating error)
 			w.WriteHeader(http.StatusOK)
-			w.Write([]byte(`{
+			_, err := w.Write([]byte(`{
 				"response_code": 1,
 				"results": []
 			}`))
+			if err != nil {
+				t.Fatal(err)
+			}
 		default:
 			// Return 404 for unknown paths
 			w.WriteHeader(http.StatusNotFound)

@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"bytes"
 	"net/http"
 	"net/http/httptest"
 
@@ -13,7 +12,7 @@ import (
 )
 
 var (
-	buff       bytes.Buffer
+	//buff       bytes.Buffer
 	mockLogger = logger.NewLogger("debug", "dev")
 )
 

@@ -50,13 +50,12 @@ func fetchCategories(url string) ([]question.Category, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer response.Body.Close()
 
 	// Check response status code
 	if response.StatusCode != http.StatusOK {
 		return nil, err
 	}
-
+	defer response.Body.Close()
 	// Decode JSON response
 	var categoryResponse categoryResponse
 	err = json.NewDecoder(response.Body).Decode(&categoryResponse)

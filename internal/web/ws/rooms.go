@@ -43,21 +43,30 @@ func NewRoom(id string, owner string, timer int, questions []entities.Question, 
 			switch m.MsgType {
 			case game.MsgQuestion:
 				if payload, ok := m.Payload.(entities.Question); ok {
-					buff := render.RenderQuestion(payload, r.Game.CurrentQues, len(r.Game.Questions), timer, r.Game.Players)
+					buff, err := render.RenderQuestion(payload, r.Game.CurrentQues, len(r.Game.Questions), timer, r.Game.Players)
+					if err != nil {
+						r.hub.Logger.Error(err.Error())
+					}
 					r.sendMsg(buff.Bytes())
 				} else {
 					continue
 				}
 			case game.MsgInfo:
 				if payload, ok := m.Payload.(game.Info); ok {
-					buff := render.RenderGameMessage(payload)
+					buff, err := render.RenderGameMessage(payload)
+					if err != nil {
+						r.hub.Logger.Error(err.Error())
+					}
 					r.sendMsg(buff.Bytes())
 				} else {
 					continue
 				}
 			case game.MsgGameEnd:
 				if payload, ok := m.Payload.(game.Winners); ok {
-					buff := render.GameEnd(payload)
+					buff, err := render.GameEnd(payload)
+					if err != nil {
+						r.hub.Logger.Error(err.Error())
+					}
 					r.sendMsg(buff.Bytes())
 					r.hub.removeRoom(r)
 				} else {
@@ -73,22 +82,29 @@ func (r *Room) addClient(client *Client) {
 	r.Lock()
 	defer r.Unlock()
 	r.clients[client] = true
-	buff := render.RenderPlayers(r.Id, r.getUsers())
+	buff, err := render.RenderPlayers(r.Id, r.getUsers())
+	if err != nil {
+		r.hub.Logger.Error(err.Error())
+	}
 	r.sendMsg(buff.Bytes())
 }
-func (r *Room) removeClient(client *Client) {
+func (r *Room) removeClient(client *Client) error {
 	r.Lock()
 	defer r.Unlock()
 	if _, ok := r.clients[client]; ok {
-		client.connection.Close()
+		err := client.connection.Close()
+		if err != nil {
+			return err
+		}
 		delete(r.clients, client)
 	}
 	if len(r.clients) == 0 {
 		if _, ok := r.hub.rooms[r.Id]; ok {
 			r.hub.removeRoom(r)
-			return
+			return nil
 		}
 	}
+	return nil
 }
 func (r *Room) getUsers() []string {
 	var users []string

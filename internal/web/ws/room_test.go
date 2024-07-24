@@ -59,8 +59,10 @@ func TestRoomAddClientRemoveClient(t *testing.T) {
 		}
 
 		// Remove the client from the room
-		room.removeClient(client)
-
+		err = room.removeClient(client)
+		if err != nil {
+			t.Fatal(err)
+		}
 		// Ensure the client is removed from the room's client list
 		if _, ok := room.clients[client]; ok {
 			t.Error("failed to remove client from room")
@@ -77,6 +79,7 @@ func TestRoomAddClientRemoveClient(t *testing.T) {
 	// Connect to the mock WebSocket server
 	url := "ws" + strings.TrimPrefix(server.URL, "http")
 	conn, _, err := websocket.DefaultDialer.Dial(url, nil)
+
 	if err != nil {
 		t.Fatalf("failed to connect to WebSocket server: %v", err)
 	}

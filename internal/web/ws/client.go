@@ -35,13 +35,20 @@ func NewClient(conn *websocket.Conn, room *Room, username string) *Client {
 }
 func (c *Client) sendErrormsg(err error) {
 	c.room.hub.Logger.Error(err.Error())
-	bufferr := render.WsServerError()
+	bufferr, err := render.WsServerError()
+	if err != nil {
+		c.room.hub.Logger.Error(err.Error())
+		return
+	}
 	c.egress <- bufferr.Bytes()
 
 }
 func (c *Client) readMessage() {
 	defer func() {
-		c.room.removeClient(c)
+		err := c.room.removeClient(c)
+		if err != nil {
+			c.room.hub.Logger.Error(err.Error())
+		}
 	}()
 	if err := c.connection.SetReadDeadline(time.Now().Add(pongWait)); err != nil {
 		log.Println(err)
@@ -78,7 +85,11 @@ func (c *Client) readMessage() {
 		case SendAnswer:
 			answer := game.NewAnswer(c.Username, req.Payload)
 			c.room.Game.AnswerCh <- answer
-			buff := render.RenderUserAnswer(req.Payload)
+			buff, err := render.RenderUserAnswer(req.Payload)
+			if err != nil {
+				c.room.hub.Logger.Error(err.Error())
+				return
+			}
 			c.egress <- buff.Bytes()
 		default:
 			c.sendErrormsg(err)
@@ -88,7 +99,10 @@ func (c *Client) readMessage() {
 }
 func (c *Client) writeMessage() {
 	defer func() {
-		c.room.removeClient(c)
+		err := c.room.removeClient(c)
+		if err != nil {
+			c.room.hub.Logger.Error(err.Error())
+		}
 	}()
 	ticker := time.NewTicker(pingInterval)
 

@@ -1,24 +1,21 @@
 version: '3.8'
 services:
-  # app:
-  #   build: 
-  #     context: ./.
-  #     dockerfile: Dockerfile
-  #   container_name: app
-  #   depends_on:
-  #     - mongo
-  #   ports:
-  #     - 8080:8080
-  #   environment:
-  #     - PORT=8080
-  #     - DB_URL=mongodb://admin:admin11@mongo/trivia?authSource=admin
-  #     - WS_URL=connect:ws://localhost:8080
-  #     - LOG_LEVEL=info
-  #     - ENV=dev  
+  app:
+    build: 
+      context: ./.
+      dockerfile: Dockerfile
+    container_name: app
+    depends_on:
+      - mongo
+    ports:
+      - 8080:8080
+    environment:
+      - PORT=8080
+      - DB_URL=mongodb://admin:admin11@mongo/trivia?authSource=admin
+      - LOG_LEVEL=info
+      - ENV=dev  
   mongo:
     image: 'mongo:7.0.5'
-    ports:
-      - 27017:27017
     environment:
       - MONGO_INITDB_DATABASE=trivia
       - MONGO_INITDB_ROOT_USERNAME=admin

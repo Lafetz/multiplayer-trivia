@@ -179,7 +179,7 @@ func Game(gameConfig webentities.GameConfig) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var11 string
-			templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("connect:ws://"+gameConfig.Host+"/wscreate?category=%d&amount=%d&timer=%d", gameConfig.Catagory, gameConfig.Amount, gameConfig.Timer))
+			templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("connect:ws://"+gameConfig.Host+"/wscreate?category=%d&amount=%d&timer=%d", gameConfig.Category, gameConfig.Amount, gameConfig.Timer))
 			if templ_7745c5c3_Err != nil {
 				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/components/game.templ`, Line: 60, Col: 172}
 			}

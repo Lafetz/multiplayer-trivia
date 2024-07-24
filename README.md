@@ -39,7 +39,7 @@ To run the application using the provided Makefile, you can follow these steps:
 ```sh
   DB_URL= Database URL.
   PORT= Port number.
-  LOG_LEVEL=info||warn
+  LOG_LEVEL=debug||info||warn||error
   ENV=dev||prod
 ```
 

@@ -37,7 +37,7 @@ func TestHome(t *testing.T) {
 		t.Errorf("expected status %d; got %d", http.StatusOK, w.Code)
 	}
 
-	expectedHTML := `hx-get="/activegame"` //here active games
+	expectedHTML := `hx-get="/activegames"`
 	verifyHtml(t, w, expectedHTML)
 
 }

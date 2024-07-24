@@ -5,10 +5,6 @@ type Event struct {
 	Payload   string `json:"payload"`
 }
 
-func (e *Event) valid() error {
-	return nil
-}
-
 // type EventHandler func(event Event, c *Client) error
 
 const (

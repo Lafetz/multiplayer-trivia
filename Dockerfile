@@ -14,7 +14,7 @@ COPY ./cmd ./cmd
 COPY ./internal ./internal
 
 
-RUN go build -o ./bin/web ./cmd/web
+RUN go build -ldflags="-s" -o ./bin/web ./cmd/web
 
 FROM alpine:latest
 
