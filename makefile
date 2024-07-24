@@ -1,5 +1,4 @@
 run:
-
 	@echo "Loading environment variables from .env file"
 	@set -o allexport; source ./load_env.sh; set +o allexport; \
 	echo "Running Go application"; \
@@ -14,7 +13,7 @@ air:
 	echo "Running air"; \
 	air -c .air.toml
 test:
-	go test $(go list ./... | grep -v /views/)  -coverprofile=coverage.out ./... ;
+	go test  ./... 
 
 coverage:
 	go test  -coverprofile=coverage.out ./... ;
