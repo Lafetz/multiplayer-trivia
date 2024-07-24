@@ -8,6 +8,7 @@ import (
 
 	"github.com/Lafetz/showdown-trivia-game/internal/core/question"
 	render "github.com/Lafetz/showdown-trivia-game/internal/web/Render"
+	webentities "github.com/Lafetz/showdown-trivia-game/internal/web/entity"
 	"github.com/Lafetz/showdown-trivia-game/internal/web/form"
 	"github.com/Lafetz/showdown-trivia-game/internal/web/ws"
 )
@@ -35,8 +36,8 @@ func Home(logger *slog.Logger) http.HandlerFunc {
 
 	}
 }
-func sendGamePage(w http.ResponseWriter, r *http.Request, wsUrl string, create bool, id string, catagory int, timer int, amount int) error {
-	return render.SendGamePage(w, r, wsUrl, create, id, catagory, timer, amount)
+func sendGamePage(w http.ResponseWriter, r *http.Request, gameConfig webentities.GameConfig) error {
+	return render.SendGamePage(w, r, gameConfig)
 
 }
 
@@ -52,7 +53,7 @@ func CreateFormGet(logger *slog.Logger, questionService question.QuestionService
 		}
 	}
 }
-func CreateFormPost(logger *slog.Logger, questionService question.QuestionServiceApi, wsUrl string) http.HandlerFunc { // sends ws component with /wscreate
+func CreateFormPost(logger *slog.Logger, questionService question.QuestionServiceApi) http.HandlerFunc { // sends ws component with /wscreate
 	return func(w http.ResponseWriter, r *http.Request) {
 		cat, err := questionService.GetCategories()
 		if err != nil {
@@ -80,7 +81,8 @@ func CreateFormPost(logger *slog.Logger, questionService question.QuestionServic
 		amount, _ := strconv.Atoi(form.Amount)
 		gameOwner := true
 		id := ""
-		err = sendGamePage(w, r, wsUrl, gameOwner, id, category, time, amount)
+		gameConfig := webentities.NewConfig(r.Host, gameOwner, id, category, time, amount)
+		err = sendGamePage(w, r, gameConfig)
 		if err != nil {
 			ServerError(w, r, err, logger)
 		}
@@ -97,11 +99,12 @@ func ActiveGames(hub *ws.Hub, logger *slog.Logger) http.HandlerFunc {
 		}
 	}
 }
-func Join(logger *slog.Logger, wsUrl string) http.HandlerFunc {
+func Join(logger *slog.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		gameOwner := false
 		id := r.PathValue("id")
-		err := sendGamePage(w, r, wsUrl, gameOwner, id, 0, 0, 0)
+		gameConfig := webentities.NewConfig(r.Host, gameOwner, id, 0, 0, 0)
+		err := sendGamePage(w, r, gameConfig)
 		if err != nil {
 			ServerError(w, r, err, logger)
 		}

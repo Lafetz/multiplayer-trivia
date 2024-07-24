@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -78,7 +79,7 @@ func TestJoin(t *testing.T) {
 	req := httptest.NewRequest("GET", "/", nil)
 	w := httptest.NewRecorder()
 
-	handler := Join(mockLogger, "connect:ws://localhost:8080")
+	handler := Join(mockLogger)
 	handler.ServeHTTP(w, req)
 
 	// Check response status code
@@ -86,7 +87,7 @@ func TestJoin(t *testing.T) {
 		t.Errorf("Join handler returned unexpected status code: %d", w.Code)
 	}
 
-	expectedHTML := `<div hx-ws="connect:ws://localhost:8080/wsjoin/">`
+	expectedHTML := fmt.Sprintf(`<div hx-ws="connect:ws://%s/wsjoin/">`, req.Host)
 	verifyHtml(t, w, expectedHTML)
 
 }
@@ -137,7 +138,7 @@ func TestCreateFormPost(t *testing.T) {
 
 			w := httptest.NewRecorder()
 
-			handler := CreateFormPost(logger, mockQuestionService, "connect:ws://localhost:8080")
+			handler := CreateFormPost(logger, mockQuestionService)
 			handler.ServeHTTP(w, req)
 			verifyHtml(t, w, tc.expectation)
 		})

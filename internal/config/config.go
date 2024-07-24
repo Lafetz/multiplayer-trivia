@@ -11,7 +11,6 @@ import (
 var (
 	ErrInvalidDbUrl = errors.New("db url is invalid")
 	ErrInvalidPort  = errors.New("port number is invalid")
-	ErrInvalidHost  = errors.New("ws url is invalid")
 	ErrLogLevel     = errors.New("log level not set")
 	ErrInvliadEnv   = errors.New("env not set or invliad")
 	ErrInvalidLevel = errors.New("invliad log level")
@@ -20,7 +19,6 @@ var (
 type Config struct {
 	Port     int
 	DbUrl    string
-	WsUrl    string
 	LogLevel string
 	Env      string
 }
@@ -44,10 +42,6 @@ func (c *Config) loadEnv() error {
 
 	}
 
-	wsUrl := os.Getenv("WS_URL")
-	if wsUrl == "" {
-		return ErrInvalidHost
-	}
 	dbUrl := os.Getenv("DB_URL")
 	if dbUrl == "" {
 		return ErrInvalidDbUrl
@@ -70,7 +64,7 @@ func (c *Config) loadEnv() error {
 
 	c.DbUrl = dbUrl
 	c.Port = port
-	c.WsUrl = wsUrl
+
 	c.LogLevel = logLevel
 	return nil
 }

@@ -1,4 +1,5 @@
 run:
+
 	@echo "Loading environment variables from .env file"
 	@set -o allexport; source ./load_env.sh; set +o allexport; \
 	echo "Running Go application"; \

@@ -160,7 +160,7 @@ func CreateGame(form form.NewGame, catagories []question.Category) templ.Compone
 	})
 }
 
-func Game(wsUrl string, owner bool, id string, catagory int, timer int, amount int) templ.Component {
+func Game(gameConfig webentities.GameConfig) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -173,15 +173,15 @@ func Game(wsUrl string, owner bool, id string, catagory int, timer int, amount i
 			templ_7745c5c3_Var10 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		if owner {
+		if gameConfig.Owner {
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"socket\" hx-ws=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var11 string
-			templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf(wsUrl+"/wscreate?category=%d&amount=%d&timer=%d", catagory, amount, timer))
+			templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("connect:ws://"+gameConfig.Host+"/wscreate?category=%d&amount=%d&timer=%d", gameConfig.Catagory, gameConfig.Amount, gameConfig.Timer))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/components/game.templ`, Line: 60, Col: 113}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/components/game.templ`, Line: 60, Col: 172}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 			if templ_7745c5c3_Err != nil {
@@ -205,9 +205,9 @@ func Game(wsUrl string, owner bool, id string, catagory int, timer int, amount i
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var12 string
-			templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(wsUrl + "/wsjoin/" + id)
+			templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs("connect:ws://" + gameConfig.Host + "/wsjoin/" + gameConfig.Id)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/components/game.templ`, Line: 77, Col: 38}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/views/components/game.templ`, Line: 77, Col: 77}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 			if templ_7745c5c3_Err != nil {

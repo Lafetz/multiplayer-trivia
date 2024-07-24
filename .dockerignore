@@ -4,6 +4,6 @@ bin
 tmp
 makefile
 tailwind.config.js
-docker-compose.yaml
+compose.yaml
 .gitignore
 .air.toml

@@ -55,9 +55,9 @@ templ CreateGame(form form.NewGame, catagories []question.Category) {
 	</div>
 }
 
-templ Game(wsUrl string, owner bool, id string, catagory int, timer int, amount int) {
-	if owner {
-		<div id="socket" hx-ws={ fmt.Sprintf(wsUrl+"/wscreate?category=%d&amount=%d&timer=%d", catagory, amount, timer) }>
+templ Game(gameConfig webentities.GameConfig) {
+	if gameConfig.Owner {
+		<div id="socket" hx-ws={ fmt.Sprintf("connect:ws://"+gameConfig.Host+"/wscreate?category=%d&amount=%d&timer=%d", gameConfig.Catagory, gameConfig.Amount, gameConfig.Timer) }>
 			<div id="lobby" class="flex flex-col gap-3 justify-center items-center">
 				@Players("", []string{""})
 				<button
@@ -74,7 +74,7 @@ templ Game(wsUrl string, owner bool, id string, catagory int, timer int, amount 
 			</div>
 		</div>
 	} else {
-		<div hx-ws={ wsUrl + "/wsjoin/" + id }>
+		<div hx-ws={ "connect:ws://" + gameConfig.Host + "/wsjoin/" + gameConfig.Id }>
 			<div id="lobby" class="flex flex-col gap-3 justify-center items-center">
 				@Players("", []string{""})
 			</div>

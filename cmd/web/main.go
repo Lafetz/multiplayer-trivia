@@ -29,7 +29,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	logger.Info("db connected...")
+	logger.Info("db connected")
 	repo, err := repository.NewStore(db)
 	if err != nil {
 		log.Fatal(err)
@@ -38,7 +38,7 @@ func main() {
 	triviaClient := triviaapi.NewTriviaClient()
 	questionService := question.NewQuestionService(triviaClient)
 
-	app := web.NewApp(cfg.Port, cfg.WsUrl, logger, userservice, store, questionService)
+	app := web.NewApp(cfg.Port, logger, userservice, store, questionService)
 	err = app.Run()
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
