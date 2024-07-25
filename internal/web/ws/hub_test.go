@@ -8,10 +8,12 @@ import (
 
 	"github.com/Lafetz/showdown-trivia-game/internal/core/entities"
 	webentities "github.com/Lafetz/showdown-trivia-game/internal/web/entity"
+	"github.com/Lafetz/showdown-trivia-game/internal/web/metrics"
+	"github.com/prometheus/client_golang/prometheus"
 )
 
 func TestHubGetRoom(t *testing.T) {
-	hub := NewHub(&slog.Logger{})
+	hub := newMockHub()
 
 	// Create a test room
 	roomId := "testRoom"
@@ -50,7 +52,7 @@ func TestHubGetRoom(t *testing.T) {
 }
 
 func TestHubAddRoomRemoveRoom(t *testing.T) {
-	hub := NewHub(slog.Default())
+	hub := newMockHub()
 
 	// Create a test room
 	questions := []entities.Question{
@@ -81,7 +83,8 @@ func TestHubAddRoomRemoveRoom(t *testing.T) {
 }
 
 func TestHubListRooms(t *testing.T) {
-	hub := NewHub(slog.Default())
+
+	hub := newMockHub()
 
 	questions := []entities.Question{
 		{Question: "What is 2+2?", Options: []string{"3", "4", "5", "6"}, CorrectAnswer: "4"},
@@ -113,4 +116,11 @@ func TestHubListRooms(t *testing.T) {
 			t.Errorf("listed room at index %d does not match expected", i)
 		}
 	}
+}
+func newMockHub() *Hub {
+	reg := prometheus.NewRegistry()
+	m := metrics.NewMetrics(reg)
+
+	hub := NewHub(slog.Default(), m)
+	return hub
 }

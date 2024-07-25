@@ -57,6 +57,7 @@ func (c *Config) loadEnv() error {
 	}
 	//
 	portStr := os.Getenv("PORT")
+
 	port, err := strconv.Atoi(portStr)
 	if err != nil {
 		return ErrInvalidPort

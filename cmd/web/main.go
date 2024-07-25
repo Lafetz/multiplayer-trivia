@@ -12,6 +12,7 @@ import (
 	"github.com/Lafetz/showdown-trivia-game/internal/web"
 	"github.com/gorilla/securecookie"
 	"github.com/gorilla/sessions"
+	"github.com/prometheus/client_golang/prometheus"
 )
 
 func main() {
@@ -37,8 +38,8 @@ func main() {
 	userservice := user.NewUserService(repo)
 	triviaClient := triviaapi.NewTriviaClient()
 	questionService := question.NewQuestionService(triviaClient)
-
-	app := web.NewApp(cfg.Port, logger, userservice, store, questionService)
+	reg := prometheus.NewRegistry()
+	app := web.NewApp(cfg.Port, logger, userservice, store, questionService, reg)
 	err = app.Run()
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)

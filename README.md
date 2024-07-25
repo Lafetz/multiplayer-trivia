@@ -5,10 +5,10 @@ A web-based application developed using Go and HTMX. Players can engage in real-
 ## ☑ FE
 
 - [x] User Authentication
+- [x] Score
 - [x] Modify timer and number of questions
 - [x] Choose categories
-- [ ] CI/CD
-- [ ] Monitoring
+- [x] Monitoring
 - [ ] Leaderboards
 - [ ] Power-ups
 
@@ -22,9 +22,7 @@ Check out the live demo [**Here**](https://showdown-trivia-game-1.onrender.com/h
 - net/http
 - gorilla/websocket
 - Htmx
-- templ
-- Tailwind
-- MongoDB
+- Prometheus
 
 ## Getting Started
 
