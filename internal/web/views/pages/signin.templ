@@ -15,7 +15,7 @@ templ Signin(form form.SigninUser, message string, authError string) {
 						<h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
 							Sign in
 						</h1>
-						<form hx-post="/signin" hx-target-200="#message-box" hx-target-500="#toast" hx-target-422="#main" hx-target-401="#main" class="space-y-4 md:space-y-6 flex flex-col ">
+						<form id="signin-form" hx-post="/signin" hx-target-200="#message-box" hx-target-500="#toast" hx-target-422="#main" hx-target-401="#main" class="space-y-4 md:space-y-6 flex flex-col ">
 							<div>
 								<label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
 								<input type="email" name="email" id="email" value={ form.Email } class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required=""/>
@@ -43,6 +43,10 @@ templ Signin(form form.SigninUser, message string, authError string) {
 								Don't Have an account? <a href="/signup" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up here</a>
 							</p>
 						</form>
+						<div class="flex justify-center">
+							<button class="text-white bg-sky-600 hover:bg-sky-800 focus:ring-4 transition-colors  duration-300 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none" onclick="fillAndSubmitForm('testA@gmail.com', 'testA@gmail.com')">Test Account A</button>
+							<button class="text-white bg-sky-600 hover:bg-sky-800 focus:ring-4 transition-colors  duration-300 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none" onclick="fillAndSubmitForm('testB@gmail.com', 'testB@gmail.com')">Test Account B</button>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -8,8 +8,7 @@ A web-based application developed using Go and HTMX. Players can engage in real-
 - [x] Score
 - [x] Modify timer and number of questions
 - [x] Choose categories
-- [ ] CI/CD
-- [ ] Monitoring
+- [x] Monitoring
 - [ ] Leaderboards
 - [ ] Power-ups
 

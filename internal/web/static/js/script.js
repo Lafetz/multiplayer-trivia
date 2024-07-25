@@ -65,3 +65,8 @@ function toastComponent() {
       }
   };
 }
+function fillAndSubmitForm(username, password) {
+    document.getElementById('email').value = username;
+    document.getElementById('password').value = password;
+    document.getElementById('signin-form').requestSubmit();
+}
