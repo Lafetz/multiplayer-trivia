@@ -57,7 +57,7 @@ templ CreateGame(form form.NewGame, catagories []question.Category) {
 
 templ Game(gameConfig webentities.GameConfig) {
 	if gameConfig.Owner {
-		<div id="socket" hx-ws={ fmt.Sprintf("connect:ws://"+gameConfig.Host+"/wscreate?category=%d&amount=%d&timer=%d", gameConfig.Category, gameConfig.Amount, gameConfig.Timer) }>
+		<div id="socket" hx-ws={ fmt.Sprintf("connect:wss://"+gameConfig.Host+"/wscreate?category=%d&amount=%d&timer=%d", gameConfig.Category, gameConfig.Amount, gameConfig.Timer) }>
 			<div id="lobby" class="flex flex-col gap-3 justify-center items-center">
 				@Players("", []string{""})
 				<button
@@ -74,7 +74,7 @@ templ Game(gameConfig webentities.GameConfig) {
 			</div>
 		</div>
 	} else {
-		<div hx-ws={ "connect:ws://" + gameConfig.Host + "/wsjoin/" + gameConfig.Id }>
+		<div hx-ws={ "connect:wss://" + gameConfig.Host + "/wsjoin/" + gameConfig.Id }>
 			<div id="lobby" class="flex flex-col gap-3 justify-center items-center">
 				@Players("", []string{""})
 			</div>
