@@ -82,6 +82,7 @@ func (r *Room) addClient(client *Client) {
 	r.Lock()
 	defer r.Unlock()
 	r.clients[client] = true
+	r.hub.m.WebsocketConns.Inc()
 	buff, err := render.RenderPlayers(r.Id, r.getUsers())
 	if err != nil {
 		r.hub.Logger.Error(err.Error())
@@ -97,8 +98,10 @@ func (r *Room) removeClient(client *Client) error {
 			return err
 		}
 		delete(r.clients, client)
+		r.hub.m.WebsocketConns.Dec()
+		//
 	}
-	if len(r.clients) == 0 {
+	if len(r.clients) == 0 { // remove room if there a no connected users
 		if _, ok := r.hub.rooms[r.Id]; ok {
 			r.hub.removeRoom(r)
 			return nil

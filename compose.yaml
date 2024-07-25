@@ -16,7 +16,27 @@ services:
       - ENV=dev  
   mongo:
     image: 'mongo:7.0.5'
+    ports:
+      - 27017:27017
     environment:
       - MONGO_INITDB_DATABASE=trivia
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=admin11
+  prometheus:
+    image: prom/prometheus:v2.40.4
+    ports:
+      - 9090:9090
+    volumes:
+      - ./deployments/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+  grafana:
+    image: grafana/grafana:9.3.0
+    ports:
+      - 3000:3000
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=devops123
+    volumes:
+      - ./deployments/grafana/datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
+      - grafana:/var/lib/grafana
+volumes:
+  grafana:

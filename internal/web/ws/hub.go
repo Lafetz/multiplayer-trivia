@@ -5,9 +5,11 @@ import (
 	"log"
 	"log/slog"
 	"net/http"
+
 	"sync"
 
 	webentities "github.com/Lafetz/showdown-trivia-game/internal/web/entity"
+	"github.com/Lafetz/showdown-trivia-game/internal/web/metrics"
 	"github.com/gorilla/websocket"
 )
 
@@ -25,6 +27,7 @@ var (
 type Hub struct {
 	Logger *slog.Logger
 	rooms  RoomList
+	m      *metrics.Metrics
 	sync.RWMutex
 }
 
@@ -66,11 +69,11 @@ func (h *Hub) removeRoom(room *Room) {
 	delete(h.rooms, room.Id)
 }
 
-func NewHub(logger *slog.Logger) *Hub {
+func NewHub(logger *slog.Logger, m *metrics.Metrics) *Hub {
 	h := &Hub{
 		rooms:  make(RoomList),
 		Logger: logger,
-		// handlers: make(map[string]EventHandler),
+		m:      m,
 	}
 	return h
 }
