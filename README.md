@@ -33,6 +33,8 @@ Check out the live demo [**Here**](https://showdown-trivia-game-1.onrender.com/h
 
 <img width="1028" alt="image" src="https://raw.githubusercontent.com/Lafetz/multiplayer-trivia/main/docs/c.png">
 
+<img width="1028" alt="image" src="https://raw.githubusercontent.com/Lafetz/multiplayer-trivia/main/docs/d.png">
+
 ## Getting Started
 
 ### With Makefile
