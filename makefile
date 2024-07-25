@@ -12,9 +12,10 @@ air:
 	@set -o allexport; source ./load_env.sh; set +o allexport; \
 	echo "Running air"; \
 	air -c .air.toml
+lint:
+	golangci-lint run
 test:
 	go test  ./... 
-
 coverage:
 	go test  -coverprofile=coverage.out ./... ;
 	go tool cover -func=coverage.out

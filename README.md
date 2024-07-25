@@ -7,7 +7,6 @@ A web-based application developed using Go and HTMX. Players can engage in real-
 - [x] User Authentication
 - [x] Modify timer and number of questions
 - [x] Choose categories
-- [ ] CI/CD
 - [ ] Monitoring
 - [ ] Leaderboards
 - [ ] Power-ups
@@ -25,6 +24,14 @@ Check out the live demo [**Here**](https://showdown-trivia-game-1.onrender.com/h
 - templ
 - Tailwind
 - MongoDB
+
+## imgs
+
+<img width="1028" alt="image" src="https://raw.githubusercontent.com/Lafetz/multiplayer-trivia/main/docs/a.png">
+
+<img width="1028" alt="image" src="https://raw.githubusercontent.com/Lafetz/multiplayer-trivia/main/docs/b.png">
+
+<img width="1028" alt="image" src="https://raw.githubusercontent.com/Lafetz/multiplayer-trivia/main/docs/c.png">
 
 ## Getting Started
 
