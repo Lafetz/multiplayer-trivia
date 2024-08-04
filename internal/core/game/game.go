@@ -34,7 +34,24 @@ func (g *Game) Start(players []*Player) {
 	}
 
 }
+func (g *Game) endOfQuestion(question entities.Question, answers map[string]string) { //score correct answers
+	for username, answer := range answers {
+		if question.CorrectAnswer == answer {
+			g.score(username)
+		}
 
+	}
+}
+
+func (g *Game) score(username string) {
+	for _, player := range g.Players {
+		if player.Username == username {
+
+			player.Score++
+
+		}
+	}
+}
 func (g *Game) AskQuestion(question entities.Question, doneCh chan struct{}) {
 
 	timer := time.NewTimer(g.timerSpan)
@@ -50,23 +67,9 @@ func (g *Game) AskQuestion(question entities.Question, doneCh chan struct{}) {
 			answers[answer.username] = answer.answer
 
 		case <-timer.C:
-			for username, answer := range answers {
+			g.endOfQuestion(question, answers)
 
-				if question.CorrectAnswer == answer {
-
-					for _, player := range g.Players {
-
-						if player.Username == username {
-
-							player.Score++
-						}
-					}
-
-				}
-
-			}
-
-			if len(g.Questions) == (g.CurrentQues) {
+			if len(g.Questions) == (g.CurrentQues) { //was the last question
 				g.DisplayWinner()
 			}
 			answers = make(map[string]string)
@@ -78,7 +81,7 @@ func (g *Game) AskQuestion(question entities.Question, doneCh chan struct{}) {
 
 		}
 	}
-	//}()
+
 }
 func (g *Game) DisplayWinner() {
 

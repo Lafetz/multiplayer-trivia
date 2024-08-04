@@ -87,7 +87,7 @@ func TestJoin(t *testing.T) {
 		t.Errorf("Join handler returned unexpected status code: %d", w.Code)
 	}
 
-	expectedHTML := fmt.Sprintf(`<div hx-ws="connect:ws://%s/wsjoin/">`, req.Host)
+	expectedHTML := fmt.Sprintf(`<div hx-ws="connect:wss://%s/wsjoin/">`, req.Host)
 	verifyHtml(t, w, expectedHTML)
 
 }
