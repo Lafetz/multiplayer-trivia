@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"log/slog"
 
 	"time"
 
@@ -14,18 +15,28 @@ type Store struct {
 	users *mongo.Collection
 }
 
-func NewDb(url string) (*mongo.Client, error) {
+func NewDb(url string, logger *slog.Logger) (*mongo.Client, func(), error) {
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(url))
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
+
 	err = client.Ping(ctx, nil)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	return client, nil
+	return client, func() {
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+		err := client.Disconnect(ctx)
+		if err != nil {
+			logger.Error(err.Error())
+		}
+
+	}, nil
+
 }
 
 func NewStore(client *mongo.Client) (*Store, error) {

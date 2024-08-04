@@ -25,8 +25,11 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	store := sessions.NewCookieStore(securecookie.GenerateRandomKey(16), securecookie.GenerateRandomKey(16))
-	db, err := repository.NewDb(cfg.DbUrl)
+	db, close, err := repository.NewDb(cfg.DbUrl, logger)
+	defer close()
+
 	if err != nil {
 		log.Fatal(err)
 	}
